@@ -1,5 +1,5 @@
 public class Habitacion {
-    private int id;//numero de habitacion
+    private int id; //numero de habitación
     private static int contador = 1;
     private int precio;
     private boolean descuento;
@@ -7,7 +7,7 @@ public class Habitacion {
     private Eestado estado;
     private EtipoHabitacion tipo;
     private EcantPersonas cantPersonas;
-    private String servicios;//fijarse si va a hacer string o enum
+    private String servicios; //fijarse si va a hacer string o enum
 
     public Habitacion(int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios,Eestado estado) {
         this.precio = precio;
@@ -18,7 +18,7 @@ public class Habitacion {
         this.id = contador++;
         this.descuento=false;
         this.estado=estado;
-    }//este constructor puede cambiar
+    } //este constructor puede cambiar
 
     //getters, aun no hay setters
     public int getId() {
@@ -54,7 +54,7 @@ public class Habitacion {
     }
 
     @Override
-    public String toString() {//hacer el toString personalizado
+    public String toString() { //hacer el toString personalizado
         return "Habitacion{" +
                 "id=" + id +
                 ", precio=" + precio +
