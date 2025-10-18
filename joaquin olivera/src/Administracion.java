@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-
 public class Administracion {
-    private Generica<Habitacion>catalogo; //atributo habitaciones
+    private Generica<Habitacion> catalogo; //atributo habitaciones
     // definir próximos atributos
 
     public Administracion() {
@@ -15,7 +13,7 @@ public class Administracion {
 
     /// metodos admin
     // metodos de habitaciones:
-    public boolean agregarHabitacion (int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios,Eestado estado){ //este metodo es de prueba
+    public boolean agregarHabitacion (int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, Eestado estado){ //este metodo es de prueba
         Habitacion H = new Habitacion(precio, descripcion, tipo, cantPersonas, servicios, estado);
         return this.catalogo.agregarEnListado(H);
     }
