@@ -1,4 +1,7 @@
+import Interfaz.IdentificarCodigo;
+
 public class Administracion {
+
     private Generica<Habitacion> catalogo; //atributo habitaciones
     // definir próximos atributos
 
@@ -25,6 +28,18 @@ public class Administracion {
         return info;
     }
     //faltan mas
+    public boolean agregarHabitacion2(int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, Eestado estado){
+        Habitacion h1=new Habitacion(precio, descripcion, tipo, cantPersonas, servicios, estado);
+        return catalogo.agregar(h1);
+    }
 
+
+    public String verHabitacion(){
+        return catalogo.mostrarTodo();
+    }
+
+    public boolean buscarHabitacion(int id){
+
+    }
 
 }

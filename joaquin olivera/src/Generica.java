@@ -1,6 +1,7 @@
+
 import java.util.ArrayList;
 
-public class Generica <T>{
+public class Generica <T> {
     //cambiar de nombre la clase
     private ArrayList<T>listado; //para objetos que se puedan repetir
 
@@ -35,6 +36,42 @@ public class Generica <T>{
         }
         info = "no se encontro la habitacion";
         return info;
+    }
+
+    //generales
+    public boolean agregar(T elemento){
+        return listado.add(elemento);
+    }
+/*
+    public boolean eliminar(int id){
+       boolean encontrar=false;
+        for (T e : listado){
+           if (e){
+               encontrar=true;
+               listado.remove(e);
+           }
+       }
+        return encontrar;
+    }
+
+
+    public T buscar(T elemento){
+        T rta = null;
+        for (T e: listado){
+            if (e.equals(elemento)){
+                rta= e;
+            }
+        }
+        return rta;
+    }
+
+ */
+    public String mostrarTodo(){
+        String rta="";
+        for (T e: listado){
+            rta+=e.toString();
+        }
+        return rta;
     }
 
 }
