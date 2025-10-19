@@ -1,18 +1,26 @@
-import Interfaz.IdentificarCodigo;
 
-public class Administracion {
+public class Administracion extends Usuario{
 
     private Generica<Habitacion> catalogo; //atributo habitaciones
     // definir próximos atributos
 
-    public Administracion() {
+    public Administracion(String nombreUsuario, String contrasenia, Generica<Habitacion> catalogo) {
+        super(nombreUsuario, contrasenia);
         this.catalogo = new Generica<>();
-    }//modificar constructor con próximos atributos
+    }
+    //modificar constructor con próximos atributos
+
+    //constructor para usuario
+    public Administracion(String nombreUsuario, String contrasenia) {
+        super(nombreUsuario, contrasenia);
+        this.catalogo = new Generica<>();
+    }
 
     //getters
     public Generica<Habitacion> getCatalogo() {
         return catalogo;
     }
+
 
     /// metodos admin
     // metodos de habitaciones:
@@ -28,6 +36,8 @@ public class Administracion {
         return info;
     }
     //faltan mas
+
+    //los generales
     public boolean agregarHabitacion2(int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, Eestado estado){
         Habitacion h1=new Habitacion(precio, descripcion, tipo, cantPersonas, servicios, estado);
         return catalogo.agregar(h1);
@@ -36,10 +46,6 @@ public class Administracion {
 
     public String verHabitacion(){
         return catalogo.mostrarTodo();
-    }
-
-    public boolean buscarHabitacion(int id){
-
     }
 
 }
