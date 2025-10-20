@@ -1,12 +1,17 @@
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class Generica <T> {
     //cambiar de nombre la clase
     private ArrayList<T>listado; //para objetos que se puedan repetir
+    private HashSet<T> litaPrueba;
+
 
     public Generica() {
         this.listado = new ArrayList<>();
+        this.litaPrueba=new HashSet<>();
     }
 
     public boolean agregarEnListado(T obj){
@@ -37,6 +42,7 @@ public class Generica <T> {
         info = "no se encontro la habitacion";
         return info;
     }
+
 
     //generales
     public boolean agregar(T elemento){

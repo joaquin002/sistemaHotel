@@ -20,7 +20,7 @@ public class Conserje extends Usuario{
 
     @Override
     public String toString() {
-        return "Conserje{" +
+        return super.toString()+"Conserje{" +
                 "estadoHabitacion=" + estadoHabitacion +
                 ", limpieza=" + limpieza +
                 ", reparacion=" + reparacion +
