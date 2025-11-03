@@ -13,8 +13,8 @@ public class SistemaHotel {
             case 1: //administrador
                 nuevo= new Administracion(nombreUsuario, contrasenia);
                 break;
-            case 2: //conserje
-                nuevo=new Conserje(nombreUsuario, contrasenia);
+            case 2: //cliente
+
                 break;
                 //falta
             default:

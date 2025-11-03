@@ -1,17 +1,10 @@
-public class Conserje extends Usuario{
+public class Conserje{
     private boolean estadoHabitacion; //true ocupada false desocupada
     private boolean limpieza; //true limpio false: no se limpio
     private boolean reparacion; // true se reparo false no se reparo
     private double tarifaAdicional;
 
-    //constructor para usuario
-    public Conserje(String nombreUsuario, String contrasenia) {
-        super(nombreUsuario, contrasenia);
-        this.estadoHabitacion = estadoHabitacion;
-    }
-
-    public Conserje(String nombreUsuario, String contrasenia, boolean estadoHabitacion, boolean limpieza, boolean reparacion, double tarifaAdicional) {
-        super(nombreUsuario, contrasenia);
+    public Conserje(boolean estadoHabitacion, boolean limpieza, boolean reparacion, double tarifaAdicional) {
         this.estadoHabitacion = estadoHabitacion;
         this.limpieza = limpieza;
         this.reparacion = reparacion;
