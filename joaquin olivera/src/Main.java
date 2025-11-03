@@ -5,12 +5,17 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         /// prueba de usuario funciona
-        /*
+
         SistemaHotel s1 = new SistemaHotel();
         s1.registrarUsuario("paulina", "pau1234", 1);
-        System.out.println(s1.iniciarSesion("paulina", "pau1234"));
-        System.out.println(s1.iniciarSesion("paulina", "pau4"));
-         */
+        try {
+            System.out.println(s1.iniciarSesion("paulina", "pau1234"));
+            System.out.println(s1.iniciarSesion("paulina", "pau4"));
+        } catch (UsuarioNoEncontradoEx e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
 }

@@ -15,6 +15,10 @@ public abstract class Usuario {
         return contrasenia;
     }
 
+    public boolean validarUsuario(String nombreU, String contrasenia) {
+        return this.nombreUsuario.equals(nombreU) && this.contrasenia.equals(contrasenia);
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +

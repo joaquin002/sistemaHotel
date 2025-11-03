@@ -25,15 +25,12 @@ public class SistemaHotel {
         System.out.println("usuario registrado con exito");
     }
 
-    public String iniciarSesion(String nombreUsuario, String contrasenia){
-        String rta="";
+    public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx{
         for (Usuario u: usuarios){
-            if (u.getNombreUsuario().equals(nombreUsuario) && u.getContrasenia().equals(contrasenia)){
-                rta="inicio sesion correctamente";
-            }else {
-                rta="nombre de usuario o contraseña incorrecto";
+            if (u.validarUsuario(nombreUsuario, contrasenia)){
+                return "inicio sesion correctamente";
             }
         }
-        return rta;
+        throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
     }
 }
