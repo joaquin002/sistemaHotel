@@ -14,9 +14,11 @@ public class SistemaHotel {
                 nuevo= new Administracion(nombreUsuario, contrasenia);
                 break;
             case 2: //cliente
-
+                nuevo= new Cliente(nombreUsuario, contrasenia);
                 break;
-                //falta
+            case 3: // recepcionista
+                nuevo= new Recepcionista(nombreUsuario, contrasenia);
+                break;
             default:
                 System.out.println("opcion invalida");
                 break;

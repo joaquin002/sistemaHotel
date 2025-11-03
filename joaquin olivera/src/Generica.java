@@ -14,8 +14,8 @@ public class Generica <T> {
         this.litaPrueba=new HashSet<>();
     }
 
-    public boolean agregarEnListado(T obj){
-        return this.listado.add(obj);
+    public boolean agregarEnListado(T elemento){
+        return this.listado.add(elemento);
     }
 
     public boolean eliminarHabitacion(int buscado){
