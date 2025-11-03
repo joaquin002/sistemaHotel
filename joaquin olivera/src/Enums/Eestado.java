@@ -1,3 +1,5 @@
+package Enums;
+
 public enum Eestado {
     DISPONIBLE,
     NO_DISPONIBLE;

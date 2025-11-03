@@ -1,3 +1,7 @@
+package Clase;
+
+import Excepcion.UsuarioNoEncontradoEx;
+
 import java.util.ArrayList;
 
 public class SistemaHotel {
@@ -27,7 +31,7 @@ public class SistemaHotel {
         System.out.println("usuario registrado con exito");
     }
 
-    public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx{
+    public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx {
         for (Usuario u: usuarios){
             if (u.validarUsuario(nombreUsuario, contrasenia)){
                 return "inicio sesion correctamente";

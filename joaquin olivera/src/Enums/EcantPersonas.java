@@ -1,3 +1,5 @@
+package Enums;
+
 public enum EcantPersonas {
     DOS,
     TRES,

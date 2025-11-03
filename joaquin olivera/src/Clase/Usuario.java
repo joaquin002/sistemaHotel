@@ -1,3 +1,5 @@
+package Clase;
+
 public abstract class Usuario {
     private String nombreUsuario;
     private String contrasenia;
@@ -21,7 +23,7 @@ public abstract class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "Clase.Usuario{" +
                 "nombreUsuario='" + nombreUsuario + '\'' +
                 ", contraseña='" + contrasenia + '\'' +
                 '}';

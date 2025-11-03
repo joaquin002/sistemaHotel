@@ -1,4 +1,6 @@
-public class Cliente extends Usuario{
+package Clase;
+
+public class Cliente extends Usuario {
 
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {

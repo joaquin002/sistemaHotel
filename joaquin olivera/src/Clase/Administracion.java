@@ -1,5 +1,9 @@
+package Clase;
 
-public class Administracion extends Usuario{
+import Enums.EcantPersonas;
+import Enums.EtipoHabitacion;
+
+public class Administracion extends Usuario {
 
     private Generica<Habitacion> catalogo; //atributo habitaciones
     // definir próximos atributos
@@ -24,7 +28,7 @@ public class Administracion extends Usuario{
 
     /// metodos admin
     // metodos de habitaciones:
-    public boolean agregarHabitacion (int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, Eestado estado){ //este metodo es de prueba
+    public boolean agregarHabitacion (int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, boolean estado){ //este metodo es de prueba
         Habitacion H = new Habitacion(precio, descripcion, tipo, cantPersonas, servicios, estado);
         return this.catalogo.agregarEnListado(H);
     }
@@ -38,7 +42,7 @@ public class Administracion extends Usuario{
     //faltan mas
 
     //los generales
-    public boolean agregarHabitacion2(int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, Eestado estado){
+    public boolean agregarHabitacion2(int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, boolean estado){
         Habitacion h1=new Habitacion(precio, descripcion, tipo, cantPersonas, servicios, estado);
         return catalogo.agregar(h1);
     }

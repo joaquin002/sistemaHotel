@@ -1,4 +1,6 @@
-public class Recepcionista extends Usuario{
+package Clase;
+
+public class Recepcionista extends Usuario {
     private int idPasajero;
     private int idReserva;
 

@@ -1,3 +1,5 @@
+package Clase;
+
 public class Conserje{
     private boolean estadoHabitacion; //true ocupada false desocupada
     private boolean limpieza; //true limpio false: no se limpio
@@ -13,7 +15,7 @@ public class Conserje{
 
     @Override
     public String toString() {
-        return super.toString()+"Conserje{" +
+        return super.toString()+"Clase.Conserje{" +
                 "estadoHabitacion=" + estadoHabitacion +
                 ", limpieza=" + limpieza +
                 ", reparacion=" + reparacion +
