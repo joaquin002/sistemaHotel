@@ -1,6 +1,6 @@
 package Enums;
 
-public enum EtipoHabitacion {
+public enum TipoHabitacion {
     SUITE,
     DELUXE,
     ESTANDAR;

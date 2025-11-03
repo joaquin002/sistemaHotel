@@ -1,7 +1,7 @@
 package Clase;
 
-import Enums.EcantPersonas;
-import Enums.EtipoHabitacion;
+import Enums.CantidadPersonas;
+import Enums.TipoHabitacion;
 
 public class Administracion extends Usuario {
 
@@ -28,7 +28,7 @@ public class Administracion extends Usuario {
 
     /// metodos admin
     // metodos de habitaciones:
-    public boolean agregarHabitacion (int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, boolean estado){ //este metodo es de prueba
+    public boolean agregarHabitacion (int precio, String descripcion, TipoHabitacion tipo, CantidadPersonas cantPersonas, String servicios, boolean estado){ //este metodo es de prueba
         Habitacion H = new Habitacion(precio, descripcion, tipo, cantPersonas, servicios, estado);
         return this.catalogo.agregarEnListado(H);
     }
@@ -42,7 +42,7 @@ public class Administracion extends Usuario {
     //faltan mas
 
     //los generales
-    public boolean agregarHabitacion2(int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, boolean estado){
+    public boolean agregarHabitacion2(int precio, String descripcion, TipoHabitacion tipo, CantidadPersonas cantPersonas, String servicios, boolean estado){
         Habitacion h1=new Habitacion(precio, descripcion, tipo, cantPersonas, servicios, estado);
         return catalogo.agregar(h1);
     }

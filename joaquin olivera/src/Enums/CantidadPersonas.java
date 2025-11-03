@@ -1,6 +1,6 @@
 package Enums;
 
-public enum EcantPersonas {
+public enum CantidadPersonas {
     DOS,
     TRES,
     CAUTRO,

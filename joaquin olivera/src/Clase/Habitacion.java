@@ -1,6 +1,6 @@
 package Clase;
-import Enums.EcantPersonas;
-import Enums.EtipoHabitacion;
+import Enums.CantidadPersonas;
+import Enums.TipoHabitacion;
 
 
 public class Habitacion {
@@ -10,11 +10,11 @@ public class Habitacion {
     private boolean descuento;
     private String descripcion;
     private boolean estado;
-    private EtipoHabitacion tipo;
-    private EcantPersonas cantPersonas;
+    private TipoHabitacion tipo;
+    private CantidadPersonas cantPersonas;
     private String servicios; //fijarse si va a hacer string o enum
 
-    public Habitacion(int precio, String descripcion, EtipoHabitacion tipo, EcantPersonas cantPersonas, String servicios, boolean estado) {
+    public Habitacion(int precio, String descripcion, TipoHabitacion tipo, CantidadPersonas cantPersonas, String servicios, boolean estado) {
         this.precio = precio;
         this.descripcion = descripcion;
         this.tipo = tipo;
@@ -46,11 +46,11 @@ public class Habitacion {
         return estado;
     }
 
-    public EtipoHabitacion getTipo() {
+    public TipoHabitacion getTipo() {
         return tipo;
     }
 
-    public EcantPersonas getCantPersonas() {
+    public CantidadPersonas getCantPersonas() {
         return cantPersonas;
     }
 
