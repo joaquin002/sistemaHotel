@@ -11,6 +11,7 @@ public class Cliente extends Usuario {
     private String domicilio;
     private MetodoPago metodoPago;
     private ArrayList <Historial> historial;
+    private Reserva reserva;
 
 
     //constructor normal:
