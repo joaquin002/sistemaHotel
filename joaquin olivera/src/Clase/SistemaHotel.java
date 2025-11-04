@@ -32,6 +32,7 @@ public class SistemaHotel {
     }
 
     public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx {
+        String rta="";
         for (Usuario u: usuarios){
             if (u.validarUsuario(nombreUsuario, contrasenia)){
                 return "inicio sesion correctamente";
