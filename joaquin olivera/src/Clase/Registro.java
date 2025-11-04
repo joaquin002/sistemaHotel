@@ -38,4 +38,15 @@ public class Registro<T extends Identificable> {
         }
         return rta;
     }
+    //mostrar por id
+    public String muestraIndividual(int idBuscado){
+        String rta="";
+        for (T elemento : lista) {
+            if (elemento.getIdBuscado() == idBuscado) {
+                rta+=elemento.toString()+"\n";
+                return rta;
+            }
+        }
+        return null;
+    }
 }

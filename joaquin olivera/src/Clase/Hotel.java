@@ -6,7 +6,7 @@ import Interfaces.Identificable;
 
 import java.util.ArrayList;
 
-public class Hotel{
+public class Hotel implements Identificable{
     private int id;
     private String nombre;
     private String direccion;
@@ -42,6 +42,11 @@ public class Hotel{
     }
 
     @Override
+    public int getIdBuscado() {
+        return this.id;
+    }
+
+    @Override
     public String toString() {
         return "Hotel{" +
                 "id=" + id +
@@ -64,5 +69,7 @@ public class Hotel{
     public void elimarHabitacion(int idBuscado){
         this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
     }
-    //public String mostrarHabitacion(int idBuscado)
+    public String mostrarHabitacion(int idBuscado){
+        return this.habitaciones.muestraIndividual(idBuscado);
+    }
 }
