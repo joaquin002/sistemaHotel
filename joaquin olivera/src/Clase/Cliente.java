@@ -10,11 +10,10 @@ public class Cliente extends Usuario {
     private int dni;
     private String domicilio;
     private MetodoPago metodoPago;
-   // private ArrayList <Historial> historial;
+    private ArrayList <Historial> historial;
 
 
     //constructor normal:
-
     public Cliente(String nombreUsuario, String contrasenia, String nombre, int dni, String domicilio, MetodoPago metodoPago) {
         super(nombreUsuario, contrasenia);
         this.nombre = nombre;
