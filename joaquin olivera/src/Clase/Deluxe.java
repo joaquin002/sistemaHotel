@@ -5,8 +5,8 @@ import Enums.ServicioEsepcialDeluxe;
 public class Deluxe extends Habitacion{
     private ServicioEsepcialDeluxe servicioEsepcialDeluxe;
 
-    public Deluxe(int id, int precio, String descripcion, boolean estado, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe) {
-        super(id, precio, descripcion, estado, servicios, personasPermitidas);
+    public Deluxe(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe) {
+        super(id, precio, descripcion,servicios, personasPermitidas);
         this.servicioEsepcialDeluxe = servicioEsepcialDeluxe;
     }
 

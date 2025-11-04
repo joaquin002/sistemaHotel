@@ -1,20 +1,24 @@
 package Clase;
 
+import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialSuite;
+import Interfaces.Identificable;
+
 import java.util.ArrayList;
 
-public class Hotel {
+public class Hotel{
     private int id;
     private String nombre;
     private String direccion;
     private int recaudacion;
-    private ArrayList<Habitacion> habitaciones;
+    private Registro<Habitacion> habitaciones;
 
     public Hotel(int id, String nombre, String direccion, int recaudacion) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.recaudacion = recaudacion;
-        this.habitaciones = new ArrayList<>();
+        this.habitaciones = new Registro<>();
     }
 
     public int getId() {
@@ -33,7 +37,7 @@ public class Hotel {
         return recaudacion;
     }
 
-    public ArrayList<Habitacion> getHabitaciones() {
+    public Registro<Habitacion> getHabitaciones() {
         return habitaciones;
     }
 
@@ -48,4 +52,17 @@ public class Hotel {
                 '}';
     }
 
+    public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas) {
+        this.habitaciones.agregar(new Habitacion(id, precio, descripcion, servicios, personasPermitidas));
+    }
+    public void agregarSuite(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite){
+        this.habitaciones.agregar(new Suite(id, precio, descripcion,servicios, personasPermitidas, especialSuite));
+    }
+    public void agregarDeluxe(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe){
+        this.habitaciones.agregar(new Deluxe(id, precio, descripcion,servicios, personasPermitidas, servicioEsepcialDeluxe));
+    }
+    public void elimarHabitacion(int idBuscado){
+        this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
+    }
+    //public String mostrarHabitacion(int idBuscado)
 }
