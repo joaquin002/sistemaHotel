@@ -1,8 +1,5 @@
 package Clase;
 
-import Enums.CantidadPersonas;
-import Enums.TipoHabitacion;
-
 import java.util.HashSet;
 
 public class Administracion extends Usuario {
