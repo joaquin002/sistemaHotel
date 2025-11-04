@@ -14,4 +14,5 @@ public class Recepcionista extends Usuario {
         this.idPasajero = idPasajero;
         this.idReserva = idReserva;
     }
+
 }
