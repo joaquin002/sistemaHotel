@@ -10,7 +10,7 @@ public class Cliente extends Usuario {
     private int dni;
     private String domicilio;
     private MetodoPago metodoPago;
-    //private ArrayList<Historial> listaHistorialCliente;
+   // private ArrayList <Historial> historial;
 
 
     //constructor normal:
