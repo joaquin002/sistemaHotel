@@ -4,28 +4,24 @@ import Enums.TipoHabitacion;
 
 
 public class Habitacion {
-    private int id; //numero de habitación
-    private static int contador = 1;
+    private int id;
     private int precio;
-    private boolean descuento;
     private String descripcion;
     private boolean estado;
     private TipoHabitacion tipo;
-    private CantidadPersonas cantPersonas;
-    private String servicios; //fijarse si va a hacer string o enum
+    private String servicios;
+    private int personasPermitidas;
 
-    public Habitacion(int precio, String descripcion, TipoHabitacion tipo, CantidadPersonas cantPersonas, String servicios, boolean estado) {
+    public Habitacion(int id, int precio, String descripcion, boolean estado, TipoHabitacion tipo, String servicios) {
+        this.id = id;
         this.precio = precio;
         this.descripcion = descripcion;
+        this.estado = estado;
         this.tipo = tipo;
-        this.cantPersonas = cantPersonas;
         this.servicios = servicios;
-        this.id = contador++;
-        this.descuento=false;
-        this.estado=estado;
-    } //este constructor puede cambiar
+        this.personasPermitidas = 4;
+    }
 
-    //getters, aun no hay setters
     public int getId() {
         return id;
     }
@@ -34,15 +30,11 @@ public class Habitacion {
         return precio;
     }
 
-    public boolean isDescuento() {
-        return descuento;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
@@ -50,25 +42,24 @@ public class Habitacion {
         return tipo;
     }
 
-    public CantidadPersonas getCantPersonas() {
-        return cantPersonas;
-    }
-
     public String getServicios() {
         return servicios;
     }
 
+    public int getPersonasPermitidas() {
+        return personasPermitidas;
+    }
+
     @Override
-    public String toString() { //hacer el toString personalizado
-        return "Clase.Habitacion{" +
+    public String toString() {
+        return "Habitacion{" +
                 "id=" + id +
                 ", precio=" + precio +
-                ", descuento=" + descuento +
                 ", descripcion='" + descripcion + '\'' +
                 ", estado=" + estado +
                 ", tipo=" + tipo +
-                ", cantPersonas=" + cantPersonas +
                 ", servicios='" + servicios + '\'' +
+                ", personasPermitidas=" + personasPermitidas +
                 '}';
     }
     /// metodos futuros
