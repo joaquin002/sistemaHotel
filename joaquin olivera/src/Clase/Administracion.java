@@ -5,15 +5,21 @@ import java.util.HashSet;
 
 public class Administracion extends Usuario {
     private Registro<Hotel>hoteles;
+    private Registro<Recepcionista>recepcionistas;
 
     //constructor para usuario
     public Administracion(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia, 1);
         this.hoteles = new Registro<>();
+        this.recepcionistas = new Registro<>();
     }
 
     public Registro<Hotel> getHoteles() {
         return hoteles;
+    }
+
+    public Registro<Recepcionista> getRecepcionistas() {
+        return recepcionistas;
     }
 
     public void cargarHotel(int id, String nombre, String direccion){
@@ -24,6 +30,9 @@ public class Administracion extends Usuario {
     }
     public String mostrarHotel(int idBuscado){
         return this.hoteles.mostrarPorId(idBuscado);
+    }
+    public void cargarRecepcionista(String nombreUsuario, String contrasenia, int id){
+
     }
 
 }
