@@ -31,8 +31,13 @@ public class Administracion extends Usuario {
     public String mostrarHotel(int idBuscado){
         return this.hoteles.mostrarPorId(idBuscado);
     }
-    public void cargarRecepcionista(String nombreUsuario, String contrasenia, int id){
-
+    public void cargarRecepcionista(int id,int idHotel){
+        for (Hotel h:this.hoteles.getLista()){
+            if(h.getIdHotel()==idHotel){
+                this.recepcionistas.agregar(new Recepcionista(id,h));
+                break;
+            }
+        }
     }
 
 }

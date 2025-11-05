@@ -10,6 +10,9 @@ public abstract class Usuario {
         this.contrasenia = contrasenia;
         this.tipo = tipo;
     }
+    public Usuario(){
+
+    }
 
     public String getNombreUsuario() {
         return nombreUsuario;
