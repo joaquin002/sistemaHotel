@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class Recepcionista extends Usuario implements Identificable {
     private int id;
-    private int idHotel;
     private Registro<Cliente> clientes;
     private Registro<Reserva> reservas;
     private ArrayList<Punto> puntos;
@@ -20,11 +19,9 @@ public class Recepcionista extends Usuario implements Identificable {
         super(nombreUsuario, contrasenia,"Recepcionista");
     }
 
-    public Recepcionista(String nombreUsuario, String contrasenia, int id, Hotel hotel) {
-        super(nombreUsuario, contrasenia,"Recepcionista");
+    public Recepcionista(int id,Hotel hotel) {
         this.id = id;
         this.hotel = hotel;
-        this.idHotel = this.hotel.getIdHotel();
         this.clientes = new Registro<>();
         this.reservas = new Registro<>();
         this.puntos = new ArrayList<>();
@@ -67,7 +64,7 @@ public class Recepcionista extends Usuario implements Identificable {
         //guarda o actualiza la visita
         boolean encontrado = false;
         for (RegistroVisita rv : registroVisitas) {
-            if (rv.getIdCliente() == dniCliente && rv.getIdHotel() == idHotel) {
+            if (rv.getIdCliente() == dniCliente && rv.getIdHotel() == hotel.getIdHotel()) {
                 rv.setCantidad(rv.getCantidad() + 1);
                 rv.setFechaEstadia(fechaEstadia);
                 encontrado = true;
@@ -76,7 +73,7 @@ public class Recepcionista extends Usuario implements Identificable {
         }
 
         if (!encontrado) {
-            registroVisitas.add(new RegistroVisita(dniCliente, 1, idHotel, fechaEstadia));
+            registroVisitas.add(new RegistroVisita(dniCliente, 1, hotel.getIdHotel(), fechaEstadia));
         }
 
         System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la habitación " + idHabitacion + " en la fecha " + fechaEstadia);
