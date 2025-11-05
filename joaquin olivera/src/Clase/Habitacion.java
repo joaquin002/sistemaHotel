@@ -9,13 +9,15 @@ public class Habitacion implements Identificable {
     private String descripcion;
     private String servicios;
     private int personasPermitidas;
+    private boolean disponible;
 
-    public Habitacion(int id, int precio, String descripcion,String servicios, int personasPermitidas) {
+    public Habitacion(int id, int precio, String descripcion,String servicios, int personasPermitidas,  boolean disponible) {
         this.id = id;
         this.precio = precio;
         this.descripcion = descripcion;
         this.servicios = servicios;
         this.personasPermitidas =  personasPermitidas;
+        this.disponible = disponible;
     }
 
     public int getId() {
@@ -36,6 +38,14 @@ public class Habitacion implements Identificable {
 
     public int getPersonasPermitidas() {
         return personasPermitidas;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 
     @Override

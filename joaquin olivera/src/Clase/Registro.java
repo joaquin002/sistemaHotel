@@ -13,6 +13,10 @@ public class Registro<T extends Identificable> {
         lista = new ArrayList();
     }
 
+    public ArrayList<T> getLista() {
+        return lista;
+    }
+
     // agregar
     public void agregar(T elemento) {
         lista.add(elemento);
@@ -22,6 +26,7 @@ public class Registro<T extends Identificable> {
         return lista.remove(elemento);
     }
     //buscar
+
     public T buscar(int idBuscado) {
         for (T elemento : lista) {
             if (elemento.getIdBuscado() == idBuscado) {
@@ -48,5 +53,16 @@ public class Registro<T extends Identificable> {
             }
         }
         return rta;
+    }
+
+    //buscar por id
+    public boolean buscarPorId(int idBuscado){
+        boolean encontrado=false;
+        for (T elemento : lista) {
+            if (elemento.getIdBuscado() == idBuscado) {
+                encontrado=true;
+            }
+        }
+        return encontrado;
     }
 }

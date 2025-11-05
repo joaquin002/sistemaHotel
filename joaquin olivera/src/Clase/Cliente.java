@@ -1,10 +1,11 @@
 package Clase;
 
 import Enums.MetodoPago;
+import Interfaces.Identificable;
 
 import java.util.ArrayList;
 
-public class Cliente extends Usuario {
+public class Cliente extends Usuario implements Identificable {
 
     private String nombre;
     private int dni;
@@ -21,12 +22,17 @@ public class Cliente extends Usuario {
         this.dni = dni;
         this.domicilio = domicilio;
         this.metodoPago = metodoPago;
-        this.reserva=new Reserva(idReserva, dniCliente, idRecepcionista, fecha);
+        this.reserva=new Reserva(idReserva, dniCliente, fecha);
     }
 
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia);
+    }
+
+    @Override
+    public int getIdBuscado() {
+        return this.dni;
     }
 
     @Override

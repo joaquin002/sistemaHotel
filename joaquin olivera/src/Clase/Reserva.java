@@ -4,12 +4,13 @@ import Interfaces.Identificable;
 
 public class Reserva implements Identificable {
     private int idReserva;
+    private static int cont=1;
     private int dniCliente;
     private int idRecepcionista;
     private String fecha; // lo hacemos con el formato
 
-    public Reserva(int idReserva, int dniCliente, int idRecepcionista, String fecha) {
-        this.idReserva = idReserva;
+    public Reserva(int dniCliente, int idRecepcionista, String fecha) {
+        this.idReserva = cont++;
         this.dniCliente = dniCliente;
         this.idRecepcionista = idRecepcionista;
         this.fecha = fecha;
