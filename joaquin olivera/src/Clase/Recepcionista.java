@@ -51,15 +51,11 @@ public class Recepcionista extends Usuario implements Identificable {
         }
 
         //crea reserva
-        Reserva nuevaReserva = new Reserva(dniCliente, this.id, fechaEstadia);
+        Reserva nuevaReserva = new Reserva(dniCliente, this.id, fechaEstadia, idHabitacion);
         reservas.agregar(nuevaReserva);
 
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
-
-        //suma la recaudacion de la habitacion al hotel
-        this.hotel.sumarRecaudacion(habitacionEncontrada.getPrecio());
-
 
         //guarda o actualiza la visita
         boolean encontrado = false;
@@ -79,6 +75,29 @@ public class Recepcionista extends Usuario implements Identificable {
         System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la habitación " + idHabitacion + " en la fecha " + fechaEstadia);
     }
 
-    public void checkOut() {
+    //busca una reserva
+    public Reserva buscarReserva(int id){
+        return this.reservas.buscar(id);
+    }
+
+    public void checkOut(int idReserva) throws NoRegistradoEx {
+        Reserva r2=buscarReserva(idReserva); //buscar la reserva
+        if (r2==null) {
+            throw new NoRegistradoEx("la reserva con id: "+idReserva+" no esta registrada");
+        }
+
+        //buscar habitacion de la reserva
+        Habitacion h1=hotel.buscarHabitacion(r2.getIdHabitacion());
+        if (h1==null) {
+            throw new NoRegistradoEx("no se encontro la habitacion asociada a la reserva");
+        }
+
+        //liberar habitacion
+        h1.setDisponible(true);
+
+        //sumar recaudacion
+        this.hotel.sumarRecaudacion(h1.getPrecio());
+
+        System.out.println("se realizo con exito el check-out de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada y recaudación actualizada.");
     }
 }

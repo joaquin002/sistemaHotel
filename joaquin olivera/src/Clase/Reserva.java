@@ -8,12 +8,18 @@ public class Reserva implements Identificable {
     private int dniCliente;
     private int idRecepcionista;
     private String fecha; // lo hacemos con el formato
+    private int idHabitacion;
 
-    public Reserva(int dniCliente, int idRecepcionista, String fecha) {
+    public Reserva(int dniCliente, int idRecepcionista, String fecha, int idHabitacion) {
         this.idReserva = cont++;
         this.dniCliente = dniCliente;
         this.idRecepcionista = idRecepcionista;
         this.fecha = fecha;
+        this.idHabitacion = idHabitacion;
+    }
+
+    public int getIdHabitacion() {
+        return idHabitacion;
     }
 
     @Override

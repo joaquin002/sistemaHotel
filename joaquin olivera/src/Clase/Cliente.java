@@ -16,13 +16,13 @@ public class Cliente extends Usuario implements Identificable {
 
 
     //constructor normal:
-    public Cliente(String nombreUsuario, String contrasenia, String nombre, int dni, String domicilio, MetodoPago metodoPago, int idReserva, int dniCliente, int idRecepcionista, String fecha) {
+    public Cliente(String nombreUsuario, String contrasenia, String nombre, int dni, String domicilio, MetodoPago metodoPago, int idReserva, int dniCliente, int idRecepcionista, String fecha, int idHabitacion) {
         super(nombreUsuario, contrasenia, "Cliente");
         this.nombre = nombre;
         this.dni = dni;
         this.domicilio = domicilio;
         this.metodoPago = metodoPago;
-        this.reserva=new Reserva(idReserva, dniCliente, fecha);
+        this.reserva=new Reserva(idReserva, dniCliente, fecha, idHabitacion);
     }
 
     //constructor para usuario
