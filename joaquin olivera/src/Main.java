@@ -1,4 +1,5 @@
 import Clase.SistemaHotel;
+import Clase.Usuario;
 import Excepcion.UsuarioNoEncontradoEx;
 
 import java.util.Scanner;
@@ -49,8 +50,8 @@ public class Main {
                 case 2:
                     ingresarDatos(nombre, contrasenia);
                     try {
-                        sistema.iniciarSesion(nombre, contrasenia);
-                        System.out.println("¡Sesion iniciado con exito!");
+                        Usuario  usuario=sistema.iniciarSesion(nombre, contrasenia);
+                        mostrarMenuPorRol(usuario);
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
                     }
@@ -127,5 +128,35 @@ public class Main {
         name=sc.nextLine();
         System.out.println("Ingrese contrasena:");
         password=sc.nextLine();
+    }
+
+    public static void mostrarMenuPorRol(Usuario usuario)
+    {
+        Scanner sc=new Scanner(System.in);
+        int opcion=0;
+        System.out.println("Seleccione modo al que desea ingresar:");
+        System.out.println("1. Administrador");
+        System.out.println("2. Cliente");
+        System.out.println("3. Recepcionista");
+        opcion=sc.nextInt();
+
+        if(opcion== usuario.getTipo())
+        {
+            System.out.println("Accediento al modo "+rolToString(opcion));
+        }
+        else
+        {
+            System.out.println("No tiene permisos para ingresar como "+rolToString(opcion));
+        }
+    }
+
+    public static String rolToString(int tipo)
+    {
+        return switch (tipo) {
+            case 1 -> "Administrador";
+            case 2 -> "Cliente";
+            case 3 -> "Recepcionista";
+            default -> "Desconocido";
+        };
     }
 }

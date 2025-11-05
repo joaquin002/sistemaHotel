@@ -3,10 +3,12 @@ package Clase;
 public abstract class Usuario {
     private String nombreUsuario;
     private String contrasenia;
+    private int tipo;
 
-    public Usuario(String nombreUsuario, String contrasenia) {
+    public Usuario(String nombreUsuario, String contrasenia, int tipo) {
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
+        this.tipo = tipo;
     }
 
     public String getNombreUsuario() {
@@ -15,6 +17,10 @@ public abstract class Usuario {
 
     public String getContrasenia() {
         return contrasenia;
+    }
+
+    public int getTipo() {
+        return tipo;
     }
 
     public boolean validarUsuario(String nombreU, String contrasenia) {

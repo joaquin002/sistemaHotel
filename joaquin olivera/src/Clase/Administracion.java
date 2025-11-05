@@ -8,7 +8,7 @@ public class Administracion extends Usuario {
 
     //constructor para usuario
     public Administracion(String nombreUsuario, String contrasenia) {
-        super(nombreUsuario, contrasenia);
+        super(nombreUsuario, contrasenia, 1);
         this.hoteles = new Registro<>();
     }
 

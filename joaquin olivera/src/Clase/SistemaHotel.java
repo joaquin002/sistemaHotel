@@ -31,13 +31,24 @@ public class SistemaHotel {
         System.out.println("usuario registrado con exito");
     }
 
-    public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx {
-        String rta="";
+    public Usuario iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx {
         for (Usuario u: usuarios){
             if (u.validarUsuario(nombreUsuario, contrasenia)){
-                return "inicio sesion correctamente";
+                System.out.println("Inicio de sesion correctamente como"+tipoToString(u.getTipo()));
+                return u;
             }
         }
         throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
+    }
+
+    public String tipoToString(int tipo)
+    {
+        return switch (tipo)
+        {
+            case 1 -> "Administrador";
+            case 2 -> "Cliente";
+            case 3 -> "Recepcionista";
+            default -> "Desconocido";
+        };
     }
 }
