@@ -80,7 +80,11 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.reservas.buscar(id);
     }
 
-    public void checkOut(int idReserva) throws NoRegistradoEx {
+    public Cliente buscarCliente(int dni){
+        return this.clientes.buscar(dni);
+    }
+
+    public void checkOut(int idReserva, int dniCliente, String fechaSalida) throws NoRegistradoEx {
         Reserva r2=buscarReserva(idReserva); //buscar la reserva
         if (r2==null) {
             throw new NoRegistradoEx("la reserva con id: "+idReserva+" no esta registrada");
@@ -97,6 +101,13 @@ public class Recepcionista extends Usuario implements Identificable {
 
         //sumar recaudacion
         this.hotel.sumarRecaudacion(h1.getPrecio());
+
+        //para que se guarde en el historial
+        Cliente c1=buscarCliente(dniCliente);
+        if (c1==null) {
+            throw new NoRegistradoEx("no se encontro el cliente con dni: "+dniCliente);
+        }
+        c1.guardarHistorial(dniCliente,  fechaSalida);
 
         System.out.println("se realizo con exito el check-out de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada y recaudación actualizada.");
     }

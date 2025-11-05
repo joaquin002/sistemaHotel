@@ -23,11 +23,17 @@ public class Cliente extends Usuario implements Identificable {
         this.domicilio = domicilio;
         this.metodoPago = metodoPago;
         this.reserva=new Reserva(idReserva, dniCliente, fecha, idHabitacion);
+        this.historial = new ArrayList<>();
     }
 
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia,"Cliente");
+    }
+
+    public void guardarHistorial(int dniCliente, String fechaEstadia){
+        Historial h1=new Historial(dniCliente,fechaEstadia);
+        this.historial.add(h1);
     }
 
     @Override
@@ -42,6 +48,8 @@ public class Cliente extends Usuario implements Identificable {
                 ", dni=" + dni +
                 ", domicilio='" + domicilio + '\'' +
                 ", metodoPago=" + metodoPago +
+                ", historial=" + historial +
+                ", reserva=" + reserva +
                 '}';
     }
 }
