@@ -15,11 +15,11 @@ public class Recepcionista extends Usuario {
 
     //para parte de usuario
     public Recepcionista(String nombreUsuario, String contrasenia) {
-        super(nombreUsuario, contrasenia);
+        super(nombreUsuario, contrasenia,3);
     }
 
     public Recepcionista(String nombreUsuario, String contrasenia, int id, int idHotel) {
-        super(nombreUsuario, contrasenia);
+        super(nombreUsuario, contrasenia,3);
         this.id = id;
         this.idHotel = idHotel;
         this.clientes = new Registro<>();

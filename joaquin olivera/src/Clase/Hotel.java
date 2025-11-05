@@ -60,11 +60,11 @@ public class Hotel implements Identificable{
     public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) {
         this.habitaciones.agregar(new Habitacion(id, precio, descripcion, servicios, personasPermitidas, estado));
     }
-    public void agregarSuite(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite){
-        this.habitaciones.agregar(new Suite(id, precio, descripcion,servicios, personasPermitidas, especialSuite));
+    public void agregarSuite(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
+        this.habitaciones.agregar(new Suite(id, precio, descripcion,servicios, personasPermitidas, especialSuite,disponible));
     }
-    public void agregarDeluxe(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe){
-        this.habitaciones.agregar(new Deluxe(id, precio, descripcion,servicios, personasPermitidas, servicioEsepcialDeluxe));
+    public void agregarDeluxe(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
+        this.habitaciones.agregar(new Deluxe(id, precio, descripcion,servicios, personasPermitidas, servicioEsepcialDeluxe, disponible));
     }
     public void elimarHabitacion(int idBuscado){
         this.habitaciones.eliminar(habitaciones.buscar(idBuscado));

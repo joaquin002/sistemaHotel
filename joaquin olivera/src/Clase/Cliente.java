@@ -17,7 +17,7 @@ public class Cliente extends Usuario implements Identificable {
 
     //constructor normal:
     public Cliente(String nombreUsuario, String contrasenia, String nombre, int dni, String domicilio, MetodoPago metodoPago, int idReserva, int dniCliente, int idRecepcionista, String fecha) {
-        super(nombreUsuario, contrasenia);
+        super(nombreUsuario, contrasenia, 2);
         this.nombre = nombre;
         this.dni = dni;
         this.domicilio = domicilio;
@@ -27,7 +27,7 @@ public class Cliente extends Usuario implements Identificable {
 
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {
-        super(nombreUsuario, contrasenia);
+        super(nombreUsuario, contrasenia,2);
     }
 
     @Override
