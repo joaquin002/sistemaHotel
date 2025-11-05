@@ -23,13 +23,13 @@ public class Main {
 
 
        // menudos();
-       // menu();
+        //menu();
 
 
 
     }
 
-    public static void menu()
+    public static void menuPrincipal()
     {
         Scanner sc = new Scanner(System.in);
         int opcion=0;
@@ -38,11 +38,16 @@ public class Main {
         char seguir='s';
         boolean encontrar=false;
         SistemaHotel s1 = new SistemaHotel();
+
         do {
-            System.out.println("HOTEL");
+            System.out.println("Hotel BellaVista.com");
+            System.out.println("\n=============================================");
+            System.out.println("🏨  BIENVENIDO A HOTEL BELLAVISTA  🏨");
+            System.out.println("=============================================");
             System.out.println("1. Registrar usuario");
             System.out.println("2. Iniciar Sesion");
             System.out.println("3. Salir");
+            System.out.println("Seleccione una opción...");
             opcion = sc.nextInt();
 
             switch (opcion)
@@ -59,14 +64,15 @@ public class Main {
                     }
                     break;
                 case 3:
+                    System.out.println("Gracias por usar nuestro sistema. ¡Hasta pronto!");
                     seguir='n';
                     break;
                 default:
-                    System.out.println("opcion invalida");
+                    System.out.println("Error. Opcion no valida. Intente nuevamente.");
                     break;
             }
             if (opcion!=3){
-                System.out.println("quiere elegir otra opcion?");
+                System.out.println("\n¿Desea realizar otra accion? (s/n): ");
                 seguir=sc.next().charAt(0);
             }
         }while (seguir=='s' && opcion!=3);
@@ -82,7 +88,7 @@ public class Main {
         char seguir='s';
         boolean encontrado=false;
         do {
-            System.out.println("Seleccione modo:");
+            System.out.println("Seleccione modo de acceso:");
             System.out.println("1. Administrador");
             System.out.println("2. Cliente");
             System.out.println("3. Recepcionista");
@@ -107,11 +113,11 @@ public class Main {
                     encontrado=true;
                     break;
                 default:
-                    System.out.println("Opcion incorrecta");
+                    System.out.println("Error. Opcion no valida...");
                     break;
             }
             if (encontrado==false){
-                System.out.println("Desea elegir otra opcion?");
+                System.out.println("¿Desea elegir otra opcion?");
                 seguir=sc.next().charAt(0);
             }
         }while (seguir=='s' && encontrado==false);
@@ -122,7 +128,7 @@ public class Main {
     public static void ingresarDatos(String name, String password)
     {
         Scanner sc=new Scanner(System.in);
-        System.out.println("Ingrese su nombre de usuario:");
+        System.out.println("Ingrese nombre de usuario:");
         name=sc.nextLine();
         System.out.println("Ingrese contrasena:");
         password=sc.nextLine();
