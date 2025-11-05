@@ -3,10 +3,11 @@ package Clase;
 import Enums.ServicioEsepcialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Interfaces.Identificable;
+import Interfaces.IhotelOperable;
 
 import java.util.ArrayList;
 
-public class Hotel implements Identificable{
+public class Hotel implements Identificable, IhotelOperable {
     private int id;
     private String nombre;
     private String direccion;
@@ -20,8 +21,9 @@ public class Hotel implements Identificable{
         this.habitaciones = new Registro<>();
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public int getIdHotel() {
+        return this.id;
     }
 
     public String getNombre() {
@@ -38,10 +40,6 @@ public class Hotel implements Identificable{
 
     public Registro<Habitacion> getHabitaciones() {
         return habitaciones;
-    }
-
-    public void setRecaudacion(int recaudacion) {
-        this.recaudacion = recaudacion;
     }
 
     @Override
@@ -74,5 +72,18 @@ public class Hotel implements Identificable{
     }
     public String mostrarHabitacion(int idBuscado){
         return this.habitaciones.mostrarPorId(idBuscado);
+    }
+    public Habitacion buscarHabitacion(int idHabitacion) {
+        for (Habitacion h : this.habitaciones.getLista()) {
+            if (h.getId() == idHabitacion) {
+                return h;
+            }
+        }
+        return null;
+    }
+    public void sumarRecaudacion(int recaudacion) {
+        if (recaudacion > 0) {
+            this.recaudacion += recaudacion;
+        }
     }
 }

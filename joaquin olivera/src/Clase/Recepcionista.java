@@ -1,34 +1,40 @@
 package Clase;
 
 import Excepcion.NoRegistradoEx;
+import Interfaces.Identificable;
+import Interfaces.IhotelOperable;
 
 import java.util.ArrayList;
 
-public class Recepcionista extends Usuario {
+public class Recepcionista extends Usuario implements Identificable {
     private int id;
     private int idHotel;
     private Registro<Cliente> clientes;
     private Registro<Reserva> reservas;
     private ArrayList<Punto> puntos;
     private ArrayList<RegistroVisita> registroVisitas;
-    private Hotel hotel;
+    private IhotelOperable hotel; //una variable de tipo interface que solo te deja utilizar los metodos elegidos
 
     //para parte de usuario
     public Recepcionista(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia,3);
     }
 
-    public Recepcionista(String nombreUsuario, String contrasenia, int id, int idHotel) {
+    public Recepcionista(String nombreUsuario, String contrasenia, int id, Hotel hotel) {
         super(nombreUsuario, contrasenia,3);
         this.id = id;
-        this.idHotel = idHotel;
+        this.hotel = hotel;
+        this.idHotel = this.hotel.getIdHotel();
         this.clientes = new Registro<>();
         this.reservas = new Registro<>();
         this.puntos = new ArrayList<>();
         this.registroVisitas = new ArrayList<>();
-        this.hotel = hotel;
     }
 
+    @Override
+    public int getIdBuscado() {
+        return this.id;
+    }
 
     public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia) throws NoRegistradoEx {
         //verifica cliente
@@ -37,13 +43,8 @@ public class Recepcionista extends Usuario {
         }
 
         //verifica habitación
-        Habitacion habitacionEncontrada = null;
-        for (Habitacion h : hotel.getHabitaciones().getLista()) {
-            if (h.getIdBuscado() == idHabitacion) {
-                habitacionEncontrada = h;
-                break;
-            }
-        }
+        Habitacion habitacionEncontrada = this.hotel.buscarHabitacion(idHabitacion);
+
         if (habitacionEncontrada == null) {
             throw new NoRegistradoEx("a habitacion con id " + idHabitacion + " no existe.");
         }
@@ -60,7 +61,7 @@ public class Recepcionista extends Usuario {
         habitacionEncontrada.setDisponible(false);
 
         //suma la recaudacion de la habitacion al hotel
-        this.hotel.setRecaudacion(habitacionEncontrada.getPrecio());
+        this.hotel.sumarRecaudacion(habitacionEncontrada.getPrecio());
 
 
         //guarda o actualiza la visita
