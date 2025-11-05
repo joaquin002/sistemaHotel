@@ -19,25 +19,19 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-
-
-
        // menudos();
-        //menu();
-
-
+        menuPrincipal(s1);
 
     }
 
-    public static void menuPrincipal()
+    public static void menuPrincipal(SistemaHotel sistema)
     {
         Scanner sc = new Scanner(System.in);
         int opcion=0;
         String nombre="";
         String contrasenia="";
+
         char seguir='s';
-        boolean encontrar=false;
-        SistemaHotel s1 = new SistemaHotel();
 
         do {
             System.out.println("Hotel BellaVista.com");
@@ -53,12 +47,13 @@ public class Main {
             switch (opcion)
             {
                 case 1:
-                    menudos();
+                    menudos(sistema);
                     break;
                 case 2:
                     ingresarDatos(nombre, contrasenia);
                     try {
-                        s1.iniciarSesion(nombre, contrasenia);
+                        sistema.iniciarSesion(nombre, contrasenia);
+                        System.out.println("¡Sesion iniciado con exito!");
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
                     }
@@ -78,9 +73,8 @@ public class Main {
         }while (seguir=='s' && opcion!=3);
     }
 
-    public static void menudos()
+    public static void menudos(SistemaHotel sistema)
     {
-        SistemaHotel s1 = new SistemaHotel();
         Scanner sc = new Scanner(System.in);
         int opcion=0;
         String name="";
@@ -99,15 +93,15 @@ public class Main {
             {
                 case 1:
                     ingresarDatos(name,password);
-                    s1.registrarUsuario(name,password,1);
+                    sistema.registrarUsuario(name,password,1);
                     break;
                 case 2:
                     ingresarDatos(name,password);
-                    s1.registrarUsuario(name,password,2);
+                    sistema.registrarUsuario(name,password,2);
                     break;
                 case 3:
                     ingresarDatos(name,password);
-                    s1.registrarUsuario(name,password,3);
+                    sistema.registrarUsuario(name,password,3);
                     break;
                 case 4:
                     encontrado=true;
