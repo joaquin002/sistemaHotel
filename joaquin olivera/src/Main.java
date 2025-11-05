@@ -8,39 +8,30 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         /// prueba de usuario funciona
-
-
-        SistemaHotel s1 = new SistemaHotel();
-        s1.registrarUsuario("paulina", "pau1234", 1);
+        SistemaHotel sistema = new SistemaHotel();
+        sistema.registrarUsuario("paulina", "pau1234", 1);
         try {
-            s1.iniciarSesion("paulina", "pau1234");
-            s1.iniciarSesion("paulina", "pau4");
+            sistema.iniciarSesion("paulina", "pau1234");
+            sistema.iniciarSesion("paulina", "pau4");
         } catch (UsuarioNoEncontradoEx e) {
             System.out.println(e.getMessage());
         }
 
-
-
-
-       // menudos();
-        //menu();
-
-
+        menuPrincipal(sistema);
 
     }
 
-    public static void menuPrincipal()
+    public static void menuPrincipal(SistemaHotel sistema)
     {
         Scanner sc = new Scanner(System.in);
         int opcion=0;
         String nombre="";
         String contrasenia="";
+
         char seguir='s';
-        boolean encontrar=false;
-        SistemaHotel s1 = new SistemaHotel();
 
         do {
-            System.out.println("Hotel BellaVista.com");
+            System.out.println("Hotel BellaVista.com");  // Hago un poco de decoracion para que se vea mas prolijo como si fuese un programa real
             System.out.println("\n=============================================");
             System.out.println("🏨  BIENVENIDO A HOTEL BELLAVISTA  🏨");
             System.out.println("=============================================");
@@ -53,12 +44,13 @@ public class Main {
             switch (opcion)
             {
                 case 1:
-                    menudos();
+                    menuInterno(sistema);
                     break;
                 case 2:
                     ingresarDatos(nombre, contrasenia);
                     try {
-                        s1.iniciarSesion(nombre, contrasenia);
+                        sistema.iniciarSesion(nombre, contrasenia);
+                        System.out.println("¡Sesion iniciado con exito!");
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
                     }
@@ -78,9 +70,9 @@ public class Main {
         }while (seguir=='s' && opcion!=3);
     }
 
-    public static void menudos()
+    // tengo que llamar en los parametros al sistema creado en el main porque sino lo que yo cargue en estos metodos no se va a guardar.
+    public static void menuInterno(SistemaHotel sistema)
     {
-        SistemaHotel s1 = new SistemaHotel();
         Scanner sc = new Scanner(System.in);
         int opcion=0;
         String name="";
@@ -88,6 +80,9 @@ public class Main {
         char seguir='s';
         boolean encontrado=false;
         do {
+            System.out.println("=============================================");
+            System.out.println("          Registrando usuario  ");
+            System.out.println("=============================================");
             System.out.println("Seleccione modo de acceso:");
             System.out.println("1. Administrador");
             System.out.println("2. Cliente");
@@ -99,15 +94,15 @@ public class Main {
             {
                 case 1:
                     ingresarDatos(name,password);
-                    s1.registrarUsuario(name,password,1);
+                    sistema.registrarUsuario(name,password,1);
                     break;
                 case 2:
                     ingresarDatos(name,password);
-                    s1.registrarUsuario(name,password,2);
+                    sistema.registrarUsuario(name,password,2);
                     break;
                 case 3:
                     ingresarDatos(name,password);
-                    s1.registrarUsuario(name,password,3);
+                    sistema.registrarUsuario(name,password,3);
                     break;
                 case 4:
                     encontrado=true;
@@ -117,7 +112,7 @@ public class Main {
                     break;
             }
             if (encontrado==false){
-                System.out.println("¿Desea elegir otra opcion?");
+                System.out.println("¿Desea registrarse en otro modo?");
                 seguir=sc.next().charAt(0);
             }
         }while (seguir=='s' && encontrado==false);

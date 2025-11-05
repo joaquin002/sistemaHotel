@@ -23,7 +23,7 @@ public class Administracion extends Usuario {
         this.hoteles.eliminar(hoteles.buscar(idBuscado));
     }
     public String mostrarHotel(int idBuscado){
-        return this.hoteles.muestraIndividual(idBuscado);
+        return this.hoteles.mostrarPorId(idBuscado);
     }
 
 }
