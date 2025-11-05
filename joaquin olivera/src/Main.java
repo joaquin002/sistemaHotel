@@ -133,22 +133,3 @@ public class Main {
     }
 
 }
-    /*
-    public static String rolToString(int tipo)
-    {
-        String rta="";
-
-            switch (tipo) {
-                case 1 :
-                    rta="Administrador";
-                    break;
-                case 2:
-                    rta="Cliente";
-                    break;
-                case 3:
-                    rta="Recepcionista";
-                    break;
-            }
-        return rta;
-        }
-    }*/

@@ -23,8 +23,8 @@ public abstract class Usuario {
         return tipo;
     }
 
-    public boolean validarUsuario(String nombreU, String contrasenia) {
-        return this.nombreUsuario.equals(nombreU) && this.contrasenia.equals(contrasenia);
+    public boolean validarUsuario(String nombreU, String contraseniaIngresada) {
+        return this.nombreUsuario.equals(nombreU) && this.contrasenia.equals(contraseniaIngresada);
     }
 
     @Override

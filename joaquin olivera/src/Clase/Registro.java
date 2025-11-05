@@ -3,14 +3,13 @@ package Clase;
 import Interfaces.Identificable;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Registro<T extends Identificable> {
     private ArrayList <T> lista;
 
 
     public Registro() {
-        lista = new ArrayList();
+        lista = new ArrayList<>();
     }
 
     public ArrayList<T> getLista() {
