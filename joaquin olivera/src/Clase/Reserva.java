@@ -1,6 +1,8 @@
 package Clase;
 
-public class Reserva {
+import Interfaces.Identificable;
+
+public class Reserva implements Identificable {
     private int idReserva;
     private int dniCliente;
     private int idRecepcionista;
@@ -24,4 +26,8 @@ public class Reserva {
     }
 
 
+    @Override
+    public int getIdBuscado() {
+        return this.idReserva;
+    }
 }

@@ -70,6 +70,6 @@ public class Hotel implements Identificable{
         this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
     }
     public String mostrarHabitacion(int idBuscado){
-        return this.habitaciones.muestraIndividual(idBuscado);
+        return this.habitaciones.mostrarPorId(idBuscado);
     }
 }
