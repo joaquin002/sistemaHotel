@@ -52,8 +52,8 @@ public class Main {
 
                     ingresarDatos(nombre, contrasenia);
                     try {
-                        int tipoReal=sistema.iniciarSesion(nombre, contrasenia);
-                        System.out.println("Inicio sesion correctamente con "+tipoReal);
+                        String modo=sistema.iniciarSesion(nombre, contrasenia);
+                        System.out.println("Inicio sesion correctamente como "+modo);
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
                     }
@@ -132,51 +132,8 @@ public class Main {
         password=sc.nextLine();
     }
 
-   /* public static void eligiendoModo(SistemaHotel sistema,String nombre, String contrasenia)
-    {
-        Scanner sc=new Scanner(System.in);
-        boolean encontrado=false;
-        int tipo=0;
-        do {
-            System.out.println("Seleccione modo para ingresar:");
-            System.out.println("1. Administrador");
-            System.out.println("2. Cliente");
-            System.out.println("3. Recepcionista");
-            int modoElegido=sc.nextInt();
-            sc.nextLine();
-
-            switch (modoElegido)
-            {
-                case 1:
-                    try
-                    {
-                        tipo=sistema.iniciarSesion(nombre,contrasenia);
-                    }catch (UsuarioNoEncontradoEx e)
-                    {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-            }
-
-            ingresarDatos(nombre, contrasenia);
-            try {
-                int tipoReal=sistema.iniciarSesion(nombre, contrasenia);
-                if(tipoReal == modoElegido)
-                {
-                    System.out.println("Inicio sesion correctamente");
-                }
-                else {
-                    System.out.println("No puede ingresar como "+rolToString(modoElegido)+" porque fue registrado como "+rolToString(tipoReal));
-                }
-            } catch (UsuarioNoEncontradoEx e) {
-                System.out.println(e.getMessage());
-            }
-        }while
-
-
-
-    }*/
-
+}
+    /*
     public static String rolToString(int tipo)
     {
         String rta="";
@@ -194,4 +151,4 @@ public class Main {
             }
         return rta;
         }
-    }
+    }*/

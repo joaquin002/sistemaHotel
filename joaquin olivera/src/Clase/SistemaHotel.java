@@ -40,12 +40,13 @@ public class SistemaHotel {
         throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
     }
 
-    public String tipoToString(String tipo)
+    public String tipoToString()
     {
         String rta="";
-         switch (tipo)
+        int opcion=0;
+         switch (opcion)
         {
-            case 1 :
+            case 1:
                 rta="Administrador";
                 break;
             case 2:

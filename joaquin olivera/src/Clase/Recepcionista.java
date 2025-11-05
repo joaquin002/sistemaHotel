@@ -17,11 +17,11 @@ public class Recepcionista extends Usuario implements Identificable {
 
     //para parte de usuario
     public Recepcionista(String nombreUsuario, String contrasenia) {
-        super(nombreUsuario, contrasenia,3);
+        super(nombreUsuario, contrasenia,"Recepcionista");
     }
 
     public Recepcionista(String nombreUsuario, String contrasenia, int id, Hotel hotel) {
-        super(nombreUsuario, contrasenia,3);
+        super(nombreUsuario, contrasenia,"Recepcionista");
         this.id = id;
         this.hotel = hotel;
         this.idHotel = this.hotel.getIdHotel();

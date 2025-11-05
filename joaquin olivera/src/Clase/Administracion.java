@@ -9,7 +9,7 @@ public class Administracion extends Usuario {
 
     //constructor para usuario
     public Administracion(String nombreUsuario, String contrasenia) {
-        super(nombreUsuario, contrasenia, 1);
+        super(nombreUsuario, contrasenia, "Administrador");
         this.hoteles = new Registro<>();
         this.recepcionistas = new Registro<>();
     }
