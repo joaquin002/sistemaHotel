@@ -59,6 +59,10 @@ public class Recepcionista extends Usuario {
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
 
+        //suma la recaudacion de la habitacion al hotel
+        this.hotel.setRecaudacion(habitacionEncontrada.getPrecio());
+
+
         //guarda o actualiza la visita
         boolean encontrado = false;
         for (RegistroVisita rv : registroVisitas) {

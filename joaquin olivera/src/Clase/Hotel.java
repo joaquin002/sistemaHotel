@@ -10,14 +10,13 @@ public class Hotel implements Identificable{
     private int id;
     private String nombre;
     private String direccion;
-    private int recaudacion;
+    private int recaudacion = 0;
     private Registro<Habitacion> habitaciones;
 
-    public Hotel(int id, String nombre, String direccion, int recaudacion) {
+    public Hotel(int id, String nombre, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.recaudacion = recaudacion;
         this.habitaciones = new Registro<>();
     }
 
@@ -39,6 +38,10 @@ public class Hotel implements Identificable{
 
     public Registro<Habitacion> getHabitaciones() {
         return habitaciones;
+    }
+
+    public void setRecaudacion(int recaudacion) {
+        this.recaudacion = recaudacion;
     }
 
     @Override

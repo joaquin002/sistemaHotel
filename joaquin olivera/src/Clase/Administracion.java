@@ -16,8 +16,8 @@ public class Administracion extends Usuario {
         return hoteles;
     }
 
-    public void cargarHotel(int id, String nombre, String direccion, int recaudacion){
-        this.hoteles.agregar(new Hotel(id, nombre, direccion, recaudacion));
+    public void cargarHotel(int id, String nombre, String direccion){
+        this.hoteles.agregar(new Hotel(id, nombre, direccion));
     }
     public void elimianrHotel(int idBuscado){
         this.hoteles.eliminar(hoteles.buscar(idBuscado));
