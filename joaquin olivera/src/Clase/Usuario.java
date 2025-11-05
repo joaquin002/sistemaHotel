@@ -3,9 +3,9 @@ package Clase;
 public abstract class Usuario {
     private String nombreUsuario;
     private String contrasenia;
-    private int tipo;
+    private String tipo;
 
-    public Usuario(String nombreUsuario, String contrasenia, int tipo) {
+    public Usuario(String nombreUsuario, String contrasenia, String tipo) {
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
         this.tipo = tipo;
@@ -19,7 +19,7 @@ public abstract class Usuario {
         return contrasenia;
     }
 
-    public int getTipo() {
+    public String getTipo() {
         return tipo;
     }
 

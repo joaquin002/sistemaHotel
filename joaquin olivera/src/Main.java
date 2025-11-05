@@ -22,6 +22,7 @@ public class Main {
 
     }
 
+    // menu principal. va a contener el resto de los metodos necesarios para que funcione
     public static void menuPrincipal(SistemaHotel sistema)
     {
         Scanner sc = new Scanner(System.in);
@@ -32,7 +33,7 @@ public class Main {
         char seguir='s';
 
         do {
-            System.out.println("Hotel BellaVista.com");  // Hago un poco de decoracion para que se vea mas prolijo como si fuese un programa real
+            System.out.println("Hotel BellaVista.com");
             System.out.println("\n=============================================");
             System.out.println("🏨  BIENVENIDO A HOTEL BELLAVISTA  🏨");
             System.out.println("=============================================");
@@ -48,10 +49,11 @@ public class Main {
                     menuInterno(sistema);
                     break;
                 case 2:
+
                     ingresarDatos(nombre, contrasenia);
                     try {
-                        Usuario  usuario=sistema.iniciarSesion(nombre, contrasenia);
-                        mostrarMenuPorRol(usuario);
+                        int tipoReal=sistema.iniciarSesion(nombre, contrasenia);
+                        System.out.println("Inicio sesion correctamente con "+tipoReal);
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
                     }
@@ -130,33 +132,66 @@ public class Main {
         password=sc.nextLine();
     }
 
-    public static void mostrarMenuPorRol(Usuario usuario)
+   /* public static void eligiendoModo(SistemaHotel sistema,String nombre, String contrasenia)
     {
         Scanner sc=new Scanner(System.in);
-        int opcion=0;
-        System.out.println("Seleccione modo al que desea ingresar:");
-        System.out.println("1. Administrador");
-        System.out.println("2. Cliente");
-        System.out.println("3. Recepcionista");
-        opcion=sc.nextInt();
+        boolean encontrado=false;
+        int tipo=0;
+        do {
+            System.out.println("Seleccione modo para ingresar:");
+            System.out.println("1. Administrador");
+            System.out.println("2. Cliente");
+            System.out.println("3. Recepcionista");
+            int modoElegido=sc.nextInt();
+            sc.nextLine();
 
-        if(opcion== usuario.getTipo())
-        {
-            System.out.println("Accediento al modo "+rolToString(opcion));
-        }
-        else
-        {
-            System.out.println("No tiene permisos para ingresar como "+rolToString(opcion));
-        }
-    }
+            switch (modoElegido)
+            {
+                case 1:
+                    try
+                    {
+                        tipo=sistema.iniciarSesion(nombre,contrasenia);
+                    }catch (UsuarioNoEncontradoEx e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+            }
+
+            ingresarDatos(nombre, contrasenia);
+            try {
+                int tipoReal=sistema.iniciarSesion(nombre, contrasenia);
+                if(tipoReal == modoElegido)
+                {
+                    System.out.println("Inicio sesion correctamente");
+                }
+                else {
+                    System.out.println("No puede ingresar como "+rolToString(modoElegido)+" porque fue registrado como "+rolToString(tipoReal));
+                }
+            } catch (UsuarioNoEncontradoEx e) {
+                System.out.println(e.getMessage());
+            }
+        }while
+
+
+
+    }*/
 
     public static String rolToString(int tipo)
     {
-        return switch (tipo) {
-            case 1 -> "Administrador";
-            case 2 -> "Cliente";
-            case 3 -> "Recepcionista";
-            default -> "Desconocido";
-        };
+        String rta="";
+
+            switch (tipo) {
+                case 1 :
+                    rta="Administrador";
+                    break;
+                case 2:
+                    rta="Cliente";
+                    break;
+                case 3:
+                    rta="Recepcionista";
+                    break;
+            }
+        return rta;
+        }
     }
-}
