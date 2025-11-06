@@ -10,4 +10,25 @@ public class Punto {
         this.dniCliente = dniCliente;
         this.cantidad = cantidad;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getDniCliente() {
+        return dniCliente;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Punto{" +
+                "id=" + id +
+                ", dniCliente=" + dniCliente +
+                ", cantidad=" + cantidad +
+                '}';
+    }
 }
