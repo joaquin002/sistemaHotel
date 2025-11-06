@@ -1,5 +1,6 @@
 package Clase;
 
+import Excepcion.DuplicadoEx;
 import Excepcion.UsuarioNoEncontradoEx;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class SistemaHotel {
         return rta;
     }*/
 
-    public void cargarHotel(int id, String nombre, String direccion)
+    public void cargarHotel(int id, String nombre, String direccion) throws DuplicadoEx
     {
         for(Usuario u: usuarios)
         {
@@ -70,16 +71,21 @@ public class SistemaHotel {
             {
                 ((Administracion) u).cargarHotel(id,nombre,direccion);
             }
+            else {
+                throw new DuplicadoEx("Hotel existente");
+            }
         }
 
     }
 
-    public void mostrarHoteles(int id)
+    public String mostrarHoteles(int id)
     {
+        String rta="";
         for(Usuario u: usuarios)
             if (u instanceof Administracion)
             {
-                ((Administracion) u).mostrarHotel(id);
+                rta=((Administracion) u).mostrarHotel(id);
             }
+        return rta;
     }
 }

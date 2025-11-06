@@ -1,4 +1,5 @@
 import Clase.SistemaHotel;
+import Excepcion.DuplicadoEx;
 import Excepcion.NoRegistradoEx;
 import Excepcion.UsuarioNoEncontradoEx;
 
@@ -212,7 +213,14 @@ public class Main {
             {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
-                    sistema.cargarHotel(1,"hotel 1", "calle nueva");
+                    try
+                    {
+                        sistema.cargarHotel(1,"hotel 1", "calle nueva");
+
+                    }catch (DuplicadoEx e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
                     break;
@@ -221,7 +229,7 @@ public class Main {
                 case 4:
                     break;
                 case 5:
-                    sistema.mostrarHoteles(1);
+                    System.out.println(sistema.mostrarHoteles(1));
                     break;
                 default:
                     break;
