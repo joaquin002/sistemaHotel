@@ -42,27 +42,6 @@ public class SistemaHotel {
         throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
     }
 
-   /* public String tipoToString()
-    {
-        String rta="";
-        int opcion=0;
-         switch (opcion)
-        {
-            case 1:
-                rta="Administrador";
-                break;
-            case 2:
-                rta="Cliente";
-                break;
-            case 3:
-                rta="Recepcionista";
-                break;
-            default:
-                rta="Desconocido";
-                break;
-        }
-        return rta;
-    }*/
 
     public void cargarHotel(int id, String nombre, String direccion) throws DuplicadoEx
     {
@@ -85,7 +64,7 @@ public class SistemaHotel {
         for(Usuario u: usuarios)
             if (u instanceof Administracion)
             {
-                rta=((Administracion) u).mostrarHotel(id);
+                rta=((Administracion) u).mostrarHotel();
             }
         return rta;
     }
@@ -99,7 +78,7 @@ public class SistemaHotel {
             {
                 try
                 {
-                    ((Administracion) u).cargarRecepcionista(id,idHotel);
+                    ((Administracion) u).cargarRecepcionista(id);
 
                 }catch (DuplicadoEx e)
                 {
@@ -125,19 +104,11 @@ public class SistemaHotel {
         }
         return rta;
     }
-
-    public void cargarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado, int idHotel)
+/// REVISAAAAAR!!!!
+    public void cargarHabitacionEstandar(int idHotel,String nombre,String direccion, int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado)
     {
-
-        for(Usuario u: usuarios)
-        {
-            if(u instanceof Administracion)
-            {
-                Hotel h1=((Administracion) u).buscarHotel(idHotel);
-                h1.agregarHabitacionEstandar(id,precio,descripcion,servicios,personasPermitidas,estado);
-            }
-        }
-
+        Hotel h1=new Hotel(idHotel,nombre,direccion);
+        h1.agregarHabitacionEstandar(id,precio,descripcion,servicios,personasPermitidas,estado);
     }
 
     public String mostrarHabitacion(int idHabitacion, int idHotel)
@@ -147,7 +118,7 @@ public class SistemaHotel {
         {
             if(u instanceof Administracion)
             {
-              rta=((Administracion) u).mostrarHabitacionHotel(idHabitacion, idHotel);
+              rta=((Administracion) u).mostrarHabitacionHotel(idHabitacion);
             }
         }
         return rta;

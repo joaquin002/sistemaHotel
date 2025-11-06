@@ -7,18 +7,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Administracion extends Usuario {
-    private Registro<Hotel>hoteles;
+    private Hotel hotel;
     private Registro<Recepcionista>recepcionistas;
 
     //constructor para usuario
     public Administracion(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia, "Administrador");
-        this.hoteles = new Registro<>();
         this.recepcionistas = new Registro<>();
-    }
-
-    public Registro<Hotel> getHoteles() {
-        return hoteles;
     }
 
     public Registro<Recepcionista> getRecepcionistas() {
@@ -26,39 +21,35 @@ public class Administracion extends Usuario {
     }
     //hotel
     public void cargarHotel(int id, String nombre, String direccion)throws DuplicadoEx {
-        Hotel aux = new Hotel(id, nombre, direccion);
-        for (Hotel h : this.hoteles.getLista()) {
-            if (h.getIdHotel() == aux.getIdHotel()) {
-                throw new DuplicadoEx("Hotel existente");
-            }
+        if(this.hotel!=null){
+            throw new DuplicadoEx("Ya existe un hotel cargado en el sistema");
         }
-        this.hoteles.agregar(aux);
+        this.hotel = new Hotel(id, nombre, direccion);
+        System.out.println("Hotel cargado con exito:" +nombre);
     }
-    public void elimianrHotel(int idBuscado){
-        this.hoteles.eliminar(hoteles.buscar(idBuscado));
-    }
-    public String mostrarHotel(int idBuscado){
-        return this.hoteles.mostrarPorId(idBuscado);
+
+    public String mostrarHotel(){
+        if(this.hotel==null){
+            return "No hay hotel cargado";
+        }
+        return this.hotel.toString();
     }
     //recepcion
-    public void cargarRecepcionista(int id, int idHotel) throws DuplicadoEx, NoRegistradoEx {
-        Hotel aux = null;
-        for (Hotel h : this.hoteles.getLista()) {
-            if (h.getIdHotel() == idHotel) {
-                aux = h;
-                break;
+    public void cargarRecepcionista(int id) throws DuplicadoEx, NoRegistradoEx {
+       if(this.hotel==null)
+       {
+           throw new NoRegistradoEx("Primero debe cargarse un hotel");
+       }
+        for (Recepcionista recepcionista : this.recepcionistas.getLista())
+        {
+            if(recepcionista.getIdBuscado()==id)
+            {
+                throw new DuplicadoEx("Ya existe un recepcionista con ese ID");
             }
         }
-        if (aux == null) {
-            throw new NoRegistradoEx("no existe el hotel buscado");
-        }
-        for (Recepcionista r : this.recepcionistas.getLista()) {
-            if (r.getIdHotel() == idHotel) {
-                throw new DuplicadoEx("ya existe un recepcionista asociado a este hotel");
-            }
-        }
-        this.recepcionistas.agregar(new Recepcionista(id, aux));
+        this.recepcionistas.agregar(new Recepcionista(id, this.hotel));
     }
+
     public void eliminarRecepcionista(int idRecepcionista){
         this.recepcionistas.eliminar(recepcionistas.buscar(idRecepcionista));
     }
@@ -66,16 +57,10 @@ public class Administracion extends Usuario {
         return this.recepcionistas.mostrarPorId(idRecepcionista);
     }
 
-    public Hotel buscarHotel(int id)
-    {
-        return this.hoteles.buscar(id);
-    }
 
-    public String mostrarHabitacionHotel(int idBuscado, int idHotel)
+    public String mostrarHabitacionHotel(int idBuscado)
     {
-        Hotel h1=buscarHotel(idHotel);
-        String rta=h1.mostrarHabitacion(idBuscado);
-        return rta;
+        return this.hotel.mostrarHabitacion(idBuscado);
     }
 
 }
