@@ -170,14 +170,7 @@ public class Main {
             {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
-                    try
-                    {
-                        sistema.hacerCheckIn(123, 1, "10/10/2025");
 
-                    }catch (NoRegistradoEx e)
-                    {
-                        System.out.println(e.getMessage());
-                    }
                     break;
                 case 2:
                     break;
@@ -219,6 +212,7 @@ public class Main {
             {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
+                    sistema.cargarHotel(1,"hotel 1", "calle nueva");
                     break;
                 case 2:
                     break;
@@ -227,6 +221,7 @@ public class Main {
                 case 4:
                     break;
                 case 5:
+                    sistema.mostrarHoteles(1);
                     break;
                 default:
                     break;

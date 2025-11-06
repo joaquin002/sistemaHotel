@@ -1,10 +1,8 @@
 package Clase;
 
-import Excepcion.NoRegistradoEx;
 import Excepcion.UsuarioNoEncontradoEx;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class SistemaHotel {
     private ArrayList <Usuario> usuarios;
@@ -64,6 +62,24 @@ public class SistemaHotel {
         return rta;
     }*/
 
-    public void cargarCliente()
+    public void cargarHotel(int id, String nombre, String direccion)
+    {
+        for(Usuario u: usuarios)
+        {
+            if(u instanceof Administracion)
+            {
+                ((Administracion) u).cargarHotel(id,nombre,direccion);
+            }
+        }
+
     }
 
+    public void mostrarHoteles(int id)
+    {
+        for(Usuario u: usuarios)
+            if (u instanceof Administracion)
+            {
+                ((Administracion) u).mostrarHotel(id);
+            }
+    }
+}

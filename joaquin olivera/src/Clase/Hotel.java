@@ -86,4 +86,6 @@ public class Hotel implements Identificable, IhotelOperable {
             this.recaudacion += recaudacion;
         }
     }
+
+
 }
