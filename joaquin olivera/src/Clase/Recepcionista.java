@@ -111,4 +111,8 @@ public class Recepcionista extends Usuario implements Identificable {
 
         System.out.println("se realizo con exito el check-out de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada y recaudación actualizada.");
     }
+
+    public int getIdHotel() {
+        return this.hotel.getIdHotel();
+    }
 }
