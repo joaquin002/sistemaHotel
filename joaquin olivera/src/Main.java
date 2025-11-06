@@ -61,13 +61,13 @@ public class Main {
                         {
                             menuRecepcionista(sistema);
                         }
-                        if(modo.equals("Cliente"))
-                        {
-                            //menu del cliente
-                        }
                         if(modo.equals("Administrador"))
                         {
-                            //menu del administrador
+                            menuAdministrador(sistema);
+                        }
+                        if(modo.equals("Cliente"))
+                        {
+                            menuCliente(sistema);
                         }
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
@@ -185,4 +185,74 @@ public class Main {
         }while (seguir=='s');
     }
 
+    public static void menuAdministrador(SistemaHotel sistema)
+    {
+        Scanner sc=new Scanner(System.in);
+        int opcion=0;
+        char seguir='s';
+
+        do {
+            System.out.println("Administrador:");
+            System.out.println("1. Cargar Hotel");
+            System.out.println("2. Cargar recepcionista");
+            System.out.println("3. Eliminar hotel");
+            System.out.println("4. Eliminar  recepcionista");
+            System.out.println("5. Buscar hotel");
+            System.out.println("6. Buscar recepcionista");
+            opcion=sc.nextInt();
+
+            switch (opcion)
+            {
+                case 1:
+                    //aca agrego los metodos correspondientes cuando los tenga
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                default:
+                    break;
+            }
+            System.out.println("¿Desea elegir otra opcion?");
+            seguir=sc.next().charAt(0);
+
+
+        }while (seguir=='s');
+    }
+
+    public static void menuCliente(SistemaHotel sistema1)
+    {
+        Scanner sc=new Scanner(System.in);
+        int opcion=0;
+        char seguir='s';
+
+        do {
+            System.out.println("Cliente:");
+            System.out.println("1. Hacer reserva");
+            System.out.println("2. Ver puntos disponibles");
+            System.out.println("3. Canjear puntos disponibles");
+            opcion=sc.nextInt();
+
+            switch (opcion)
+            {
+                case 1:
+                    //aca agrego los metodos correspondientes cuando los tenga
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            System.out.println("¿Desea elegir otra opcion?");
+            seguir=sc.next().charAt(0);
+
+
+        }while (seguir=='s');
+    }
 }
