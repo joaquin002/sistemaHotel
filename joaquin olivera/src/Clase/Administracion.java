@@ -24,9 +24,15 @@ public class Administracion extends Usuario {
     public Registro<Recepcionista> getRecepcionistas() {
         return recepcionistas;
     }
-
-    public void cargarHotel(int id, String nombre, String direccion){
-        this.hoteles.agregar(new Hotel(id, nombre, direccion));
+    //hotel
+    public void cargarHotel(int id, String nombre, String direccion)throws DuplicadoEx {
+        Hotel aux = new Hotel(id, nombre, direccion);
+        for (Hotel h : this.hoteles.getLista()) {
+            if (h.getIdHotel() == aux.getIdHotel()) {
+                throw new DuplicadoEx("Hotel existente");
+            }
+        }
+        this.hoteles.agregar(aux);
     }
     public void elimianrHotel(int idBuscado){
         this.hoteles.eliminar(hoteles.buscar(idBuscado));
@@ -34,7 +40,7 @@ public class Administracion extends Usuario {
     public String mostrarHotel(int idBuscado){
         return this.hoteles.mostrarPorId(idBuscado);
     }
-
+    //recepcion
     public void cargarRecepcionista(int id, int idHotel) throws DuplicadoEx, NoRegistradoEx {
         Hotel aux = null;
         for (Hotel h : this.hoteles.getLista()) {
