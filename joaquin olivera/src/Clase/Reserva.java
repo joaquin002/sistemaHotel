@@ -22,6 +22,18 @@ public class Reserva implements Identificable {
         return idHabitacion;
     }
 
+    public int getDniCliente() {
+        return dniCliente;
+    }
+
+    public int getIdRecepcionista() {
+        return idRecepcionista;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
     @Override
     public String toString() {
         return "Reserva{" +

@@ -39,5 +39,11 @@ public class Administracion extends Usuario {
             }
         }
     }
+    public void eliminarRecepcionista(int idRecepcionista){
+        this.recepcionistas.eliminar(recepcionistas.buscar(idRecepcionista));
+    }
+    public String mostrarRecepcionista(int idRecepcionista){
+        return this.recepcionistas.mostrarPorId(idRecepcionista);
+    }
 
 }

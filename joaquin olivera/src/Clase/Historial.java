@@ -9,6 +9,14 @@ public class Historial {
         this.fechaEstadia = fechaEstadia;
     }
 
+    public int getDniCliente() {
+        return dniCliente;
+    }
+
+    public String getFechaEstadia() {
+        return fechaEstadia;
+    }
+
     @Override
     public String toString() {
         return "Historial{" +
