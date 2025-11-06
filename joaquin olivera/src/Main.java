@@ -20,6 +20,9 @@ public class Main {
 
         menuPrincipal(sistema);
 
+        //probando hacer un checkin
+
+
     }
 
     // menu principal. va a contener el resto de los metodos necesarios para que funcione
@@ -54,6 +57,18 @@ public class Main {
                     try {
                         String modo=sistema.iniciarSesion(nombre, contrasenia);
                         System.out.println("Inicio sesion correctamente como "+modo);
+                        if(modo.equals("Recepcionista"))
+                        {
+                            menuRecepcionista(sistema);
+                        }
+                        if(modo.equals("Cliente"))
+                        {
+                            //menu del cliente
+                        }
+                        if(modo.equals("Administrador"))
+                        {
+                            //menu del administrador
+                        }
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
                     }
@@ -130,6 +145,44 @@ public class Main {
         name=sc.nextLine();
         System.out.println("Ingrese contrasena:");
         password=sc.nextLine();
+    }
+
+    public static void menuRecepcionista(SistemaHotel sistema)
+    {
+        Scanner sc=new Scanner(System.in);
+        int opcion=0;
+        char seguir='s';
+
+        do {
+        System.out.println("Recepcionista:");
+            System.out.println("1. Hacer CheckIn");
+            System.out.println("2. Hacer CheckOut");
+            System.out.println("3. Consultar disponibilidad");
+            System.out.println("4. Buscar reserva");
+            System.out.println("5. Buscar cliente");
+            opcion=sc.nextInt();
+
+            switch (opcion)
+            {
+                case 1:
+                    //aca agrego los metodos correspondientes cuando los tenga
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                default:
+                    break;
+            }
+            System.out.println("¿Desea elegir otra opcion?");
+            seguir=sc.next().charAt(0);
+
+
+        }while (seguir=='s');
     }
 
 }
