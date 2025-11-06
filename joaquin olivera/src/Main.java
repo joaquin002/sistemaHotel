@@ -1,5 +1,5 @@
 import Clase.SistemaHotel;
-import Clase.Usuario;
+import Excepcion.NoRegistradoEx;
 import Excepcion.UsuarioNoEncontradoEx;
 
 import java.util.Scanner;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        /// prueba de usuario funciona
+        // prueba de usuario funciona
         SistemaHotel sistema = new SistemaHotel();
         sistema.registrarUsuario("paulina", "pau1234", 1);
         try {
@@ -29,7 +29,7 @@ public class Main {
     public static void menuPrincipal(SistemaHotel sistema)
     {
         Scanner sc = new Scanner(System.in);
-        int opcion=0;
+        int opcion;
         String nombre="";
         String contrasenia="";
 
@@ -53,7 +53,7 @@ public class Main {
                     break;
                 case 2:
 
-                    ingresarDatos(nombre, contrasenia);
+                    ingresarDatos();
                     try {
                         String modo=sistema.iniciarSesion(nombre, contrasenia);
                         System.out.println("Inicio sesion correctamente como "+modo);
@@ -85,14 +85,14 @@ public class Main {
                 System.out.println("\n¿Desea realizar otra accion? (s/n): ");
                 seguir=sc.next().charAt(0);
             }
-        }while (seguir=='s' && opcion!=3);
+        }while (seguir=='s');
     }
 
     // tengo que llamar en los parametros al sistema creado en el main porque sino lo que yo cargue en estos metodos no se va a guardar.
     public static void menuInterno(SistemaHotel sistema)
     {
         Scanner sc = new Scanner(System.in);
-        int opcion=0;
+        int opcion;
         String name="";
         String password="";
         char seguir='s';
@@ -111,15 +111,15 @@ public class Main {
             switch (opcion)
             {
                 case 1:
-                    ingresarDatos(name,password);
+                    ingresarDatos();
                     sistema.registrarUsuario(name,password,1);
                     break;
                 case 2:
-                    ingresarDatos(name,password);
+                    ingresarDatos();
                     sistema.registrarUsuario(name,password,2);
                     break;
                 case 3:
-                    ingresarDatos(name,password);
+                    ingresarDatos();
                     sistema.registrarUsuario(name,password,3);
                     break;
                 case 4:
@@ -129,17 +129,19 @@ public class Main {
                     System.out.println("Error. Opcion no valida...");
                     break;
             }
-            if (encontrado==false){
+            if (!encontrado){
                 System.out.println("¿Desea registrarse en otro modo?");
                 seguir=sc.next().charAt(0);
             }
-        }while (seguir=='s' && encontrado==false);
+        }while (seguir=='s' && !encontrado);
 
 
     }
 
-    public static void ingresarDatos(String name, String password)
+    public static void ingresarDatos()
     {
+        String name;
+        String password;
         Scanner sc=new Scanner(System.in);
         System.out.println("Ingrese nombre de usuario:");
         name=sc.nextLine();
@@ -150,11 +152,13 @@ public class Main {
     public static void menuRecepcionista(SistemaHotel sistema)
     {
         Scanner sc=new Scanner(System.in);
-        int opcion=0;
+        int opcion;
         char seguir='s';
 
         do {
-        System.out.println("Recepcionista:");
+            System.out.println("=============================================");
+            System.out.println("        Recepcionista    ");
+            System.out.println("---------------------------------------------");
             System.out.println("1. Hacer CheckIn");
             System.out.println("2. Hacer CheckOut");
             System.out.println("3. Consultar disponibilidad");
@@ -166,6 +170,14 @@ public class Main {
             {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
+                    try
+                    {
+                        sistema.hacerCheckIn(123, 1, "10/10/2025");
+
+                    }catch (NoRegistradoEx e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
                     break;
@@ -192,7 +204,9 @@ public class Main {
         char seguir='s';
 
         do {
-            System.out.println("Administrador:");
+            System.out.println("=============================================");
+            System.out.println("      Administrador   ");
+            System.out.println("---------------------------------------------");
             System.out.println("1. Cargar Hotel");
             System.out.println("2. Cargar recepcionista");
             System.out.println("3. Eliminar hotel");
@@ -231,7 +245,9 @@ public class Main {
         char seguir='s';
 
         do {
-            System.out.println("Cliente:");
+            System.out.println("=============================================");
+            System.out.println("        Cliente     ");
+            System.out.println("---------------------------------------------");
             System.out.println("1. Hacer reserva");
             System.out.println("2. Ver puntos disponibles");
             System.out.println("3. Canjear puntos disponibles");

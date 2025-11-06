@@ -1,8 +1,10 @@
 package Clase;
 
+import Excepcion.NoRegistradoEx;
 import Excepcion.UsuarioNoEncontradoEx;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class SistemaHotel {
     private ArrayList <Usuario> usuarios;
@@ -40,7 +42,7 @@ public class SistemaHotel {
         throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
     }
 
-    public String tipoToString()
+   /* public String tipoToString()
     {
         String rta="";
         int opcion=0;
@@ -60,5 +62,8 @@ public class SistemaHotel {
                 break;
         }
         return rta;
+    }*/
+
+    public void cargarCliente()
     }
-}
+
