@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         // prueba de usuario funciona
         SistemaHotel sistema = new SistemaHotel();
-        sistema.registrarUsuario("paulina", "pau1234", 1);
+        sistema.registrarUsuario(1,"paulina", "pau1234", 1);
         try {
             sistema.iniciarSesion("paulina", "pau1234");
             sistema.iniciarSesion("paulina", "pau4");
@@ -113,15 +113,15 @@ public class Main {
             {
                 case 1:
                     ingresarDatos();
-                    sistema.registrarUsuario(name,password,1);
+                    sistema.registrarUsuario(1,name,password,1);
                     break;
                 case 2:
                     ingresarDatos();
-                    sistema.registrarUsuario(name,password,2);
+                    sistema.registrarUsuario(1,name,password,2);
                     break;
                 case 3:
                     ingresarDatos();
-                    sistema.registrarUsuario(name,password,3);
+                    sistema.registrarUsuario(1,name,password,3);
                     break;
                 case 4:
                     encontrado=true;
@@ -207,6 +207,8 @@ public class Main {
             System.out.println("4. Eliminar  recepcionista");
             System.out.println("5. Buscar hotel");
             System.out.println("6. Buscar recepcionista");
+            System.out.println("7. cargar habitacion en un hotel");
+            System.out.println("8. ver habitaciones del hotel");
             opcion=sc.nextInt();
 
             switch (opcion)
@@ -215,7 +217,8 @@ public class Main {
                     //aca agrego los metodos correspondientes cuando los tenga
                     try
                     {
-                        sistema.cargarHotel(1,"hotel 1", "calle nueva");
+
+                        sistema.cargarHotel(1,"hotel 1", "calle nueva"); // PEDIRLE AL USUARIO
 
                     }catch (DuplicadoEx e)
                     {
@@ -223,13 +226,23 @@ public class Main {
                     }
                     break;
                 case 2:
+                    sistema.cargarRecepcionista(1, 1);
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
                 case 5:
-                    System.out.println(sistema.mostrarHoteles(1));
+                    System.out.println(sistema.mostrarHoteles(1)); //PEDIRLE AL USUARIO EL ID
+                    break;
+                case 6:
+                    System.out.println(sistema.verRecepcionista(1));
+                    break;
+                case 7:
+                    sistema.cargarHabitacionEstandar(123, 1200, "muy buena", "varios", 2, true, 1);
+                    break;
+                case 8:
+                    System.out.println(sistema.mostrarHabitacion(123, 1));
                     break;
                 default:
                     break;

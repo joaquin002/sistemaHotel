@@ -54,7 +54,7 @@ public class Hotel implements Identificable, IhotelOperable {
                 ", nombre='" + nombre + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", recaudacion=" + recaudacion +
-                ", habitaciones=" + habitaciones +
+                ", habitaciones=" + mostrarTodasLasHabitaciones()+
                 '}';
     }
 
@@ -85,6 +85,15 @@ public class Hotel implements Identificable, IhotelOperable {
         if (recaudacion > 0) {
             this.recaudacion += recaudacion;
         }
+    }
+
+    public String mostrarTodasLasHabitaciones()
+    {
+        String rta="";
+        for (Habitacion h : this.habitaciones.getLista()) {
+            rta+=h.toString()+'\n';
+        }
+        return rta;
     }
 
 

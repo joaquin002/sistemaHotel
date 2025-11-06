@@ -15,8 +15,9 @@ public class Recepcionista extends Usuario implements Identificable {
     private IhotelOperable hotel; //una variable de tipo interface que solo te deja utilizar los metodos elegidos
 
     //para parte de usuario
-    public Recepcionista(String nombreUsuario, String contrasenia) {
+    public Recepcionista(int id,String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia,"Recepcionista");
+        this.id=id;
     }
 
     public Recepcionista(int id,Hotel hotel) {
@@ -114,5 +115,17 @@ public class Recepcionista extends Usuario implements Identificable {
 
     public int getIdHotel() {
         return this.hotel.getIdHotel();
+    }
+
+    @Override
+    public String toString() {
+        return "Recepcionista{" +
+                "id=" + id +
+                ", clientes=" + clientes +
+                ", reservas=" + reservas +
+                ", puntos=" + puntos +
+                ", registroVisitas=" + registroVisitas +
+                ", hotel=" + hotel.toString() +
+                '}';
     }
 }

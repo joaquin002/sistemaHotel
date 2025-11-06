@@ -66,4 +66,16 @@ public class Administracion extends Usuario {
         return this.recepcionistas.mostrarPorId(idRecepcionista);
     }
 
+    public Hotel buscarHotel(int id)
+    {
+        return this.hoteles.buscar(id);
+    }
+
+    public String mostrarHabitacionHotel(int idBuscado, int idHotel)
+    {
+        Hotel h1=buscarHotel(idHotel);
+        String rta=h1.mostrarHabitacion(idBuscado);
+        return rta;
+    }
+
 }
