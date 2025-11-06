@@ -48,17 +48,16 @@ public class Administracion extends Usuario {
                 aux = h;
                 break;
             }
-        if (aux == null){
+        }
+        if (aux == null) {
             throw new NoRegistradoEx("no existe el hotel buscado");
         }
         for (Recepcionista r : this.recepcionistas.getLista()) {
-            if (r.getIdHotel()==idHotel) {
+            if (r.getIdHotel() == idHotel) {
                 throw new DuplicadoEx("ya existe un recepcionista asociado a este hotel");
             }
         }
-        this.recepcionistas.agregar(new Recepcionista(id,aux));
-
-        }
+        this.recepcionistas.agregar(new Recepcionista(id, aux));
     }
     public void eliminarRecepcionista(int idRecepcionista){
         this.recepcionistas.eliminar(recepcionistas.buscar(idRecepcionista));
