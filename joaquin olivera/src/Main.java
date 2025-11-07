@@ -201,14 +201,14 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Cargar Hotel");
-            System.out.println("2. Cargar recepcionista");
-            System.out.println("3. Eliminar hotel");
-            System.out.println("4. Eliminar  recepcionista");
-            System.out.println("5. Buscar hotel");
-            System.out.println("6. Buscar recepcionista");
-            System.out.println("7. cargar habitacion en un hotel");
-            System.out.println("8. ver habitaciones del hotel");
+            System.out.println("1. Cargar Hotel");//listo
+            System.out.println("2. Cargar recepcionista");//listo
+            System.out.println("3. Eliminar hotel");//listo
+            System.out.println("4. Eliminar  recepcionista");//listo
+            System.out.println("5. mostrar hotel");//listo
+            System.out.println("6. Buscar recepcionista");//listo
+            System.out.println("7. cargar habitacion en un hotel");//listo
+            System.out.println("8. ver habitaciones del hotel");//listo
             opcion=sc.nextInt();
 
             switch (opcion)

@@ -75,7 +75,10 @@ public class Hotel implements Identificable, IhotelOperable {
         }
         this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
     }
-    public String mostrarHabitacion(int idBuscado){
+    public String mostrarHabitacion(int idBuscado)throws NoRegistradoEx {
+        if (!this.habitaciones.buscarPorId(idBuscado)) {
+            throw new NoRegistradoEx("Habitacion no encontrada");
+        }
         return this.habitaciones.mostrarPorId(idBuscado);
     }
     public Habitacion buscarHabitacion(int idHabitacion) {

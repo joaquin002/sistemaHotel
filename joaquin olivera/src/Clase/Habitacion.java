@@ -63,6 +63,4 @@ public class Habitacion implements Identificable {
                 ", personasPermitidas=" + personasPermitidas +
                 '}';
     }
-
-    /// metodos futuros
 }

@@ -57,7 +57,14 @@ public class SistemaHotel {
             }
         }
     }
-
+    public void eliminarHotel(){
+        for (Usuario u: usuarios){
+            if (u instanceof Administracion){
+                ((Administracion) u).eliminarHotel();
+                break;
+            }
+        }
+    }
     public String mostrarHoteles(int id)
     {
         String rta="";
@@ -68,65 +75,69 @@ public class SistemaHotel {
             }
         return rta;
     }
+    public void cargarRecepcionista(int id, int idHotel) {
+        for (Usuario u : usuarios) {
 
-    public void cargarRecepcionista(int id, int idHotel)
-    {
-        for(Usuario u: usuarios)
-        {
-
-            if(u instanceof Administracion)
-            {
-                try
-                {
+            if (u instanceof Administracion) {
+                try {
                     ((Administracion) u).cargarRecepcionista(id);
-
-                }catch (DuplicadoEx e)
-                {
+                } catch (DuplicadoEx e) {
                     System.out.println(e.getMessage());
-                }
-                catch (NoRegistradoEx e)
-                {
+                } catch (NoRegistradoEx e) {
                     System.out.println(e.getMessage());
                 }
             }
         }
     }
-
-    public String verRecepcionista(int id)
-    {
-        String rta="";
-        for(Usuario u: usuarios)
-        {
-            if(u instanceof Administracion)
-            {
-               rta= ((Administracion) u).mostrarRecepcionista(id);
+    public String verRecepcionista(int id) {
+        String rta = "";
+        for (Usuario u : usuarios) {
+            if (u instanceof Administracion) {
+                try {
+                    rta = ((Administracion) u).mostrarRecepcionista(id);
+                } catch (NoRegistradoEx e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
         return rta;
     }
     //cargar y muestra habitaciones
-    public void cargarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado)
-    {
-        for (Usuario u :  usuarios){
+    public void cargarHabitacionEstandar(int id, int precio, String descripcion, String servicios, int personasPermitidas, boolean estado) {
+        for (Usuario u : usuarios) {
             if (u instanceof Administracion) {
-                ((Administracion) u).agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
-                break;
+                try {
+                    ((Administracion) u).agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
+                    break;
+                } catch (NoRegistradoEx e) {
+                    System.out.println(e.getMessage());
+                }
+
             }
         }
     }
-    public void cargarHabitacionSuite(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
-        for (Usuario u :  usuarios){
+    public void cargarHabitacionSuite(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible) {
+        for (Usuario u : usuarios) {
             if (u instanceof Administracion) {
-                ((Administracion) u).agregarHabitacionSuiete(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
-                break;
+                try {
+                    ((Administracion) u).agregarHabitacionSuiete(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+                    break;
+                } catch (NoRegistradoEx e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
-    public void cargarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
-        for (Usuario u :  usuarios){
+
+    public void cargarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible) {
+        for (Usuario u : usuarios) {
             if (u instanceof Administracion) {
-                ((Administracion) u).agregarHabitacionDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
-                break;
+                try {
+                    ((Administracion) u).agregarHabitacionDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
+                    break;
+                } catch (NoRegistradoEx e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
@@ -139,15 +150,16 @@ public class SistemaHotel {
         }
     }
 
-    public String mostrarHabitacion(int idHabitacion)
-    {
-        String rta="";
-        for(Usuario u: usuarios)
-        {
-            if(u instanceof Administracion)
-            {
-              rta=((Administracion) u).getHotel().mostrarHabitacion(idHabitacion);
-              break;
+    public String mostrarHabitacion(int idHabitacion) {
+        String rta = "";
+        for (Usuario u : usuarios) {
+            if (u instanceof Administracion) {
+                try {
+                    rta = ((Administracion) u).getHotel().mostrarHabitacion(idHabitacion);
+                    break;
+                } catch (NoRegistradoEx e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
         return rta;
