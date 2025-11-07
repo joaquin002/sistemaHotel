@@ -1,5 +1,7 @@
 package Clase;
 
+import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoEx;
 import Excepcion.NoRegistradoEx;
 import Excepcion.UsuarioNoEncontradoEx;
@@ -43,19 +45,17 @@ public class SistemaHotel {
     }
 
 
-    public void cargarHotel(int id, String nombre, String direccion) throws DuplicadoEx
-    {
-        for(Usuario u: usuarios)
-        {
-            if(u instanceof Administracion)
-            {
-                ((Administracion) u).cargarHotel(id,nombre,direccion);
-            }
-            else {
-                throw new DuplicadoEx("Hotel existente");
+    public void cargarHotel(int id, String nombre, String direccion) {
+        for (Usuario u : usuarios) {
+            if (u instanceof Administracion) {
+                try {
+                    ((Administracion) u).cargarHotel(id, nombre, direccion);
+                    break;
+                } catch (DuplicadoEx e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
-
     }
 
     public String mostrarHoteles(int id)
@@ -104,21 +104,50 @@ public class SistemaHotel {
         }
         return rta;
     }
-/// REVISAAAAAR!!!!
-    public void cargarHabitacionEstandar(int idHotel,String nombre,String direccion, int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado)
+    //cargar y muestra habitaciones
+    public void cargarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado)
     {
-        Hotel h1=new Hotel(idHotel,nombre,direccion);
-        h1.agregarHabitacionEstandar(id,precio,descripcion,servicios,personasPermitidas,estado);
+        for (Usuario u :  usuarios){
+            if (u instanceof Administracion) {
+                ((Administracion) u).agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
+                break;
+            }
+        }
+    }
+    public void cargarHabitacionSuite(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
+        for (Usuario u :  usuarios){
+            if (u instanceof Administracion) {
+                ((Administracion) u).agregarHabitacionSuiete(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+                break;
+            }
+        }
+    }
+    public void cargarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
+        for (Usuario u :  usuarios){
+            if (u instanceof Administracion) {
+                ((Administracion) u).agregarHabitacionDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
+                break;
+            }
+        }
+    }
+    public void eliminarHabitacion(int idHabitacion){
+        for (Usuario u :  usuarios){
+            if (u instanceof Administracion) {
+                ((Administracion) u).eliminarHabitacion(idHabitacion);
+                break;
+            }
+        }
     }
 
-    public String mostrarHabitacion(int idHabitacion, int idHotel)
+    public String mostrarHabitacion(int idHabitacion)
     {
         String rta="";
         for(Usuario u: usuarios)
         {
             if(u instanceof Administracion)
             {
-              rta=((Administracion) u).mostrarHabitacionHotel(idHabitacion);
+              rta=((Administracion) u).getHotel().mostrarHabitacion(idHabitacion);
+              break;
             }
         }
         return rta;

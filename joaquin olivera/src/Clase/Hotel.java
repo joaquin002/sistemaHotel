@@ -2,6 +2,7 @@ package Clase;
 
 import Enums.ServicioEsepcialDeluxe;
 import Enums.ServicioEspecialSuite;
+import Excepcion.NoRegistradoEx;
 import Interfaces.Identificable;
 import Interfaces.IhotelOperable;
 
@@ -67,7 +68,11 @@ public class Hotel implements Identificable, IhotelOperable {
     public void agregarDeluxe(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
         this.habitaciones.agregar(new Deluxe(id, precio, descripcion,servicios, personasPermitidas, servicioEsepcialDeluxe, disponible));
     }
-    public void elimarHabitacion(int idBuscado){
+
+    public void elimarHabitacion(int idBuscado) throws NoRegistradoEx {
+        if (!this.habitaciones.buscarPorId(idBuscado)) {
+            throw new NoRegistradoEx("Habitacion no encontrada");
+        }
         this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
     }
     public String mostrarHabitacion(int idBuscado){
@@ -86,9 +91,7 @@ public class Hotel implements Identificable, IhotelOperable {
             this.recaudacion += recaudacion;
         }
     }
-
-    public String mostrarTodasLasHabitaciones()
-    {
+    public String mostrarTodasLasHabitaciones(){
         String rta="";
         for (Habitacion h : this.habitaciones.getLista()) {
             rta+=h.toString()+'\n';

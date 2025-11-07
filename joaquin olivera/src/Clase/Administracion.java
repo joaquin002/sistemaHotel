@@ -1,5 +1,7 @@
 package Clase;
 
+import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoEx;
 import Excepcion.NoRegistradoEx;
 
@@ -19,6 +21,11 @@ public class Administracion extends Usuario {
     public Registro<Recepcionista> getRecepcionistas() {
         return recepcionistas;
     }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
     //hotel
     public void cargarHotel(int id, String nombre, String direccion)throws DuplicadoEx {
         if(this.hotel!=null){
@@ -27,12 +34,29 @@ public class Administracion extends Usuario {
         this.hotel = new Hotel(id, nombre, direccion);
         System.out.println("Hotel cargado con exito:" +nombre);
     }
-
+    //metodo modificar hotel -hacer-
     public String mostrarHotel(){
         if(this.hotel==null){
             return "No hay hotel cargado";
         }
         return this.hotel.toString();
+    }
+    //habitaciones
+    public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado){
+        this.hotel.agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
+    }
+    public void agregarHabitacionSuiete(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
+        this.hotel.agregarSuite(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+    }
+    public void agregarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
+        this.hotel.agregarDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
+    }
+    public void eliminarHabitacion(int idHabitacion){
+        try{
+            this.hotel.elimarHabitacion(idHabitacion);
+        }catch (NoRegistradoEx e){
+            System.out.println(e.getMessage());
+        }
     }
     //recepcion
     public void cargarRecepcionista(int id) throws DuplicadoEx, NoRegistradoEx {
@@ -55,12 +79,6 @@ public class Administracion extends Usuario {
     }
     public String mostrarRecepcionista(int idRecepcionista){
         return this.recepcionistas.mostrarPorId(idRecepcionista);
-    }
-
-
-    public String mostrarHabitacionHotel(int idBuscado)
-    {
-        return this.hotel.mostrarHabitacion(idBuscado);
     }
 
 }

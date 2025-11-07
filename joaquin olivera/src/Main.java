@@ -242,7 +242,7 @@ public class Main {
                     sistema.cargarHabitacionEstandar(123, 1200, "muy buena", "varios", 2, true);
                     break;
                 case 8:
-                    System.out.println(sistema.mostrarHabitacion(123, 1));
+                    System.out.println(sistema.mostrarHabitacion(123));
                     break;
                 default:
                     break;
