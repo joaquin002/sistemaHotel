@@ -1,5 +1,7 @@
 package Clase;
 
+import Enums.MetodoPago;
+import Excepcion.DuplicadoEx;
 import Excepcion.NoRegistradoEx;
 import Interfaces.Identificable;
 import Interfaces.IhotelOperable;
@@ -117,6 +119,15 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.hotel.getIdHotel();
     }
 
+    public void agregarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago)throws DuplicadoEx {
+        for (Cliente c : this.clientes.getLista()){
+            if (c.getDni() == dni){
+                throw new DuplicadoEx("cliente ya existente");
+            }
+        }
+        this.clientes.agregar(new Cliente(nombre, dni, domicilio, metodoPago));
+    }
+    public void
     @Override
     public String toString() {
         return "Recepcionista{" +

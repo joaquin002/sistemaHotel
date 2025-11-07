@@ -226,7 +226,7 @@ public class Main {
                     }
                     break;
                 case 2:
-                    sistema.cargarRecepcionista(1, 1);
+                    sistema.cargarRecepcionista(1);
                     break;
                 case 3:
                     break;

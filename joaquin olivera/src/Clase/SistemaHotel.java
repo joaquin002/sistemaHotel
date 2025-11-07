@@ -75,7 +75,7 @@ public class SistemaHotel {
             }
         return rta;
     }
-    public void cargarRecepcionista(int id, int idHotel) {
+    public void cargarRecepcionista(int id) {
         for (Usuario u : usuarios) {
 
             if (u instanceof Administracion) {

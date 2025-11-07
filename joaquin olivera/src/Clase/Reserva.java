@@ -44,7 +44,6 @@ public class Reserva implements Identificable {
                 '}';
     }
 
-
     @Override
     public int getIdBuscado() {
         return this.idReserva;
