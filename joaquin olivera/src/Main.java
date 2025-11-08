@@ -195,7 +195,7 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Cargar Hotel");//listo
+           // System.out.println("1. Cargar Hotel");//REVISAR. porque creo que el admin no deberia cargar el hotel pq es el sistema para 1 hotel unico e irrepetible. yo lo cargaria en el main y listo.
             System.out.println("2. Cargar recepcionista");//listo
             System.out.println("3. Eliminar hotel");//listo
             System.out.println("4. Eliminar  recepcionista");//listo
@@ -208,7 +208,7 @@ public class Main {
             switch (opcion) {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
-                    sistema.cargarHotel(1, "hotel 1", "calle nueva"); // PEDIRLE AL USUARIO
+                    sistema.cargarHotel(1, "hotel 1", "calle nueva"); // REVISAR
                     break;
                 case 2:
                     sistema.cargarRecepcionista(1);
@@ -218,7 +218,7 @@ public class Main {
                 case 4:
                     break;
                 case 5:
-                    System.out.println(sistema.mostrarHoteles(1)); //PEDIRLE AL USUARIO EL ID
+                    System.out.println(sistema.mostrarHotel(1)); //PEDIRLE AL USUARIO EL ID
                     break;
                 case 6:
                     System.out.println(sistema.verRecepcionista(1));
