@@ -10,7 +10,7 @@ import java.util.HashSet;
 
 public class Administracion extends Usuario {
     private Hotel hotel;
-    private Registro<Recepcionista>recepcionistas;
+    private Registro<Recepcionista> recepcionistas;
 
     //constructor para usuario
     public Administracion(String nombreUsuario, String contrasenia) {
@@ -46,19 +46,23 @@ public class Administracion extends Usuario {
         return this.hotel.toString();
     }
     //habitaciones
-    public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado)throws NoRegistradoEx{
+    public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) throws NoRegistradoEx{
+        //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
+
         this.hotel.agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
     }
     public void agregarHabitacionSuiete(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible)throws NoRegistradoEx{
+        //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
         this.hotel.agregarSuite(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
     }
     public void agregarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible)throws NoRegistradoEx{
+        //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
@@ -85,15 +89,16 @@ public class Administracion extends Usuario {
                 throw new DuplicadoEx("Ya existe un recepcionista con ese ID");
             }
         }
-        this.recepcionistas.agregar(new Recepcionista(id, this.hotel));
+        Recepcionista r1=new Recepcionista(id,this.hotel);
+        this.recepcionistas.agregar(r1);
     }
 
     public void eliminarRecepcionista(int idRecepcionista){
         this.recepcionistas.eliminar(recepcionistas.buscar(idRecepcionista));
     }
-    public String mostrarRecepcionista(int idRecepcionista)throws NoRegistradoEx{
+    public String mostrarRecepcionista(int idRecepcionista) throws NoRegistradoEx{
         if (this.recepcionistas.getLista()==null){
-            throw new NoRegistradoEx("No hay recepcionistas");
+            throw new NoRegistradoEx("No hay recepcionista registrado");
         }
         return this.recepcionistas.mostrarPorId(idRecepcionista);
     }

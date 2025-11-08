@@ -8,6 +8,7 @@ import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
     public static void main(String[] args) {
         // prueba de usuario funciona
         SistemaHotel sistema = new SistemaHotel();
@@ -19,13 +20,14 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        //cargar el hotel que vamos a estar administrando
-        sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");
-        sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");  //prueba de que no podemos cargar mas de un hotel.
-        //prueba de mostrar la informacion del hotel
-        System.out.println(sistema.mostrarHotel(1));
 
-        //menuPrincipal(sistema);
+        //cargar el hotel que vamos a estar administrando
+       //sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");
+       // sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");  //prueba de que no podemos cargar mas de un hotel.
+        //prueba de mostrar la informacion del hotel
+       // System.out.println(sistema.mostrarHotel(1));
+
+        menuPrincipal(sistema);
 
 
 
@@ -195,7 +197,7 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
-           // System.out.println("1. Cargar Hotel");//REVISAR. porque creo que el admin no deberia cargar el hotel pq es el sistema para 1 hotel unico e irrepetible. yo lo cargaria en el main y listo.
+           System.out.println("1. Cargar Hotel");//REVISAR. porque creo que el admin no deberia cargar el hotel pq es el sistema para 1 hotel unico e irrepetible. yo lo cargaria en el main y listo.
             System.out.println("2. Cargar recepcionista");//listo
             System.out.println("3. Eliminar hotel");//listo
             System.out.println("4. Eliminar  recepcionista");//listo

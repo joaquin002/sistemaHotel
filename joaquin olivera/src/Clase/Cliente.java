@@ -26,6 +26,7 @@ public class Cliente extends Usuario implements Identificable {
         this.reserva=new Reserva(idReserva, dniCliente, fecha, idHabitacion);
         this.historial = new ArrayList<>();
     }
+
     public Cliente(String nombre, int dni, String domicilio, MetodoPago metodoPago){
         this.nombre =  nombre;
         this.dni = dni;

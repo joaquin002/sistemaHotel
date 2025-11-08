@@ -10,16 +10,23 @@ import java.util.ArrayList;
 
 public class SistemaHotel {
     private ArrayList <Usuario> usuarios;
+    private Administracion admin;
 
     public SistemaHotel() {
         this.usuarios = new ArrayList<>();
     }
 
-    public void registrarUsuario(int id,String nombreUsuario, String contrasenia, int opcion){
+    public void registrarAdministrador(String nombreUsuario, String contrasenia){
+        this.admin = new Administracion(nombreUsuario, contrasenia);
+        usuarios.add(admin);
+    }
+
+    public void registrarUsuario(int id, String nombreUsuario, String contrasenia, int opcion){
        Usuario nuevo=null;
         switch (opcion){
             case 1: //administrador
-                nuevo= new Administracion(nombreUsuario, contrasenia);
+                registrarAdministrador(nombreUsuario, contrasenia);
+                System.out.println("usuario registrado con exito");
                 break;
             case 2: //cliente
                 nuevo= new Cliente(nombreUsuario, contrasenia);
@@ -31,8 +38,11 @@ public class SistemaHotel {
                 System.out.println("opcion invalida");
                 break;
         }
-        usuarios.add(nuevo);
-        System.out.println("usuario registrado con exito");
+        if (nuevo!=null){
+            usuarios.add(nuevo);
+            System.out.println("usuario registrado con exito");
+        }
+
     }
 
     public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx {
@@ -43,6 +53,7 @@ public class SistemaHotel {
         }
         throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
     }
+
 
 //REVISAR
     public void cargarHotel(int id, String nombre, String direccion) {
@@ -56,6 +67,10 @@ public class SistemaHotel {
                 }
             }
         }
+    }
+
+    private void cargarHotel2(int id, String nombre, String direccion) {
+
     }
 
     //PREGUNTA!!!! para que queremos eliminar un hotel?
@@ -104,52 +119,33 @@ public class SistemaHotel {
         }
         return rta;
     }
+
     //cargar y muestra habitaciones
     public void cargarHabitacionEstandar(int id, int precio, String descripcion, String servicios, int personasPermitidas, boolean estado) {
-        for (Usuario u : usuarios) {
-            if (u instanceof Administracion) {
-                try {
-                    ((Administracion) u).agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
-                    break;
-                } catch (NoRegistradoEx e) {
-                    System.out.println(e.getMessage());
-                }
-
-            }
-        }
+      try {
+          admin.agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
+      }catch (NoRegistradoEx e){
+          System.out.println(e.getMessage());
+      }
     }
+
     public void cargarHabitacionSuite(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible) {
-        for (Usuario u : usuarios) {
-            if (u instanceof Administracion) {
-                try {
-                    ((Administracion) u).agregarHabitacionSuiete(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
-                    break;
-                } catch (NoRegistradoEx e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
+       try {
+           admin.agregarHabitacionSuiete(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+       }catch (NoRegistradoEx e){
+           System.out.println(e.getMessage());
+       }
     }
 
     public void cargarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible) {
-        for (Usuario u : usuarios) {
-            if (u instanceof Administracion) {
-                try {
-                    ((Administracion) u).agregarHabitacionDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
-                    break;
-                } catch (NoRegistradoEx e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
+       try {
+           admin.agregarHabitacionDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
+       }catch (NoRegistradoEx e){
+           System.out.println(e.getMessage());
+       }
     }
     public void eliminarHabitacion(int idHabitacion){
-        for (Usuario u :  usuarios){
-            if (u instanceof Administracion) {
-                ((Administracion) u).eliminarHabitacion(idHabitacion);
-                break;
-            }
-        }
+        admin.eliminarHabitacion(idHabitacion);
     }
 
     public String mostrarHabitacion(int idHabitacion) {

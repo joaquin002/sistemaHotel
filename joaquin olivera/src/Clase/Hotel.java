@@ -12,7 +12,7 @@ public class Hotel implements Identificable, IhotelOperable {
     private int id;
     private String nombre;
     private String direccion;
-    private int recaudacion = 0;
+    private int recaudacion;
     private Registro<Habitacion> habitaciones;
 
     public Hotel(int id, String nombre, String direccion) {
@@ -27,20 +27,8 @@ public class Hotel implements Identificable, IhotelOperable {
         return this.id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
     public int getRecaudacion() {
         return recaudacion;
-    }
-
-    public Registro<Habitacion> getHabitaciones() {
-        return habitaciones;
     }
 
     @Override
@@ -60,27 +48,33 @@ public class Hotel implements Identificable, IhotelOperable {
     }
 
     public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) {
-        this.habitaciones.agregar(new Habitacion(id, precio, descripcion, servicios, personasPermitidas, estado));
+        Habitacion estandar=new Habitacion(id, precio, descripcion, servicios, personasPermitidas, estado);
+        this.habitaciones.agregar(estandar);
     }
     public void agregarSuite(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
-        this.habitaciones.agregar(new Suite(id, precio, descripcion,servicios, personasPermitidas, especialSuite,disponible));
+        Suite s1=new Suite(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+        this.habitaciones.agregar(s1);
     }
     public void agregarDeluxe(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
-        this.habitaciones.agregar(new Deluxe(id, precio, descripcion,servicios, personasPermitidas, servicioEsepcialDeluxe, disponible));
+        Deluxe d1=new Deluxe(id, precio, descripcion, servicios, personasPermitidas,  servicioEsepcialDeluxe, disponible);
+        this.habitaciones.agregar(d1);
     }
 
-    public void elimarHabitacion(int idBuscado) throws NoRegistradoEx {
+    public boolean elimarHabitacion(int idBuscado) throws NoRegistradoEx {
         if (!this.habitaciones.buscarPorId(idBuscado)) {
             throw new NoRegistradoEx("Habitacion no encontrada");
         }
-        this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
+       return this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
     }
+
     public String mostrarHabitacion(int idBuscado)throws NoRegistradoEx {
         if (!this.habitaciones.buscarPorId(idBuscado)) {
             throw new NoRegistradoEx("Habitacion no encontrada");
         }
         return this.habitaciones.mostrarPorId(idBuscado);
     }
+
+    // REVISAR
     public Habitacion buscarHabitacion(int idHabitacion) {
         for (Habitacion h : this.habitaciones.getLista()) {
             if (h.getId() == idHabitacion) {
@@ -89,11 +83,15 @@ public class Hotel implements Identificable, IhotelOperable {
         }
         return null;
     }
+
+
     public void sumarRecaudacion(int recaudacion) {
         if (recaudacion > 0) {
             this.recaudacion += recaudacion;
         }
     }
+
+
     public String mostrarTodasLasHabitaciones(){
         String rta="";
         for (Habitacion h : this.habitaciones.getLista()) {
