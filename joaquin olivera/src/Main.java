@@ -198,6 +198,7 @@ public class Main {
 
             switch (opcion) {
                 case 1:
+                    //funciona
                     System.out.println(sistema.mostrarHotel());
                     break;
                 case 2:
@@ -214,15 +215,15 @@ public class Main {
                     System.out.println(sistema.verRecepcionista(1));
                     break;
                 case 6:
-                    //cargar habitacion
+                    //cargar habitacion funciona
                    menuCargarHabitacion(sistema);
                     break;
                 case 7:
-                    //buscar y mostrar habitacion
+                    //buscar y mostrar habitacion funciona
                     System.out.println(sistema.mostrarHabitacion(123));
                     break;
                 case 8:
-                   //ver todas las habitaciones
+                   //ver todas las habitaciones funciona
                     System.out.println(sistema.mostrarHabitaciones());
                     break;
                 case 9:
@@ -287,16 +288,19 @@ public class Main {
                     //estandar
                     //pedir datos al usuario
                     sistema.cargarHabitacionEstandar(123, 1200, "muy buena", "varios", 2, true);
+                    System.out.println("se agrego con exito la habitacion estandar");
                     break;
                 case 2:
                     //deluxe
                     //pedir datos al usuario
                     sistema.cargarHabitacionDeluxe(12, 2000, "desc", "servicios", 1, ServicioEsepcialDeluxe.BAR, true);
+                    System.out.println("se agrego con exito la habitacion deluxe");
                     break;
                 case 3:
                     //suite
                     //pedir datos al usuario
                     sistema.cargarHabitacionSuite(2, 50000, "desc", "servicios", 1, ServicioEspecialSuite.CINE_INTERACTIVO, true);
+                    System.out.println("se agrego con exito la habitacion suite");
                     break;
                 case 4:
                     seguir='n';

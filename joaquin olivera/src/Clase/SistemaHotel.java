@@ -20,6 +20,8 @@ public class SistemaHotel {
 
     public void registrarAdministrador(String nombreUsuario, String contrasenia){
         this.admin = new Administracion(nombreUsuario, contrasenia);
+        //asignar el hotel creado al administrador
+        this.admin.setHotel(this.hotel);
         usuarios.add(admin);
     }
 

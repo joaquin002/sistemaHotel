@@ -26,6 +26,10 @@ public class Administracion extends Usuario {
         return hotel;
     }
 
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
     //hotel no va
     public void cargarHotel(int id, String nombre, String direccion)throws DuplicadoEx {
         if(this.hotel!=null){
@@ -47,6 +51,7 @@ public class Administracion extends Usuario {
         }
         return this.hotel.toString();
     }
+
     //habitaciones
     public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) throws NoRegistradoEx{
         //verifica si hay hotel
