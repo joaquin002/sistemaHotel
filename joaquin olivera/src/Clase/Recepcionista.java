@@ -21,12 +21,18 @@ public class Recepcionista extends Usuario implements Identificable {
     public Recepcionista(int id, String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia, "Recepcionista");
         this.id = id;
+        this.clientes=new Registro<>();
+        this.reservas=new Registro<>();
+        this.puntos=new ArrayList<>();
     }
 
     public Recepcionista(int id, String nombreUsuario, String contrasenia, Hotel hotel) {
         super(nombreUsuario, contrasenia, "Recepcionista");
         this.id = id;
         this.hotel = hotel;
+        this.clientes=new Registro<>();
+        this.reservas=new Registro<>();
+        this.puntos=new ArrayList<>();
     }
 
     public Recepcionista(int id, Hotel hotel) {

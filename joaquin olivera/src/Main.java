@@ -40,14 +40,17 @@ public class Main {
             System.out.println("3. Salir");
             System.out.println("Seleccione una opción...");
             opcion = sc.nextInt();
-
+            sc.nextLine();
             switch (opcion) {
                 case 1:
                     menuInterno(sistema);
                     break;
                 case 2:
-
-                    ingresarDatos();
+                    //ingresarDatos();
+                    System.out.println("Ingrese nombre de usuario:");
+                    nombre = sc.nextLine();
+                    System.out.println("Ingrese contrasena:");
+                    contrasenia = sc.nextLine();
                     try {
                         String modo = sistema.iniciarSesion(nombre, contrasenia);
                         System.out.println("Inicio sesion correctamente como " + modo);
@@ -83,8 +86,6 @@ public class Main {
     public static void menuInterno(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion;
-        String name = "";
-        String password = "";
         char seguir = 's';
         boolean encontrado = false;
         do {
@@ -97,19 +98,32 @@ public class Main {
             System.out.println("3. Recepcionista");
             System.out.println("4. salir");
             opcion = sc.nextInt();
+            sc.nextLine();
 
             switch (opcion) {
                 case 1:
-                    ingresarDatos();
-                    sistema.registrarUsuario(1, name, password, 1);
+                   // ingresarDatos();
+                    System.out.println("Ingrese nombre de usuario:");
+                    String nameAdmin = sc.nextLine();
+                    System.out.println("Ingrese contrasena:");
+                    String passAdmin = sc.nextLine();
+                    sistema.registrarUsuario(1, nameAdmin, passAdmin, 1);
                     break;
                 case 2:
-                    ingresarDatos();
-                    sistema.registrarUsuario(1, name, password, 2);
+                    //ingresarDatos();
+                    System.out.println("Ingrese nombre de usuario:");
+                    String nameCliente = sc.nextLine();
+                    System.out.println("Ingrese contrasena:");
+                    String passCliente = sc.nextLine();
+                    sistema.registrarUsuario(1, nameCliente, passCliente, 2);
                     break;
                 case 3:
-                    ingresarDatos();
-                    sistema.registrarUsuario(1, name, password, 3);
+                    //ingresarDatos();
+                    System.out.println("Ingrese nombre de usuario:");
+                    String nameRecep = sc.nextLine();
+                    System.out.println("Ingrese contrasena:");
+                    String passRecep = sc.nextLine();
+                    sistema.registrarUsuario(1, nameRecep, passRecep, 3);
                     break;
                 case 4:
                     encontrado = true;

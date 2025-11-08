@@ -20,40 +20,45 @@ public class SistemaHotel {
         this.hotel=new Hotel(1, "Hotel BellaVista ", "Avenida Siempre Viva 742"); //crea el hotel
     }
 
-    public void registrarAdministrador(String nombreUsuario, String contrasenia){
+    public Administracion registrarAdministrador(String nombreUsuario, String contrasenia){
         this.admin = new Administracion(nombreUsuario, contrasenia);
         //asignar el hotel creado al administrador
         this.admin.setHotel(this.hotel);
-        usuarios.add(admin);
+        return this.admin;
     }
 
-    public void registrarRecepcionista(int id, String nombreUsuario, String contrasenia) {
-        this.recepcionista = new Recepcionista(id, nombreUsuario, contrasenia, this.hotel);
-        usuarios.add(this.recepcionista);
+    public Recepcionista registrarRecepcionista(int id, String nombreUsuario, String contrasenia) {
+        Recepcionista r1 = new Recepcionista(id, nombreUsuario, contrasenia, this.hotel);
+        this.recepcionista=r1;
+        return this.recepcionista;
     }
 
     public void registrarUsuario(int id, String nombreUsuario, String contrasenia, int opcion){
-       Usuario nuevo=null;
-        switch (opcion){
-            case 1: //administrador
-                registrarAdministrador(nombreUsuario, contrasenia);
-                System.out.println("usuario registrado con exito");
+
+        //verificar si existe el usuario
+        for (Usuario u : usuarios){
+            if (u.getNombreUsuario().equals(nombreUsuario)){
+                System.out.println("Error: ya existe un usuario con ese nombre");
+                return;
+            }
+        }
+        Usuario nuevo = null;
+        switch (opcion) {
+            case 1: // Administrador
+                nuevo=registrarAdministrador(nombreUsuario, contrasenia);
                 break;
-            case 2: //cliente
-                nuevo= new Cliente(nombreUsuario, contrasenia);
+            case 2: // Cliente
+                nuevo=new Cliente(nombreUsuario, contrasenia);
                 break;
-            case 3: // recepcionista
-                registrarRecepcionista(id, nombreUsuario, contrasenia);
+            case 3: // Recepcionista
+                nuevo=registrarRecepcionista(id, nombreUsuario, contrasenia);
                 break;
             default:
-                System.out.println("opcion invalida");
+                System.out.println("Opción inválida. No se registró ningún usuario.");
                 break;
         }
-        if (nuevo!=null){
-            usuarios.add(nuevo);
-            System.out.println("usuario registrado con exito");
-        }
-
+        usuarios.add(nuevo);
+        System.out.println("Usuario registrado con éxito");
     }
 
     public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx {
