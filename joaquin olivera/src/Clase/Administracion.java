@@ -10,17 +10,14 @@ import java.util.HashSet;
 
 public class Administracion extends Usuario {
     private Hotel hotel;
-    private Registro<Recepcionista> recepcionistas;
+    private Recepcionista recepcionista;
 
     //constructor para usuario
     public Administracion(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia, "Administrador");
-        this.recepcionistas = new Registro<>();
+        this.recepcionista=recepcionista;
     }
 
-    public Registro<Recepcionista> getRecepcionistas() {
-        return recepcionistas;
-    }
 
     public Hotel getHotel() {
         return hotel;
@@ -84,30 +81,27 @@ public class Administracion extends Usuario {
     }
 
     //recepcion
-    public void cargarRecepcionista(int id) throws DuplicadoEx, NoRegistradoEx {
-       if(this.hotel==null)
-       {
-           throw new NoRegistradoEx("Primero debe cargarse un hotel");
-       }
-        for (Recepcionista recepcionista : this.recepcionistas.getLista())
-        {
-            if(recepcionista.getIdBuscado()==id)
-            {
-                throw new DuplicadoEx("Ya existe un recepcionista con ese ID");
-            }
+    public void cargarRecepcionista(int id) throws DuplicadoEx {
+        if (this.recepcionista!=null){
+            throw new DuplicadoEx("ya existe un recepcionista registrado");
         }
-        Recepcionista r1=new Recepcionista(id,this.hotel);
-        this.recepcionistas.agregar(r1);
+        this.recepcionista=new Recepcionista(id, this.hotel);
     }
 
-    public void eliminarRecepcionista(int idRecepcionista){
-        this.recepcionistas.eliminar(recepcionistas.buscar(idRecepcionista));
+    public boolean eliminarRecepcionista(){
+       boolean encontrado=false;
+        if (this.recepcionista!=null){
+            this.recepcionista=null;
+            encontrado=true;
+        }
+        return encontrado;
     }
+
     public String mostrarRecepcionista(int idRecepcionista) throws NoRegistradoEx{
-        if (this.recepcionistas.getLista()==null){
+        if (this.recepcionista==null){
             throw new NoRegistradoEx("No hay recepcionista registrado");
         }
-        return this.recepcionistas.mostrarPorId(idRecepcionista);
+        return this.recepcionista.toString();
     }
 
 }

@@ -1,5 +1,6 @@
 package Clase;
 
+import Enums.MetodoPago;
 import Enums.ServicioEsepcialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoEx;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class SistemaHotel {
     private ArrayList <Usuario> usuarios;
     private Administracion admin;
+    private Recepcionista recepcionista; //un único recepcionista
     private Hotel hotel; //para que no lo cargue administrador
 
     public SistemaHotel() {
@@ -25,6 +27,11 @@ public class SistemaHotel {
         usuarios.add(admin);
     }
 
+    public void registrarRecepcionista(int id, String nombreUsuario, String contrasenia) {
+        this.recepcionista = new Recepcionista(id, nombreUsuario, contrasenia, this.hotel);
+        usuarios.add(this.recepcionista);
+    }
+
     public void registrarUsuario(int id, String nombreUsuario, String contrasenia, int opcion){
        Usuario nuevo=null;
         switch (opcion){
@@ -36,7 +43,7 @@ public class SistemaHotel {
                 nuevo= new Cliente(nombreUsuario, contrasenia);
                 break;
             case 3: // recepcionista
-                nuevo= new Recepcionista(id,nombreUsuario, contrasenia);
+                registrarRecepcionista(id, nombreUsuario, contrasenia);
                 break;
             default:
                 System.out.println("opcion invalida");
@@ -84,8 +91,6 @@ public class SistemaHotel {
             admin.cargarRecepcionista(id);
         } catch (DuplicadoEx e) {
             System.out.println(e.getMessage());
-        } catch (NoRegistradoEx e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -97,6 +102,10 @@ public class SistemaHotel {
             System.out.println(e.getMessage());
         }
         return rta;
+    }
+
+    public boolean eliminarRecepcionista(){
+        return admin.eliminarRecepcionista();
     }
 
     //cargar y muestra habitaciones
@@ -144,5 +153,22 @@ public class SistemaHotel {
         }
         rta=this.hotel.mostrarTodasLasHabitaciones();
         return rta;
+    }
+
+    //recepcionista metodos
+    public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago){
+        try {
+            recepcionista.checkIn(dniCliente, idHabitacion, fechaEstadia, nombre, domicilio, metodoPago);
+        }catch (NoRegistradoEx e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void checkOut(int idReserva, int dniCliente, String fecha){
+        try {
+            recepcionista.checkOut(idReserva, dniCliente, fecha);
+        } catch (NoRegistradoEx e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

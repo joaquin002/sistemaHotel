@@ -1,4 +1,5 @@
 import Clase.SistemaHotel;
+import Enums.MetodoPago;
 import Enums.ServicioEsepcialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoEx;
@@ -155,9 +156,12 @@ public class Main {
             switch (opcion) {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
-
+                    //pedirle datos al usuario
+                    sistema.checkIn(1234, 1, "07/11/2025", "pau", "domicilio", MetodoPago.EFECTIVO);
                     break;
                 case 2:
+                    //pedirle datos al usuario
+                    sistema.checkOut(1, 1234, "15/11/2025");
                     break;
                 case 3:
                     break;
@@ -184,7 +188,6 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
-           //System.out.println("1. Cargar Hotel");//REVISAR. porque creo que el admin no deberia cargar el hotel pq es el sistema para 1 hotel unico e irrepetible. yo lo cargaria en el main y listo.
             System.out.println("1. Mostrar hotel");//listo
             System.out.println("2. Cargar recepcionista");//listo
             System.out.println("3. Eliminar  recepcionista");//listo

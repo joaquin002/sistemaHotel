@@ -14,15 +14,22 @@ public class Recepcionista extends Usuario implements Identificable {
     private Registro<Reserva> reservas;
     private ArrayList<Punto> puntos;
     private ArrayList<RegistroVisita> registroVisitas;
-    private IhotelOperable hotel; //una variable de tipo interface que solo te deja utilizar los metodos elegidos
+    //ver private IhotelOperable hotel; //una variable de tipo interface que solo te deja utilizar los metodos elegidos
+    private Hotel hotel;
 
     //para parte de usuario
-    public Recepcionista(int id,String nombreUsuario, String contrasenia) {
-        super(nombreUsuario, contrasenia,"Recepcionista");
-        this.id=id;
+    public Recepcionista(int id, String nombreUsuario, String contrasenia) {
+        super(nombreUsuario, contrasenia, "Recepcionista");
+        this.id = id;
     }
 
-    public Recepcionista(int id,Hotel hotel) {
+    public Recepcionista(int id, String nombreUsuario, String contrasenia, Hotel hotel) {
+        super(nombreUsuario, contrasenia, "Recepcionista");
+        this.id = id;
+        this.hotel = hotel;
+    }
+
+    public Recepcionista(int id, Hotel hotel) {
         this.id = id;
         this.hotel = hotel;
         this.clientes = new Registro<>();
@@ -36,20 +43,29 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.id;
     }
 
+    public Cliente registrarClientes(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
+        Cliente c1 = new Cliente(nombre, dni, domicilio, metodoPago);
+        c1.setHotel(this.hotel);
+        clientes.agregar(c1);
+        return c1;
+    }
+
     //busca una reserva
-    public Reserva buscarReserva(int id){
+    public Reserva buscarReserva(int id) {
         return this.reservas.buscar(id);
     }
 
-    public Cliente buscarCliente(int dni){
+    public Cliente buscarCliente(int dni) {
         return this.clientes.buscar(dni);
     }
 
-    public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia) throws NoRegistradoEx {
+    public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago) throws NoRegistradoEx {
 
-        //verifica cliente
-        if (!clientes.buscarPorId(dniCliente)) {
-            throw new NoRegistradoEx("el cliente con dni " + dniCliente + " no esta registrado.");
+        //verifica si el cliente ya existe
+        Cliente c1 = buscarCliente(dniCliente);
+        if (c1 == null) {
+            //registra el cliente
+            c1 = registrarClientes(nombre, dniCliente, domicilio, metodoPago);
         }
 
         //verifica habitación
@@ -68,10 +84,8 @@ public class Recepcionista extends Usuario implements Identificable {
         reservas.agregar(nuevaReserva);
 
         //asignar la reserva al cliente
-        Cliente c1=buscarCliente(dniCliente);
-        if (c1!=null){
-            c1.agregarReserva(nuevaReserva);
-        }
+        c1.agregarReserva(nuevaReserva);
+
 
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
@@ -95,14 +109,14 @@ public class Recepcionista extends Usuario implements Identificable {
     }
 
     public void checkOut(int idReserva, int dniCliente, String fechaSalida) throws NoRegistradoEx {
-        Reserva r2=buscarReserva(idReserva); //buscar la reserva
-        if (r2==null) {
-            throw new NoRegistradoEx("la reserva con id: "+idReserva+" no esta registrada");
+        Reserva r2 = buscarReserva(idReserva); //buscar la reserva
+        if (r2 == null) {
+            throw new NoRegistradoEx("la reserva con id: " + idReserva + " no esta registrada");
         }
 
         //buscar habitacion de la reserva
-        Habitacion h1=hotel.buscarHabitacion(r2.getIdHabitacion());
-        if (h1==null) {
+        Habitacion h1 = hotel.buscarHabitacion(r2.getIdHabitacion());
+        if (h1 == null) {
             throw new NoRegistradoEx("no se encontro la habitacion asociada a la reserva");
         }
 
@@ -113,11 +127,11 @@ public class Recepcionista extends Usuario implements Identificable {
         this.hotel.sumarRecaudacion(h1.getPrecio());
 
         //para que se guarde en el historial
-        Cliente c1=buscarCliente(dniCliente);
-        if (c1==null) {
-            throw new NoRegistradoEx("no se encontro el cliente con dni: "+dniCliente);
+        Cliente c1 = buscarCliente(dniCliente);
+        if (c1 == null) {
+            throw new NoRegistradoEx("no se encontro el cliente con dni: " + dniCliente);
         }
-        c1.guardarHistorial(dniCliente,  fechaSalida);
+        c1.guardarHistorial(dniCliente, fechaSalida);
 
         System.out.println("se realizo con exito el check-out de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada y recaudación actualizada.");
     }
@@ -126,9 +140,9 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.hotel.getIdHotel();
     }
 
-    public void agregarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago)throws DuplicadoEx {
-        for (Cliente c : this.clientes.getLista()){
-            if (c.getDni() == dni){
+    public void agregarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) throws DuplicadoEx {
+        for (Cliente c : this.clientes.getLista()) {
+            if (c.getDni() == dni) {
                 throw new DuplicadoEx("cliente ya existente");
             }
         }
