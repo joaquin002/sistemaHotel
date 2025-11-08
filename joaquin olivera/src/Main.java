@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         // prueba de usuario funciona
         SistemaHotel sistema = new SistemaHotel();
-        sistema.registrarUsuario(1,"paulina", "pau1234", 1);
+        sistema.registrarUsuario(1, "paulina", "pau1234", 1);
         try {
             sistema.iniciarSesion("paulina", "pau1234");
             sistema.iniciarSesion("paulina", "pau4");
@@ -27,14 +27,13 @@ public class Main {
     }
 
     // menu principal. va a contener el resto de los metodos necesarios para que funcione
-    public static void menuPrincipal(SistemaHotel sistema)
-    {
+    public static void menuPrincipal(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion;
-        String nombre="";
-        String contrasenia="";
+        String nombre = "";
+        String contrasenia = "";
 
-        char seguir='s';
+        char seguir = 's';
 
         do {
             System.out.println("Hotel BellaVista.com");
@@ -47,8 +46,7 @@ public class Main {
             System.out.println("Seleccione una opción...");
             opcion = sc.nextInt();
 
-            switch (opcion)
-            {
+            switch (opcion) {
                 case 1:
                     menuInterno(sistema);
                     break;
@@ -56,18 +54,15 @@ public class Main {
 
                     ingresarDatos();
                     try {
-                        String modo=sistema.iniciarSesion(nombre, contrasenia);
-                        System.out.println("Inicio sesion correctamente como "+modo);
-                        if(modo.equals("Recepcionista"))
-                        {
+                        String modo = sistema.iniciarSesion(nombre, contrasenia);
+                        System.out.println("Inicio sesion correctamente como " + modo);
+                        if (modo.equals("Recepcionista")) {
                             menuRecepcionista(sistema);
                         }
-                        if(modo.equals("Administrador"))
-                        {
+                        if (modo.equals("Administrador")) {
                             menuAdministrador(sistema);
                         }
-                        if(modo.equals("Cliente"))
-                        {
+                        if (modo.equals("Cliente")) {
                             menuCliente(sistema);
                         }
                     } catch (UsuarioNoEncontradoEx e) {
@@ -76,28 +71,27 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Gracias por usar nuestro sistema. ¡Hasta pronto!");
-                    seguir='n';
+                    seguir = 'n';
                     break;
                 default:
                     System.out.println("Error. Opcion no valida. Intente nuevamente.");
                     break;
             }
-            if (opcion!=3){
+            if (opcion != 3) {
                 System.out.println("\n¿Desea realizar otra accion? (s/n): ");
-                seguir=sc.next().charAt(0);
+                seguir = sc.next().charAt(0);
             }
-        }while (seguir=='s');
+        } while (seguir == 's');
     }
 
     // tengo que llamar en los parametros al sistema creado en el main porque sino lo que yo cargue en estos metodos no se va a guardar.
-    public static void menuInterno(SistemaHotel sistema)
-    {
+    public static void menuInterno(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion;
-        String name="";
-        String password="";
-        char seguir='s';
-        boolean encontrado=false;
+        String name = "";
+        String password = "";
+        char seguir = 's';
+        boolean encontrado = false;
         do {
             System.out.println("=============================================");
             System.out.println("          Registrando usuario  ");
@@ -109,52 +103,49 @@ public class Main {
             System.out.println("4. salir");
             opcion = sc.nextInt();
 
-            switch (opcion)
-            {
+            switch (opcion) {
                 case 1:
                     ingresarDatos();
-                    sistema.registrarUsuario(1,name,password,1);
+                    sistema.registrarUsuario(1, name, password, 1);
                     break;
                 case 2:
                     ingresarDatos();
-                    sistema.registrarUsuario(1,name,password,2);
+                    sistema.registrarUsuario(1, name, password, 2);
                     break;
                 case 3:
                     ingresarDatos();
-                    sistema.registrarUsuario(1,name,password,3);
+                    sistema.registrarUsuario(1, name, password, 3);
                     break;
                 case 4:
-                    encontrado=true;
+                    encontrado = true;
                     break;
                 default:
                     System.out.println("Error. Opcion no valida...");
                     break;
             }
-            if (!encontrado){
+            if (!encontrado) {
                 System.out.println("¿Desea registrarse en otro modo?");
-                seguir=sc.next().charAt(0);
+                seguir = sc.next().charAt(0);
             }
-        }while (seguir=='s' && !encontrado);
+        } while (seguir == 's' && !encontrado);
 
 
     }
 
-    public static void ingresarDatos()
-    {
+    public static void ingresarDatos() {
         String name;
         String password;
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese nombre de usuario:");
-        name=sc.nextLine();
+        name = sc.nextLine();
         System.out.println("Ingrese contrasena:");
-        password=sc.nextLine();
+        password = sc.nextLine();
     }
 
-    public static void menuRecepcionista(SistemaHotel sistema)
-    {
-        Scanner sc=new Scanner(System.in);
+    public static void menuRecepcionista(SistemaHotel sistema) {
+        Scanner sc = new Scanner(System.in);
         int opcion;
-        char seguir='s';
+        char seguir = 's';
 
         do {
             System.out.println("=============================================");
@@ -165,10 +156,9 @@ public class Main {
             System.out.println("3. Consultar disponibilidad");
             System.out.println("4. Buscar reserva");
             System.out.println("5. Buscar cliente");
-            opcion=sc.nextInt();
+            opcion = sc.nextInt();
 
-            switch (opcion)
-            {
+            switch (opcion) {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
 
@@ -185,17 +175,16 @@ public class Main {
                     break;
             }
             System.out.println("¿Desea elegir otra opcion?");
-            seguir=sc.next().charAt(0);
+            seguir = sc.next().charAt(0);
 
 
-        }while (seguir=='s');
+        } while (seguir == 's');
     }
 
-    public static void menuAdministrador(SistemaHotel sistema)
-    {
-        Scanner sc=new Scanner(System.in);
-        int opcion=0;
-        char seguir='s';
+    public static void menuAdministrador(SistemaHotel sistema) {
+        Scanner sc = new Scanner(System.in);
+        int opcion = 0;
+        char seguir = 's';
 
         do {
             System.out.println("=============================================");
@@ -209,21 +198,12 @@ public class Main {
             System.out.println("6. Buscar recepcionista");//listo
             System.out.println("7. cargar habitacion en un hotel");//listo
             System.out.println("8. ver habitaciones del hotel");//listo
-            opcion=sc.nextInt();
+            opcion = sc.nextInt();
 
-            switch (opcion)
-            {
+            switch (opcion) {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
-                    try
-                    {
-
-                        sistema.cargarHotel(1,"hotel 1", "calle nueva"); // PEDIRLE AL USUARIO
-
-                    }catch (DuplicadoEx e)
-                    {
-                        System.out.println(e.getMessage());
-                    }
+                    sistema.cargarHotel(1, "hotel 1", "calle nueva"); // PEDIRLE AL USUARIO
                     break;
                 case 2:
                     sistema.cargarRecepcionista(1);
@@ -248,17 +228,16 @@ public class Main {
                     break;
             }
             System.out.println("¿Desea elegir otra opcion?");
-            seguir=sc.next().charAt(0);
+            seguir = sc.next().charAt(0);
 
 
-        }while (seguir=='s');
+        } while (seguir == 's');
     }
 
-    public static void menuCliente(SistemaHotel sistema1)
-    {
-        Scanner sc=new Scanner(System.in);
-        int opcion=0;
-        char seguir='s';
+    public static void menuCliente(SistemaHotel sistema1) {
+        Scanner sc = new Scanner(System.in);
+        int opcion = 0;
+        char seguir = 's';
 
         do {
             System.out.println("=============================================");
@@ -267,10 +246,9 @@ public class Main {
             System.out.println("1. Hacer reserva");
             System.out.println("2. Ver puntos disponibles");
             System.out.println("3. Canjear puntos disponibles");
-            opcion=sc.nextInt();
+            opcion = sc.nextInt();
 
-            switch (opcion)
-            {
+            switch (opcion) {
                 case 1:
                     //aca agrego los metodos correspondientes cuando los tenga
                     break;
@@ -282,9 +260,9 @@ public class Main {
                     break;
             }
             System.out.println("¿Desea elegir otra opcion?");
-            seguir=sc.next().charAt(0);
+            seguir = sc.next().charAt(0);
 
 
-        }while (seguir=='s');
+        } while (seguir == 's');
     }
 }

@@ -36,7 +36,19 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.id;
     }
 
+
+
+    //busca una reserva
+    public Reserva buscarReserva(int id){
+        return this.reservas.buscar(id);
+    }
+
+    public Cliente buscarCliente(int dni){
+        return this.clientes.buscar(dni);
+    }
+
     public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia) throws NoRegistradoEx {
+
         //verifica cliente
         if (!clientes.buscarPorId(dniCliente)) {
             throw new NoRegistradoEx("el cliente con dni " + dniCliente + " no esta registrado.");
@@ -57,6 +69,12 @@ public class Recepcionista extends Usuario implements Identificable {
         Reserva nuevaReserva = new Reserva(dniCliente, this.id, fechaEstadia, idHabitacion);
         reservas.agregar(nuevaReserva);
 
+        //asignar la reserva al cliente
+        Cliente c1=buscarCliente(dniCliente);
+        if (c1!=null){
+            c1.agregarReserva(nuevaReserva);
+        }
+
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
 
@@ -76,15 +94,6 @@ public class Recepcionista extends Usuario implements Identificable {
         }
 
         System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la habitación " + idHabitacion + " en la fecha " + fechaEstadia);
-    }
-
-    //busca una reserva
-    public Reserva buscarReserva(int id){
-        return this.reservas.buscar(id);
-    }
-
-    public Cliente buscarCliente(int dni){
-        return this.clientes.buscar(dni);
     }
 
     public void checkOut(int idReserva, int dniCliente, String fechaSalida) throws NoRegistradoEx {
@@ -127,7 +136,8 @@ public class Recepcionista extends Usuario implements Identificable {
         }
         this.clientes.agregar(new Cliente(nombre, dni, domicilio, metodoPago));
     }
-    public void
+
+
     @Override
     public String toString() {
         return "Recepcionista{" +

@@ -25,7 +25,7 @@ public class Cliente extends Usuario implements Identificable {
         this.reserva=new Reserva(idReserva, dniCliente, fecha, idHabitacion);
         this.historial = new ArrayList<>();
     }
-    public Cliente(String nombre,int dni,String domicilio,MetodoPago metodoPago){
+    public Cliente(String nombre, int dni, String domicilio, MetodoPago metodoPago){
         this.nombre =  nombre;
         this.dni = dni;
         this.domicilio = domicilio;
@@ -42,9 +42,11 @@ public class Cliente extends Usuario implements Identificable {
         Historial h1=new Historial(dniCliente,fechaEstadia);
         this.historial.add(h1);
     }
+
     public void agregarReserva(Reserva reserva){
         this.reserva=reserva;
     }
+
     @Override
     public int getIdBuscado() {
         return this.dni;
