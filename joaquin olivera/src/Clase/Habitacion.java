@@ -9,7 +9,7 @@ public class Habitacion implements Identificable {
     private String descripcion;
     private String servicios;
     private int personasPermitidas;
-    private boolean disponible;
+    private boolean disponible; //false ocupada true disponible
 
     public Habitacion(int id, int precio, String descripcion,String servicios, int personasPermitidas,  boolean disponible) {
         this.id = id;

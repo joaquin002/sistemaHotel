@@ -36,8 +36,6 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.id;
     }
 
-
-
     //busca una reserva
     public Reserva buscarReserva(int id){
         return this.reservas.buscar(id);

@@ -18,6 +18,14 @@ public class Reserva implements Identificable {
         this.idHabitacion = idHabitacion;
     }
 
+    //constructor para cliente
+    public Reserva(int dniCliente, String fecha, int idHabitacion) {
+        this.idReserva = cont++;
+        this.dniCliente = dniCliente;
+        this.fecha = fecha;
+        this.idHabitacion = idHabitacion;
+    }
+
     public int getIdHabitacion() {
         return idHabitacion;
     }

@@ -1,6 +1,7 @@
 package Clase;
 
 import Enums.MetodoPago;
+import Excepcion.NoRegistradoEx;
 import Interfaces.Identificable;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Cliente extends Usuario implements Identificable {
     private MetodoPago metodoPago;
     private ArrayList <Historial> historial;
     private Reserva reserva;
-
+    private Hotel hotel; //para asociar al cliente cuando hace la reserva
 
     //constructor normal:
     public Cliente(String nombreUsuario, String contrasenia, String nombre, int dni, String domicilio, MetodoPago metodoPago, int idReserva, int dniCliente, int idRecepcionista, String fecha, int idHabitacion) {
@@ -32,6 +33,7 @@ public class Cliente extends Usuario implements Identificable {
         this.metodoPago = metodoPago;
         this.historial = new ArrayList<>();
     }
+
 
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {
@@ -74,6 +76,33 @@ public class Cliente extends Usuario implements Identificable {
 
     public Reserva getReserva() {
         return reserva;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public void hacerReserva(int idHabitacion, String fecha) throws NoRegistradoEx {
+        Habitacion h1=hotel.buscarHabitacion(idHabitacion);
+        //verifica que este la habitacion buscada
+        if (h1==null){
+            throw new NoRegistradoEx("no se encontro la habitacion con id: "+idHabitacion);
+        }
+        //verifica que este disponible
+        if (!h1.isDisponible()){
+            throw new NoRegistradoEx("la habitacion seleccionada no esta disponible");
+        }
+
+        //el cliente crea la reserva
+        Reserva nuevaReserva=new Reserva(this.getDni(), fecha, idHabitacion);
+
+        //guarda la reserva
+        this.reserva=nuevaReserva;
+
+        //marcar habitación como ocupada
+        h1.setDisponible(false);
+
+        System.out.println("reserva realizada exitosamente para la habitacion " + idHabitacion + " en la fecha " + fecha);
     }
 
     @Override
