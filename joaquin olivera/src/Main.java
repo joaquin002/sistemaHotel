@@ -19,9 +19,14 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        menuPrincipal(sistema);
+        //cargar el hotel que vamos a estar administrando
+        sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");
+        sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");  //prueba de que no podemos cargar mas de un hotel.
+        //prueba de mostrar la informacion del hotel
+        System.out.println(sistema.mostrarHotel(1));
 
-        //probando hacer un checkin
+        //menuPrincipal(sistema);
+
 
 
     }

@@ -44,7 +44,7 @@ public class SistemaHotel {
         throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
     }
 
-
+//REVISAR
     public void cargarHotel(int id, String nombre, String direccion) {
         for (Usuario u : usuarios) {
             if (u instanceof Administracion) {
@@ -57,6 +57,8 @@ public class SistemaHotel {
             }
         }
     }
+
+    //PREGUNTA!!!! para que queremos eliminar un hotel?
     public void eliminarHotel(){
         for (Usuario u: usuarios){
             if (u instanceof Administracion){
@@ -65,7 +67,7 @@ public class SistemaHotel {
             }
         }
     }
-    public String mostrarHoteles(int id)
+    public String mostrarHotel(int id)
     {
         String rta="";
         for(Usuario u: usuarios)
