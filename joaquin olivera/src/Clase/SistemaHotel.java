@@ -11,9 +11,11 @@ import java.util.ArrayList;
 public class SistemaHotel {
     private ArrayList <Usuario> usuarios;
     private Administracion admin;
+    private Hotel hotel; //para que no lo cargue administrador
 
     public SistemaHotel() {
         this.usuarios = new ArrayList<>();
+        this.hotel=new Hotel(1, "Hotel BellaVista ", "Avenida Siempre Viva 742"); //crea el hotel
     }
 
     public void registrarAdministrador(String nombreUsuario, String contrasenia){
@@ -55,24 +57,6 @@ public class SistemaHotel {
     }
 
 
-//REVISAR
-    public void cargarHotel(int id, String nombre, String direccion) {
-        for (Usuario u : usuarios) {
-            if (u instanceof Administracion) {
-                try {
-                    ((Administracion) u).cargarHotel(id, nombre, direccion);
-                    break;
-                } catch (DuplicadoEx e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-    }
-
-    private void cargarHotel2(int id, String nombre, String direccion) {
-
-    }
-
     //PREGUNTA!!!! para que queremos eliminar un hotel?
     public void eliminarHotel(){
         for (Usuario u: usuarios){
@@ -82,40 +66,33 @@ public class SistemaHotel {
             }
         }
     }
-    public String mostrarHotel(int id)
+
+    public String mostrarHotel()
     {
         String rta="";
-        for(Usuario u: usuarios)
-            if (u instanceof Administracion)
-            {
-                rta=((Administracion) u).mostrarHotel();
-            }
+        if (this.hotel==null){
+            rta="No existe el hotel";
+        }
+        rta=this.hotel.toString();
         return rta;
     }
-    public void cargarRecepcionista(int id) {
-        for (Usuario u : usuarios) {
 
-            if (u instanceof Administracion) {
-                try {
-                    ((Administracion) u).cargarRecepcionista(id);
-                } catch (DuplicadoEx e) {
-                    System.out.println(e.getMessage());
-                } catch (NoRegistradoEx e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+    public void cargarRecepcionista(int id) {
+        try {
+            admin.cargarRecepcionista(id);
+        } catch (DuplicadoEx e) {
+            System.out.println(e.getMessage());
+        } catch (NoRegistradoEx e) {
+            System.out.println(e.getMessage());
         }
     }
+
     public String verRecepcionista(int id) {
         String rta = "";
-        for (Usuario u : usuarios) {
-            if (u instanceof Administracion) {
-                try {
-                    rta = ((Administracion) u).mostrarRecepcionista(id);
-                } catch (NoRegistradoEx e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+        try {
+            rta=admin.mostrarRecepcionista(id);
+        } catch (NoRegistradoEx e) {
+            System.out.println(e.getMessage());
         }
         return rta;
     }
@@ -150,16 +127,20 @@ public class SistemaHotel {
 
     public String mostrarHabitacion(int idHabitacion) {
         String rta = "";
-        for (Usuario u : usuarios) {
-            if (u instanceof Administracion) {
-                try {
-                    rta = ((Administracion) u).getHotel().mostrarHabitacion(idHabitacion);
-                    break;
-                } catch (NoRegistradoEx e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+        try {
+            rta=admin.getHotel().mostrarHabitacion(idHabitacion);
+        } catch (NoRegistradoEx e) {
+            System.out.println(e.getMessage());
         }
+        return rta;
+    }
+
+    public String mostrarHabitaciones(){
+        String rta="";
+        if (this.hotel==null){
+            rta="No existe el hotel";
+        }
+        rta=this.hotel.mostrarTodasLasHabitaciones();
         return rta;
     }
 }

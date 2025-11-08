@@ -1,4 +1,6 @@
 import Clase.SistemaHotel;
+import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoEx;
 import Excepcion.NoRegistradoEx;
 import Excepcion.UsuarioNoEncontradoEx;
@@ -10,23 +12,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        // prueba de usuario funciona
+
         SistemaHotel sistema = new SistemaHotel();
-        sistema.registrarUsuario(1, "paulina", "pau1234", 1);
-        try {
-            sistema.iniciarSesion("paulina", "pau1234");
-            sistema.iniciarSesion("paulina", "pau4");
-        } catch (UsuarioNoEncontradoEx e) {
-            System.out.println(e.getMessage());
-        }
-
-
-        //cargar el hotel que vamos a estar administrando
-       //sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");
-       // sistema.cargarHotel(1, "BellaVista", "Avenida Siempre Viva");  //prueba de que no podemos cargar mas de un hotel.
-        //prueba de mostrar la informacion del hotel
-       // System.out.println(sistema.mostrarHotel(1));
-
         menuPrincipal(sistema);
 
 
@@ -197,39 +184,49 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
-           System.out.println("1. Cargar Hotel");//REVISAR. porque creo que el admin no deberia cargar el hotel pq es el sistema para 1 hotel unico e irrepetible. yo lo cargaria en el main y listo.
+           //System.out.println("1. Cargar Hotel");//REVISAR. porque creo que el admin no deberia cargar el hotel pq es el sistema para 1 hotel unico e irrepetible. yo lo cargaria en el main y listo.
+            System.out.println("1. Mostrar hotel");//listo
             System.out.println("2. Cargar recepcionista");//listo
-            System.out.println("3. Eliminar hotel");//listo
-            System.out.println("4. Eliminar  recepcionista");//listo
-            System.out.println("5. mostrar hotel");//listo
-            System.out.println("6. Buscar recepcionista");//listo
-            System.out.println("7. cargar habitacion en un hotel");//listo
-            System.out.println("8. ver habitaciones del hotel");//listo
+            System.out.println("3. Eliminar  recepcionista");//listo
+            System.out.println("4. Buscar recepcionista");//listo
+            System.out.println("5. Ver recepcionista");
+            System.out.println("6. Cargar habitacion");//listo
+            System.out.println("7. Buscar habitacion");
+            System.out.println("8. Ver habitaciones del hotel");//listo
+            System.out.println("9. Eliminar habitacion");
             opcion = sc.nextInt();
 
             switch (opcion) {
                 case 1:
-                    //aca agrego los metodos correspondientes cuando los tenga
-                    sistema.cargarHotel(1, "hotel 1", "calle nueva"); // REVISAR
+                    System.out.println(sistema.mostrarHotel());
                     break;
                 case 2:
                     sistema.cargarRecepcionista(1);
                     break;
                 case 3:
+                    //eliminar recepcionista
                     break;
                 case 4:
+                    //buscar recepcionista
                     break;
                 case 5:
-                    System.out.println(sistema.mostrarHotel(1)); //PEDIRLE AL USUARIO EL ID
-                    break;
-                case 6:
+                    //ver recepcionista
                     System.out.println(sistema.verRecepcionista(1));
                     break;
+                case 6:
+                    //cargar habitacion
+                   menuCargarHabitacion(sistema);
+                    break;
                 case 7:
-                    sistema.cargarHabitacionEstandar(123, 1200, "muy buena", "varios", 2, true);
+                    //buscar y mostrar habitacion
+                    System.out.println(sistema.mostrarHabitacion(123));
                     break;
                 case 8:
-                    System.out.println(sistema.mostrarHabitacion(123));
+                   //ver todas las habitaciones
+                    System.out.println(sistema.mostrarHabitaciones());
+                    break;
+                case 9:
+                    //sistema.eliminarHabitacion(); pedir el id al usuario
                     break;
                 default:
                     break;
@@ -271,5 +268,49 @@ public class Main {
 
 
         } while (seguir == 's');
+    }
+
+    public static void menuCargarHabitacion(SistemaHotel sistema) {
+        Scanner sc = new Scanner(System.in);
+        int opcion=0;
+        char seguir='s';
+        do {
+            System.out.println("Seleccione el tipo de habitacion a cargar: ");
+            System.out.println("1. Estandar");
+            System.out.println("2. Deluxe");
+            System.out.println("3. Suite");
+            System.out.println("4. Volver al menu anterior");
+            opcion = sc.nextInt();
+            sc.nextLine();
+            switch (opcion){
+                case 1:
+                    //estandar
+                    //pedir datos al usuario
+                    sistema.cargarHabitacionEstandar(123, 1200, "muy buena", "varios", 2, true);
+                    break;
+                case 2:
+                    //deluxe
+                    //pedir datos al usuario
+                    sistema.cargarHabitacionDeluxe(12, 2000, "desc", "servicios", 1, ServicioEsepcialDeluxe.BAR, true);
+                    break;
+                case 3:
+                    //suite
+                    //pedir datos al usuario
+                    sistema.cargarHabitacionSuite(2, 50000, "desc", "servicios", 1, ServicioEspecialSuite.CINE_INTERACTIVO, true);
+                    break;
+                case 4:
+                    seguir='n';
+                    break;
+                default:
+                    System.out.println("opcion invalida");
+                    break;
+            }
+            if (opcion!=4){
+                System.out.println("Desea cargar otra habitacion? (s/n)");
+                seguir= sc.next().charAt(0);
+                sc.nextLine();
+            }
+        }while (seguir == 's');
+
     }
 }

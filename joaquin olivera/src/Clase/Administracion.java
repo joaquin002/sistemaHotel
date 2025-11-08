@@ -26,7 +26,7 @@ public class Administracion extends Usuario {
         return hotel;
     }
 
-    //hotel
+    //hotel no va
     public void cargarHotel(int id, String nombre, String direccion)throws DuplicadoEx {
         if(this.hotel!=null){
             throw new DuplicadoEx("Ya existe un hotel cargado en el sistema");
@@ -39,6 +39,8 @@ public class Administracion extends Usuario {
         this.hotel = null;
         System.out.println("Hotel eliminado con exito");
     }
+
+    //no va
     public String mostrarHotel(){
         if(this.hotel==null){
             return "No hay hotel cargado";
