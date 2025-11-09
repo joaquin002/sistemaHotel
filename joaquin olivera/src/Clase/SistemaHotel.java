@@ -192,14 +192,29 @@ public class SistemaHotel {
         return rta;
     }
 
-    public String buscarCliente(int id){
+    public String buscarCliente(int dni){
         String rta="";
-        Cliente c1= recepcionista.buscarCliente(id);
+        Cliente c1= recepcionista.buscarCliente(dni);
        if (c1==null){
-           rta="No se encontro ningun cliente con el id: "+id;
+           rta="No se encontro ningun cliente con el dni: "+dni;
        }else {
            rta=c1.toString();
        }
        return rta;
+    }
+
+    //metodos cliente
+    public String hacerReserva(String nombre, int dniCliente, String domicilio, MetodoPago metodoPago, int idHabitacion, String fecha){
+        try {
+            Cliente c1= recepcionista.buscarCliente(dniCliente);
+            if (c1==null){
+                return "No se encontro ningun cliente con el dni: "+dniCliente;
+            }else {
+                c1.setHotel(hotel); //asocio el hotel al cliente
+                return c1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha, recepcionista);
+            }
+        }catch (NoRegistradoEx e){
+            return e.getMessage();
+        }
     }
 }

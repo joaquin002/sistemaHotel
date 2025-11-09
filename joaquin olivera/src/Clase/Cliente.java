@@ -83,7 +83,28 @@ public class Cliente extends Usuario implements Identificable {
         this.hotel = hotel;
     }
 
-    public void hacerReserva(int idHabitacion, String fecha) throws NoRegistradoEx {
+    public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, String fecha, Recepcionista recepcionista) throws NoRegistradoEx {
+        if (hotel==null){
+            throw new NoRegistradoEx("El cliente no esta asociado a ningun hotel");
+        }
+
+        //guarda o actualiza datos si no estaban
+        if (this.nombre==null || this.nombre.isEmpty()){
+            this.nombre=nombre;
+        }
+
+        if (this.dni==0){
+            this.dni=dni;
+        }
+
+        if (this.domicilio==null || this.domicilio.isEmpty()){
+            this.domicilio=domicilio;
+        }
+
+        if (this.metodoPago==null){
+            this.metodoPago=metodoPago;
+        }
+
         Habitacion h1=hotel.buscarHabitacion(idHabitacion);
         //verifica que este la habitacion buscada
         if (h1==null){
@@ -96,14 +117,16 @@ public class Cliente extends Usuario implements Identificable {
 
         //el cliente crea la reserva
         Reserva nuevaReserva=new Reserva(this.getDni(), fecha, idHabitacion);
-
         //guarda la reserva
         this.reserva=nuevaReserva;
+        this.guardarHistorial(this.getDni(), fecha);
 
         //marcar habitación como ocupada
         h1.setDisponible(false);
 
-        System.out.println("reserva realizada exitosamente para la habitacion " + idHabitacion + " en la fecha " + fecha);
+        recepcionista.guardarReserva(nuevaReserva);
+
+        return "Reserva realizada exitosamente para la habitación " + idHabitacion + " en la fecha " + fecha;
     }
 
     @Override

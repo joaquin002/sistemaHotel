@@ -284,7 +284,9 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    //aca agrego los metodos correspondientes cuando los tenga
+                    //hacer reserva
+                    //pedirle los datos al usuario y descomentar
+                    //System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha));
                     break;
                 case 2:
                     break;

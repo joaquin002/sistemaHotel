@@ -49,6 +49,10 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.id;
     }
 
+    public Registro<Reserva> getReservas() {
+        return reservas;
+    }
+
     public Cliente registrarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
         Cliente c1 = new Cliente(nombre, dni, domicilio, metodoPago);
         c1.setHotel(this.hotel);
@@ -63,6 +67,10 @@ public class Recepcionista extends Usuario implements Identificable {
 
     public Cliente buscarCliente(int dni) {
         return this.clientes.buscar(dni);
+    }
+
+    public void guardarReserva(Reserva reserva) {
+        reservas.agregar(reserva);
     }
 
     public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago) throws NoRegistradoEx {
@@ -87,7 +95,7 @@ public class Recepcionista extends Usuario implements Identificable {
 
         //crea reserva
         Reserva nuevaReserva = new Reserva(dniCliente, this.id, fechaEstadia, idHabitacion);
-        reservas.agregar(nuevaReserva);
+        guardarReserva(nuevaReserva);
 
         //asignar la reserva al cliente
         c1.agregarReserva(nuevaReserva);
