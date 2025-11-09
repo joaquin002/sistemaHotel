@@ -49,7 +49,7 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.id;
     }
 
-    public Cliente registrarClientes(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
+    public Cliente registrarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
         Cliente c1 = new Cliente(nombre, dni, domicilio, metodoPago);
         c1.setHotel(this.hotel);
         clientes.agregar(c1);
@@ -71,7 +71,7 @@ public class Recepcionista extends Usuario implements Identificable {
         Cliente c1 = buscarCliente(dniCliente);
         if (c1 == null) {
             //registra el cliente
-            c1 = registrarClientes(nombre, dniCliente, domicilio, metodoPago);
+            c1 = registrarCliente(nombre, dniCliente, domicilio, metodoPago);
         }
 
         //verifica habitación
@@ -153,6 +153,21 @@ public class Recepcionista extends Usuario implements Identificable {
             }
         }
         this.clientes.agregar(new Cliente(nombre, dni, domicilio, metodoPago));
+    }
+
+    public String consultarDisponibilidad(){
+        String rta="";
+        boolean encontrado = false;
+        for (Habitacion h1: hotel.getHabitaciones().getLista()){
+            if (h1.isDisponible()){
+                rta+=h1.toString()+"\n";
+                encontrado=true;
+            }
+        }
+        if (encontrado==false){
+            rta="No hay habitaciones disponibles";
+        }
+        return rta;
     }
 
 

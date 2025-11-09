@@ -176,4 +176,30 @@ public class SistemaHotel {
             System.out.println(e.getMessage());
         }
     }
+
+    public String consultarDisponibilidad(){
+        return recepcionista.consultarDisponibilidad();
+    }
+
+    public String buscarReserva(int id){
+        String rta="";
+        Reserva r1=recepcionista.buscarReserva(id);
+        if (r1==null){
+            rta="No se encontro ninguna reserva con el id: "+id;
+        }else {
+            rta=r1.toString();
+        }
+        return rta;
+    }
+
+    public String buscarCliente(int id){
+        String rta="";
+        Cliente c1= recepcionista.buscarCliente(id);
+       if (c1==null){
+           rta="No se encontro ningun cliente con el id: "+id;
+       }else {
+           rta=c1.toString();
+       }
+       return rta;
+    }
 }

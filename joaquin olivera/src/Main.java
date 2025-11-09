@@ -178,10 +178,16 @@ public class Main {
                     sistema.checkOut(1, 1234, "15/11/2025");
                     break;
                 case 3:
+                    //consultar disponibilidad
+                    System.out.println(sistema.consultarDisponibilidad());
                     break;
                 case 4:
+                    //buscar reserva
+                    System.out.println(sistema.buscarReserva(1)); //probar
                     break;
                 case 5:
+                    //buscar cliente
+                    System.out.println(sistema.buscarCliente(1)); //probar
                     break;
                 default:
                     break;
@@ -197,7 +203,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
-
+        boolean encontrado=false;
         do {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
@@ -223,9 +229,15 @@ public class Main {
                     break;
                 case 3:
                     //eliminar recepcionista
+                    encontrado=sistema.eliminarRecepcionista();
+                    if (encontrado==true){
+                        System.out.println("se elimino el recepcionista");
+                    }else {
+                        System.out.println("no se elimino el recepcionista");
+                    }
                     break;
                 case 4:
-                    //buscar recepcionista
+                    //buscar recepcionista no se si va
                     break;
                 case 5:
                     //ver recepcionista

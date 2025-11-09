@@ -22,6 +22,10 @@ public class Hotel implements Identificable, IhotelOperable {
         this.habitaciones = new Registro<>();
     }
 
+    public Registro<Habitacion> getHabitaciones() {
+        return habitaciones;
+    }
+
     @Override
     public int getIdHotel() {
         return this.id;
