@@ -109,6 +109,13 @@ public class Recepcionista extends Usuario implements Identificable {
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
 
+        //para sumar los puntos por cada alquiler
+        int precioHabitacion=habitacionEncontrada.getPrecio();
+        int puntosGanados= precioHabitacion/100; // le vamos a asignar 1 punto por cada 100 pesos gastados.
+
+        Punto puntoNuevo= new Punto(puntos.size()+1, dniCliente,puntosGanados);
+        puntos.add(puntoNuevo);
+
         //guarda o actualiza la visita
         boolean encontrado = false;
         for (RegistroVisita rv : registroVisitas) {
@@ -181,6 +188,17 @@ public class Recepcionista extends Usuario implements Identificable {
             rta="No hay habitaciones disponibles";
         }
         return rta;
+    }
+
+    /// AGREGAR AL MAIN VER PUNTOS X ID CLIENTE:
+    public int consultarPuntosCliente(int dniCliente) {
+        int total = 0;
+        for (Punto p : puntos) {
+            if (p.getDniCliente() == dniCliente) {
+                total += p.getCantidad();
+            }
+        }
+        return total;
     }
 
 

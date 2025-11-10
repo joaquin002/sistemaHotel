@@ -307,6 +307,10 @@ public class Main {
                     //System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha));
                     break;
                 case 2:
+                    System.out.println("Ingrese DNI del cliente para ver sus puntos");
+                    int dniBuscado=sc.nextInt();
+                    int puntos=sistema1.consultarPuntosCliente(dniBuscado);
+                    System.out.println("El cliente con dni "+dniBuscado+" posee "+puntos+" puntos");
                     break;
                 case 3:
                     break;

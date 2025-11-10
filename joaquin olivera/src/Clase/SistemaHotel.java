@@ -207,4 +207,18 @@ public class SistemaHotel {
             return e.getMessage();
         }
     }
+
+    /// AGREGAR AL MAIN VER PUNTOS X ID CLIENTE:
+    public int consultarPuntosCliente(int dniCliente) {
+        int total=0;
+        for(Usuario u:usuarios)
+        {
+            if(u instanceof Recepcionista)
+            {
+                Recepcionista r1= (Recepcionista) u;
+                total=r1.consultarPuntosCliente(dniCliente);
+            }
+        }
+        return total;
+    }
 }
