@@ -302,8 +302,18 @@ public class Main {
 
             switch (opcion) {
                 case 1:
+                    ///  PREGUNTA!!! aca le estoy pidiendo los mismos datos que voy a necesitar para el check in, esta bien hacerlo asi???
                     //hacer reserva
                     //pedirle los datos al usuario y descomentar
+                    System.out.println("Ingrese nombre:");
+                    String nombre = sc.next();
+                    System.out.println("Ingrese dni:");
+                    int dniCliente = sc.nextInt();
+                    System.out.println("Ingrese domicilio:");
+                    String domicilio = sc.next();
+                    System.out.println("Ingrese fecha:");
+                    String fecha = sc.next();
+                    System.out.println("Ingrese metodo pago:");
                     //System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha));
                     break;
                 case 2:
