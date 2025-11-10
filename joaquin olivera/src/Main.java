@@ -21,7 +21,7 @@ public class Main {
 
     }
 
-    // menu principal. va a contener el resto de los metodos necesarios para que funcione
+    // Menu principal. Va a contener el resto de los metodos necesarios para que funcione
     public static void menuPrincipal(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -46,7 +46,6 @@ public class Main {
                     menuInterno(sistema);
                     break;
                 case 2:
-                    //ingresarDatos();
                     System.out.println("Ingrese nombre de usuario:");
                     nombre = sc.nextLine();
                     System.out.println("Ingrese contrasena:");
@@ -55,13 +54,13 @@ public class Main {
                         String modo = sistema.iniciarSesion(nombre, contrasenia);
                         System.out.println("Inicio sesion correctamente como " + modo);
                         if (modo.equals("Recepcionista")) {
-                            menuRecepcionista(sistema);
+                            opcionRecepcionista(sistema);
                         }
                         if (modo.equals("Administrador")) {
-                            menuAdministrador(sistema);
+                            opcionAdministrador(sistema);
                         }
                         if (modo.equals("Cliente")) {
-                            menuCliente(sistema);
+                            opcionCliente(sistema);
                         }
                     } catch (UsuarioNoEncontradoEx e) {
                         System.out.println(e.getMessage());
@@ -82,7 +81,7 @@ public class Main {
         } while (seguir == 's');
     }
 
-    // tengo que llamar en los parametros al sistema creado en el main porque sino lo que yo cargue en estos metodos no se va a guardar.
+    // Tengo que llamar en los parametros al sistema creado en el main porque sino lo que yo cargue en estos metodos no se va a guardar.
     public static void menuInterno(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion;
@@ -102,7 +101,6 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                   // ingresarDatos();
                     System.out.println("Ingrese nombre de usuario:");
                     String nameAdmin = sc.nextLine();
                     System.out.println("Ingrese contrasena:");
@@ -110,7 +108,6 @@ public class Main {
                     sistema.registrarUsuario(1, nameAdmin, passAdmin, 1);
                     break;
                 case 2:
-                    //ingresarDatos();
                     System.out.println("Ingrese nombre de usuario:");
                     String nameCliente = sc.nextLine();
                     System.out.println("Ingrese contrasena:");
@@ -118,7 +115,6 @@ public class Main {
                     sistema.registrarUsuario(1, nameCliente, passCliente, 2);
                     break;
                 case 3:
-                    //ingresarDatos();
                     System.out.println("Ingrese nombre de usuario:");
                     String nameRecep = sc.nextLine();
                     System.out.println("Ingrese contrasena:");
@@ -141,17 +137,7 @@ public class Main {
 
     }
 
-    public static void ingresarDatos() {
-        String name;
-        String password;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese nombre de usuario:");
-        name = sc.nextLine();
-        System.out.println("Ingrese contrasena:");
-        password = sc.nextLine();
-    }
-
-    public static void menuRecepcionista(SistemaHotel sistema) {
+    public static void opcionRecepcionista(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion;
         char seguir = 's';
@@ -160,7 +146,7 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("        Recepcionista    ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Hacer CheckIn");
+            System.out.println("1. Hacer CheckIn"); // casi lista
             System.out.println("2. Hacer CheckOut");
             System.out.println("3. Consultar disponibilidad");
             System.out.println("4. Buscar reserva");
@@ -168,13 +154,47 @@ public class Main {
             opcion = sc.nextInt();
 
             switch (opcion) {
-                case 1:
-                    //aca agrego los metodos correspondientes cuando los tenga
+                case 1:  // PONERLE UN CARTEL DE QUE HIZO EL CHECKIN CORRECTAMENTE
                     //pedirle datos al usuario
-                    sistema.checkIn(1234, 1, "07/11/2025", "pau", "domicilio", MetodoPago.EFECTIVO);
+                    System.out.println("Ingrese DNI del cliente:");
+                    int dni=sc.nextInt();
+                    sc.nextLine(); //limpio el buffer
+
+                    System.out.println("Ingrese nombre del cliente:");
+                    String nombre=sc.nextLine();
+
+                    System.out.println("Ingrese numero de habitacion:");
+                    int idHabitacion=sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.println("Ingrese fecha de ingreso (dd/mm/aaaa):");
+                    String fecha=sc.nextLine();
+
+                    System.out.println("Ingrese domicilio:");
+                    String domicilio=sc.nextLine();
+
+                    System.out.println("Seleccione método de pago:");
+                    //para poder seleccionar un enum: (metodo de pago)
+                    for(MetodoPago m : MetodoPago.values()){
+                        System.out.println("- " + m);
+                    }
+                    String metodo=sc.nextLine().toUpperCase();
+                    MetodoPago metodoPago=null;
+                    try
+                    {
+                        metodoPago=MetodoPago.valueOf(metodo);
+                    }catch (IllegalArgumentException e)
+                    {
+                        System.out.println("Metodo de pago invalido. Se pondra EFECTIVO por defecto...");
+                        metodoPago =MetodoPago.EFECTIVO;
+                    }
+
+                    sistema.checkIn(dni,1,fecha,nombre,domicilio,metodoPago);
                     break;
                 case 2:
                     //pedirle datos al usuario
+                    int dniCliente=0;
+                    String fechaFinal="";
                     sistema.checkOut(1, 1234, "15/11/2025");
                     break;
                 case 3:
@@ -199,7 +219,7 @@ public class Main {
         } while (seguir == 's');
     }
 
-    public static void menuAdministrador(SistemaHotel sistema) {
+    public static void opcionAdministrador(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
@@ -211,7 +231,6 @@ public class Main {
             System.out.println("1. Mostrar hotel");//listo
             System.out.println("2. Cargar recepcionista");//listo
             System.out.println("3. Eliminar  recepcionista");//listo
-            System.out.println("4. Buscar recepcionista");//listo
             System.out.println("5. Ver recepcionista");
             System.out.println("6. Cargar habitacion");//listo
             System.out.println("7. Buscar habitacion");
@@ -237,7 +256,6 @@ public class Main {
                     }
                     break;
                 case 4:
-                    //buscar recepcionista no se si va
                     break;
                 case 5:
                     //ver recepcionista
@@ -268,7 +286,7 @@ public class Main {
         } while (seguir == 's');
     }
 
-    public static void menuCliente(SistemaHotel sistema1) {
+    public static void opcionCliente(SistemaHotel sistema1) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
@@ -318,19 +336,19 @@ public class Main {
                 case 1:
                     //estandar
                     //pedir datos al usuario
-                    sistema.cargarHabitacionEstandar(123, 1200, "muy buena", "varios", 2, true);
+                    sistema.cargarHabitacionEstandar(1200, "muy buena", "varios", 2, true);
                     System.out.println("se agrego con exito la habitacion estandar");
                     break;
                 case 2:
                     //deluxe
                     //pedir datos al usuario
-                    sistema.cargarHabitacionDeluxe(12, 2000, "desc", "servicios", 1, ServicioEsepcialDeluxe.BAR, true);
+                    sistema.cargarHabitacionDeluxe( 2000, "desc", "servicios", 1, ServicioEsepcialDeluxe.BAR, true);
                     System.out.println("se agrego con exito la habitacion deluxe");
                     break;
                 case 3:
                     //suite
                     //pedir datos al usuario
-                    sistema.cargarHabitacionSuite(2, 50000, "desc", "servicios", 1, ServicioEspecialSuite.CINE_INTERACTIVO, true);
+                    sistema.cargarHabitacionSuite( 50000, "desc", "servicios", 1, ServicioEspecialSuite.CINE_INTERACTIVO, true);
                     System.out.println("se agrego con exito la habitacion suite");
                     break;
                 case 4:

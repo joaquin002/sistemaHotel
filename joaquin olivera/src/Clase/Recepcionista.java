@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Recepcionista extends Usuario implements Identificable {
     private int id;
+    private static int contador=1;
     private Registro<Cliente> clientes;
     private Registro<Reserva> reservas;
     private ArrayList<Punto> puntos;
@@ -20,11 +21,13 @@ public class Recepcionista extends Usuario implements Identificable {
     //para parte de usuario
     public Recepcionista(int id, String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia, "Recepcionista");
-        this.id = id;
+        this.id = contador++;
         this.clientes=new Registro<>();
         this.reservas=new Registro<>();
         this.puntos=new ArrayList<>();
     }
+
+
 
     public Recepcionista(int id, String nombreUsuario, String contrasenia, Hotel hotel) {
         super(nombreUsuario, contrasenia, "Recepcionista");

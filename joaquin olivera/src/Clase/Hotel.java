@@ -51,16 +51,16 @@ public class Hotel implements Identificable, IhotelOperable {
                 '}';
     }
 
-    public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) {
-        Habitacion estandar=new Habitacion(id, precio, descripcion, servicios, personasPermitidas, estado);
+    public void agregarHabitacionEstandar( int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) {
+        Habitacion estandar=new Habitacion( precio, descripcion, servicios, personasPermitidas, estado);
         this.habitaciones.agregar(estandar);
     }
-    public void agregarSuite(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
-        Suite s1=new Suite(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+    public void agregarSuite( int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
+        Suite s1=new Suite( precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
         this.habitaciones.agregar(s1);
     }
-    public void agregarDeluxe(int id, int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
-        Deluxe d1=new Deluxe(id, precio, descripcion, servicios, personasPermitidas,  servicioEsepcialDeluxe, disponible);
+    public void agregarDeluxe( int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
+        Deluxe d1=new Deluxe(precio, descripcion, servicios, personasPermitidas,  servicioEsepcialDeluxe, disponible);
         this.habitaciones.agregar(d1);
     }
 

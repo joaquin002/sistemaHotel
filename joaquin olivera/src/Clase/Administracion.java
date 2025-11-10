@@ -50,27 +50,27 @@ public class Administracion extends Usuario {
     }
 
     //habitaciones
-    public void agregarHabitacionEstandar(int id, int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) throws NoRegistradoEx{
+    public void agregarHabitacionEstandar( int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) throws NoRegistradoEx{
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
 
-        this.hotel.agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
+        this.hotel.agregarHabitacionEstandar( precio, descripcion, servicios, personasPermitidas, estado);
     }
-    public void agregarHabitacionSuiete(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible)throws NoRegistradoEx{
+    public void agregarHabitacionSuiete( int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible)throws NoRegistradoEx{
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
-        this.hotel.agregarSuite(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+        this.hotel.agregarSuite( precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
     }
-    public void agregarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible)throws NoRegistradoEx{
+    public void agregarHabitacionDeluxe( int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible)throws NoRegistradoEx{
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
-        this.hotel.agregarDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
+        this.hotel.agregarDeluxe( precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
     }
     public void eliminarHabitacion(int idHabitacion){
         try{

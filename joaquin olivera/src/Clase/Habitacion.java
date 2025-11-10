@@ -5,14 +5,15 @@ import Interfaces.Identificable;
 
 public class Habitacion implements Identificable {
     private int id;
+    private static int contador=1;
     private int precio;
     private String descripcion;
     private String servicios;
     private int personasPermitidas;
     private boolean disponible; //false ocupada true disponible
 
-    public Habitacion(int id, int precio, String descripcion,String servicios, int personasPermitidas,  boolean disponible) {
-        this.id = id;
+    public Habitacion( int precio, String descripcion,String servicios, int personasPermitidas,  boolean disponible) {
+        this.id = contador++;
         this.precio = precio;
         this.descripcion = descripcion;
         this.servicios = servicios;

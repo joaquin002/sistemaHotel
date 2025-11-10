@@ -71,16 +71,6 @@ public class SistemaHotel {
     }
 
 
-    //PREGUNTA!!!! para que queremos eliminar un hotel?
-    public void eliminarHotel(){
-        for (Usuario u: usuarios){
-            if (u instanceof Administracion){
-                ((Administracion) u).eliminarHotel();
-                break;
-            }
-        }
-    }
-
     public String mostrarHotel()
     {
         String rta="";
@@ -114,25 +104,25 @@ public class SistemaHotel {
     }
 
     //cargar y muestra habitaciones
-    public void cargarHabitacionEstandar(int id, int precio, String descripcion, String servicios, int personasPermitidas, boolean estado) {
+    public void cargarHabitacionEstandar( int precio, String descripcion, String servicios, int personasPermitidas, boolean estado) {
       try {
-          admin.agregarHabitacionEstandar(id, precio, descripcion, servicios, personasPermitidas, estado);
+          admin.agregarHabitacionEstandar( precio, descripcion, servicios, personasPermitidas, estado);
       }catch (NoRegistradoEx e){
           System.out.println(e.getMessage());
       }
     }
 
-    public void cargarHabitacionSuite(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible) {
+    public void cargarHabitacionSuite( int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible) {
        try {
-           admin.agregarHabitacionSuiete(id, precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+           admin.agregarHabitacionSuiete( precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
        }catch (NoRegistradoEx e){
            System.out.println(e.getMessage());
        }
     }
 
-    public void cargarHabitacionDeluxe(int id, int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible) {
+    public void cargarHabitacionDeluxe( int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible) {
        try {
-           admin.agregarHabitacionDeluxe(id, precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
+           admin.agregarHabitacionDeluxe( precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
        }catch (NoRegistradoEx e){
            System.out.println(e.getMessage());
        }
