@@ -2,7 +2,7 @@ package Clase;
 
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
-import Excepcion.NoRegistradoEx;
+import Excepcion.NoRegistradoException;
 import Interfaces.Identificable;
 
 public class Hotel implements Identificable{
@@ -44,7 +44,7 @@ public class Hotel implements Identificable{
                 ", nombre='" + nombre + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", recaudacion=" + recaudacion +
-                ", habitaciones=" + mostrarTodasLasHabitaciones()+
+                ", habitaciones=" + mostrarHabitaciones()+
                 '}';
     }
 
@@ -61,16 +61,16 @@ public class Hotel implements Identificable{
         this.habitaciones.agregar(d1);
     }
 
-    public boolean elimarHabitacion(int idBuscado) throws NoRegistradoEx {
+    public boolean eliminarHabitacion(int idBuscado) throws NoRegistradoException {
         if (!this.habitaciones.buscarPorId(idBuscado)) {
-            throw new NoRegistradoEx("Habitacion no encontrada");
+            throw new NoRegistradoException("Habitacion no encontrada");
         }
        return this.habitaciones.eliminar(habitaciones.buscar(idBuscado));
     }
 
-    public String mostrarHabitacion(int idBuscado)throws NoRegistradoEx {
+    public String mostrarHabitacion(int idBuscado)throws NoRegistradoException {
         if (!this.habitaciones.buscarPorId(idBuscado)) {
-            throw new NoRegistradoEx("Habitacion no encontrada");
+            throw new NoRegistradoException("Habitacion no encontrada");
         }
         return this.habitaciones.mostrarPorId(idBuscado);
     }
@@ -93,7 +93,7 @@ public class Hotel implements Identificable{
     }
 
 
-    public String mostrarTodasLasHabitaciones(){ // ver
+    public String mostrarHabitaciones(){ // ver
         String rta="";
         for (Habitacion h : this.habitaciones.getLista()) {
             rta+=h.toString()+'\n';

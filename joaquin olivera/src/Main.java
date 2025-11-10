@@ -2,14 +2,12 @@ import Clase.SistemaHotel;
 import Enums.MetodoPago;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
-import Excepcion.DuplicadoEx;
-import Excepcion.UsuarioNoEncontradoEx;
+import Excepcion.DuplicadoException;
+import Excepcion.UsuarioNoEncontradoException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     public static void main(String[] args) {
@@ -62,7 +60,7 @@ public class Main {
                         if (modo.equals("Cliente")) {
                             opcionCliente(sistema);
                         }
-                    } catch (UsuarioNoEncontradoEx e) {
+                    } catch (UsuarioNoEncontradoException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -107,7 +105,7 @@ public class Main {
                     String passAdmin = sc.nextLine();
                     try {
                         sistema.registrarUsuario(nameAdmin, passAdmin, 1);
-                    }catch (DuplicadoEx e){
+                    }catch (DuplicadoException e){
                         System.out.println(e.getMessage());
                     }
 
@@ -119,7 +117,7 @@ public class Main {
                     String passRecep = sc.nextLine();
                     try {
                         sistema.registrarUsuario(nameRecep, passRecep, 2);
-                    } catch (DuplicadoEx e) {
+                    } catch (DuplicadoException e) {
                         System.out.println(e.getMessage());
                     }
 
@@ -132,7 +130,7 @@ public class Main {
                     String passCliente = sc.nextLine();
                     try {
                         sistema.registrarUsuario(nameCliente, passCliente, 3);
-                    }catch (DuplicadoEx e){
+                    }catch (DuplicadoException e){
                         System.out.println(e.getMessage());
                     }
 
@@ -174,8 +172,10 @@ public class Main {
             switch (opcion) {
                 case 1:  // PONERLE UN CARTEL DE QUE HIZO EL CHECKIN CORRECTAMENTE
                     //pedirle datos al usuario
+                    
                     System.out.println("Ingrese DNI del cliente:");
                     int dni=sc.nextInt();
+                    sc.nextLine();
 
 
                     System.out.println("Ingrese nombre del cliente:");
@@ -183,6 +183,7 @@ public class Main {
 
                     System.out.println("Ingrese numero de habitacion:");
                     int idHabitacion=sc.nextInt();
+                    sc.nextLine();
 
                     System.out.println("Ingrese fecha de ingreso (dd/mm/aaaa):");
                     String fecha=sc.nextLine();
@@ -240,12 +241,12 @@ public class Main {
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
             System.out.println("1. Mostrar hotel");//listo
-            System.out.println("2. Eliminar  recepcionista");//VER
+            System.out.println("2. Eliminar  recepcionista REVISAAAAAR!!!!");/// VER
             System.out.println("3. Ver recepcionista");
             System.out.println("4. Cargar habitacion");//listo
-            System.out.println("5. Buscar habitacion");
+            System.out.println("5. Buscar habitacion"); //listo
             System.out.println("6. Ver todas las habitaciones del hotel");//listo
-            System.out.println("7. Eliminar habitacion");
+            System.out.println("7. Eliminar habitacion"); //listo
             opcion = sc.nextInt();
 
             switch (opcion) {
@@ -272,7 +273,9 @@ public class Main {
                     break;
                 case 5:
                     //buscar y mostrar habitacion funciona
-                    System.out.println(sistema.mostrarHabitacion(123));
+                    System.out.println("Ingrese id de la habitacion a buscar:");
+                    int id=sc.nextInt();
+                    System.out.println(sistema.mostrarHabitacion(id));
                     break;
                 case 6:
                     //ver todas las habitaciones funciona
@@ -281,7 +284,13 @@ public class Main {
                 case 7:
                     System.out.println("ingrese id de habitacion a eliminar");
                     int idHabitacionB= sc.nextInt();
-                    sistema.eliminarHabitacion(idHabitacionB);
+                    boolean rta=sistema.eliminarHabitacion(idHabitacionB);
+                    if(rta==true){
+                        System.out.println("Se elimino la habitacion");
+                    }
+                    else {
+                        System.out.println("No se elimino la habitacion");
+                    }
                     break;
                 default:
                     break;

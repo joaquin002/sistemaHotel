@@ -1,15 +1,13 @@
 package Clase;
 
 import Enums.MetodoPago;
-import Excepcion.DuplicadoEx;
-import Excepcion.NoRegistradoEx;
+import Excepcion.NoRegistradoException;
 import Interfaces.Identificable;
 
 import java.util.ArrayList;
 
 public class Recepcionista extends Usuario implements Identificable {
     private int id;
-    private static int contador=1;
     private Registro<Cliente> clientes;
     private Registro<Reserva> reservas;
     private ArrayList<Punto> puntos;
@@ -17,7 +15,7 @@ public class Recepcionista extends Usuario implements Identificable {
     private Hotel hotel;
 
     //para usuario
-    public Recepcionista(String nombreUsuario, String contrasenia, int id, Hotel hotel) {
+    public Recepcionista(String nombreUsuario, String contrasenia, Hotel hotel) {
         super(nombreUsuario, contrasenia, "Recepcionista");
         this.id = 1;
         this.hotel = hotel;
@@ -28,7 +26,7 @@ public class Recepcionista extends Usuario implements Identificable {
     }
 
     //para cargar recepcionista
-    public Recepcionista(int id, Hotel hotel) {
+    public Recepcionista(Hotel hotel) {
         this.id = 1;
         this.hotel = hotel;
         this.clientes = new Registro<>();
@@ -48,7 +46,7 @@ public class Recepcionista extends Usuario implements Identificable {
 
     public Cliente registrarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
         Cliente c1 = new Cliente(nombre, dni, domicilio, metodoPago);
-        c1.setHotel(this.hotel);//asocia el hotel al cliente
+        c1.setHotel(this.hotel);// asocia el hotel al cliente para hacer la reserva. porque no tiene sentido hacer una reserva en una habitacion sin un hotel.
         clientes.agregar(c1);
         return c1;
     }
@@ -66,7 +64,8 @@ public class Recepcionista extends Usuario implements Identificable {
         reservas.agregar(reserva);
     }
 
-    public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago) throws NoRegistradoEx {
+    public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago) throws NoRegistradoException {
+
 
         //verifica si el cliente ya existe
         Cliente c1 = buscarCliente(dniCliente);
@@ -79,11 +78,11 @@ public class Recepcionista extends Usuario implements Identificable {
         Habitacion habitacionEncontrada = this.hotel.buscarHabitacion(idHabitacion);
 
         if (habitacionEncontrada == null) {
-            throw new NoRegistradoEx("la habitacion con id " + idHabitacion + " no existe.");
+            throw new NoRegistradoException("la habitacion con id " + idHabitacion + " no existe.");
         }
         //verifica disponibilidad de la habitacion
         if (!habitacionEncontrada.isDisponible()) {
-            throw new NoRegistradoEx("la habitacion con id " + idHabitacion + " no esta disponible.");
+            throw new NoRegistradoException("la habitacion con id " + idHabitacion + " no esta disponible.");
         }
 
         //crea reserva
@@ -93,7 +92,6 @@ public class Recepcionista extends Usuario implements Identificable {
 
         //asignar la reserva al cliente
         c1.agregarReserva(nuevaReserva);
-
 
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
@@ -108,7 +106,7 @@ public class Recepcionista extends Usuario implements Identificable {
         //guarda o actualiza la visita
         boolean encontrado = false;
         for (RegistroVisita rv : registroVisitas) {
-            if (rv.getIdCliente() == dniCliente && rv.getIdHotel() == hotel.getIdBuscado()) {
+            if (rv.getDniCliente() == dniCliente && rv.getIdHotel() == hotel.getIdBuscado()) {
                 rv.setCantidad(rv.getCantidad() + 1);//incrementa veces que va el cliente al hotel
                 rv.setFechaEstadia(fechaEstadia);//actualiza fecha
                 encontrado = true;
@@ -123,16 +121,16 @@ public class Recepcionista extends Usuario implements Identificable {
         System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la habitación " + idHabitacion + " en la fecha " + fechaEstadia);
     }
 
-    public void checkOut(int idReserva, int dniCliente, String fechaSalida) throws NoRegistradoEx {
+    public void checkOut(int idReserva, int dniCliente, String fechaSalida) throws NoRegistradoException {
         Reserva r2 = buscarReserva(idReserva); //buscar la reserva
         if (r2 == null) {
-            throw new NoRegistradoEx("la reserva con id: " + idReserva + " no esta registrada");
+            throw new NoRegistradoException("la reserva con id: " + idReserva + " no esta registrada");
         }
 
         //buscar habitacion de la reserva
         Habitacion h1 = hotel.buscarHabitacion(r2.getIdHabitacion());
         if (h1 == null) {
-            throw new NoRegistradoEx("no se encontro la habitacion asociada a la reserva");
+            throw new NoRegistradoException("no se encontro la habitacion asociada a la reserva");
         }
 
         //liberar habitacion
@@ -144,7 +142,7 @@ public class Recepcionista extends Usuario implements Identificable {
         //para que se guarde en el historial
         Cliente c1 = buscarCliente(dniCliente);
         if (c1 == null) {
-            throw new NoRegistradoEx("no se encontro el cliente con dni: " + dniCliente);
+            throw new NoRegistradoException("no se encontro el cliente con dni: " + dniCliente);
         }
         c1.guardarHistorial(dniCliente, fechaSalida);
 
@@ -181,6 +179,18 @@ public class Recepcionista extends Usuario implements Identificable {
     public String mostrar() {
         return super.toString()+"Recepcionista{" +
                 "id=" + id +
+                ", hotel=" + hotel +
+                '}';
+    }
+
+    @Override
+    public String toString() {
+        return "Recepcionista{" +
+                "id=" + id +
+                ", clientes=" + clientes +
+                ", reservas=" + reservas +
+                ", puntos=" + puntos +
+                ", registroVisitas=" + registroVisitas +
                 ", hotel=" + hotel +
                 '}';
     }

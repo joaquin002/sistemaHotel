@@ -1,7 +1,7 @@
 package Clase;
 
 import Enums.MetodoPago;
-import Excepcion.NoRegistradoEx;
+import Excepcion.NoRegistradoException;
 import Interfaces.Identificable;
 
 import java.util.ArrayList;
@@ -83,9 +83,9 @@ public class Cliente extends Usuario implements Identificable {
         this.hotel = hotel;
     }
 
-    public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, String fecha, Recepcionista recepcionista) throws NoRegistradoEx {
+    public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, String fecha, Recepcionista recepcionista) throws NoRegistradoException {
         if (hotel==null){
-            throw new NoRegistradoEx("El cliente no esta asociado a ningun hotel");
+            throw new NoRegistradoException("El cliente no esta asociado a ningun hotel");
         }
 
         //guarda o actualiza datos si no estaban
@@ -108,11 +108,11 @@ public class Cliente extends Usuario implements Identificable {
         Habitacion h1=hotel.buscarHabitacion(idHabitacion);
         //verifica que este la habitacion buscada
         if (h1==null){
-            throw new NoRegistradoEx("no se encontro la habitacion con id: "+idHabitacion);
+            throw new NoRegistradoException("no se encontro la habitacion con id: "+idHabitacion);
         }
         //verifica que este disponible
         if (!h1.isDisponible()){
-            throw new NoRegistradoEx("la habitacion seleccionada no esta disponible");
+            throw new NoRegistradoException("la habitacion seleccionada no esta disponible");
         }
 
         //el cliente crea la reserva

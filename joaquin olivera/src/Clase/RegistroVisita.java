@@ -3,21 +3,21 @@ package Clase;
 public class RegistroVisita {
     private int id;
     private static int cont = 1;
-    private int idCliente;
+    private int dniCliente;
     private int cantidad; // de visitas
     private int idHotel; //del hotel al que fue.
     private String fechaEstadia; //fecha de cuando estuvo
 
-    public RegistroVisita(int idCliente, int cantidad, int idHotel,  String fechaEstadia) {
+    public RegistroVisita(int dniCliente, int cantidad, int idHotel,  String fechaEstadia) {
         this.id = cont++;
-        this.idCliente = idCliente;
+        this.dniCliente = dniCliente;
         this.cantidad = cantidad;
         this.idHotel = idHotel;
         this.fechaEstadia = fechaEstadia;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public int getDniCliente() {
+        return dniCliente;
     }
 
     public int getIdHotel() {
@@ -26,14 +26,6 @@ public class RegistroVisita {
 
     public int getCantidad() {
         return cantidad;
-    }
-
-    public String getFechaEstadia() {
-        return fechaEstadia;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
     }
 
     public void setFechaEstadia(String fechaEstadia) {
@@ -48,7 +40,7 @@ public class RegistroVisita {
     public String toString() {
         return "RegistroVisita{" +
                 "id=" + id +
-                ", idCliente=" + idCliente +
+                ", dniCliente=" + dniCliente +
                 ", cantidad=" + cantidad +
                 ", idHotel=" + idHotel +
                 ", fechaEstadia='" + fechaEstadia + '\'' +

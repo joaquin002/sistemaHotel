@@ -3,9 +3,9 @@ package Clase;
 import Enums.MetodoPago;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
-import Excepcion.DuplicadoEx;
-import Excepcion.NoRegistradoEx;
-import Excepcion.UsuarioNoEncontradoEx;
+import Excepcion.DuplicadoException;
+import Excepcion.NoRegistradoException;
+import Excepcion.UsuarioNoEncontradoException;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class SistemaHotel {
 
     public Recepcionista registrarRecepcionista(String nombreUsuario, String contrasenia) {
         int id=1;
-        Recepcionista r1 = new Recepcionista(nombreUsuario, contrasenia, id, this.hotel);
+        Recepcionista r1 = new Recepcionista(nombreUsuario, contrasenia, this.hotel);
         this.recepcionista=r1;
        //si ya existe administrador, lo guarda ahí también
         if (this.admin!=null){
@@ -38,7 +38,7 @@ public class SistemaHotel {
         return this.recepcionista;
     }
 
-    public void registrarUsuario(String nombreUsuario, String contrasenia, int opcion) throws DuplicadoEx{
+    public void registrarUsuario(String nombreUsuario, String contrasenia, int opcion) throws DuplicadoException {
 
         //verificar si existe el usuario
         for (Usuario u : usuarios){
@@ -51,14 +51,14 @@ public class SistemaHotel {
         switch (opcion) {
             case 1: // Administrador
                 if (this.admin!=null){
-                    throw new DuplicadoEx("Ya existe un administrador registrado");
+                    throw new DuplicadoException("Ya existe un administrador registrado");
                 }
                 nuevo=registrarAdministrador(nombreUsuario, contrasenia);
                 break;
             case 2: // recepcionista
 
                 if (this.recepcionista!=null){
-                    throw new DuplicadoEx("Ya existe un recepcionista registrado");
+                    throw new DuplicadoException("Ya existe un recepcionista registrado");
                 }
                 nuevo=registrarRecepcionista(nombreUsuario, contrasenia);
                 break;
@@ -73,13 +73,13 @@ public class SistemaHotel {
         System.out.println("Usuario registrado con éxito");
     }
 
-    public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoEx {
+    public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoException {
         for (Usuario u: usuarios){
             if (u.validarUsuario(nombreUsuario, contrasenia)){
                 return u.getTipo();
             }
         }
-        throw new UsuarioNoEncontradoEx("usuario o contraseña incorrecta");
+        throw new UsuarioNoEncontradoException("usuario o contraseña incorrecta");
     }
 
 
@@ -97,7 +97,7 @@ public class SistemaHotel {
         String rta = "";
         try {
             rta=admin.mostrarRecepcionista();
-        } catch (NoRegistradoEx e) {
+        } catch (NoRegistradoException e) {
             System.out.println(e.getMessage());
         }
         return rta;
@@ -111,15 +111,15 @@ public class SistemaHotel {
     public void cargarHabitacionEstandar(double precio, String descripcion, String servicios, int personasPermitidas, boolean estado, String motivoNoDisponible) {
       try {
           admin.agregarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
-      }catch (NoRegistradoEx e){
+      }catch (NoRegistradoException e){
           System.out.println(e.getMessage());
       }
     }
 
     public void cargarHabitacionSuite(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, String motivoNoDisponible) {
        try {
-           admin.agregarHabitacionSuiete(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
-       }catch (NoRegistradoEx e){
+           admin.agregarHabitacionSuite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
+       }catch (NoRegistradoException e){
            System.out.println(e.getMessage());
        }
     }
@@ -127,19 +127,19 @@ public class SistemaHotel {
     public void cargarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, String motivoNoDisponible) {
        try {
            admin.agregarHabitacionDeluxe( precio, descripcion, servicios, personasPermitidas, servicioEspecialDeluxe, disponible,  motivoNoDisponible);
-       }catch (NoRegistradoEx e){
+       }catch (NoRegistradoException e){
            System.out.println(e.getMessage());
        }
     }
-    public void eliminarHabitacion(int idHabitacion){
-        admin.eliminarHabitacion(idHabitacion);
+    public boolean eliminarHabitacion(int idHabitacion){
+       return admin.eliminarHabitacion(idHabitacion);
     }
 
     public String mostrarHabitacion(int idHabitacion) {
         String rta = "";
         try {
             rta=admin.getHotel().mostrarHabitacion(idHabitacion);
-        } catch (NoRegistradoEx e) {
+        } catch (NoRegistradoException e) {
             System.out.println(e.getMessage());
         }
         return rta;
@@ -150,15 +150,16 @@ public class SistemaHotel {
         if (this.hotel==null){
             rta="No existe el hotel";
         }
-        rta=this.hotel.mostrarTodasLasHabitaciones();
+        rta=this.hotel.mostrarHabitaciones();
         return rta;
     }
 
     //recepcionista metodos
     public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago){
+
         try {
             recepcionista.checkIn(dniCliente, idHabitacion, fechaEstadia, nombre, domicilio, metodoPago);
-        }catch (NoRegistradoEx e){
+        }catch (NoRegistradoException e){
             System.out.println(e.getMessage());
         }
     }
@@ -166,7 +167,7 @@ public class SistemaHotel {
     public void checkOut(int idReserva, int dniCliente, String fecha){
         try {
             recepcionista.checkOut(idReserva, dniCliente, fecha);
-        } catch (NoRegistradoEx e) {
+        } catch (NoRegistradoException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -210,7 +211,7 @@ public class SistemaHotel {
                 c1.setHotel(hotel); //asocio el hotel al cliente
                 return c1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha, recepcionista);
             }
-        }catch (NoRegistradoEx e){
+        }catch (NoRegistradoException e){
             return e.getMessage();
         }
     }

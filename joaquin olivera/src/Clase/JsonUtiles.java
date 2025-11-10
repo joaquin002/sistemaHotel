@@ -7,7 +7,7 @@ import java.io.*;
 
 public class JsonUtiles {
 
-        public static void subirJSon(JSONArray jsonArray, String archive){
+        public static void subirJSonArray(JSONArray jsonArray, String archive){
             try{
                 BufferedWriter salida = new BufferedWriter(new FileWriter(archive+".txt"));
                 salida.write(jsonArray.toString());
@@ -18,7 +18,7 @@ public class JsonUtiles {
             }
         }
 
-        public static void subirJson(JSONObject jsonObject, String archive){
+        public static void subirJsonObject(JSONObject jsonObject, String archive){
             try{
                 BufferedWriter salida = new BufferedWriter(new FileWriter(archive+".txt"));
                 salida.write(jsonObject.toString());

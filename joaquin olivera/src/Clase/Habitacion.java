@@ -9,16 +9,16 @@ public class Habitacion implements Identificable {
     private double precio;
     private String descripcion;
     private String servicios;
-    private int personasPermitidas;
+    private int cantPersonas;
     private boolean disponible; //false ocupada true disponible
     private String motivoNoDisponible;
 
-    public Habitacion( double precio, String descripcion,String servicios, int personasPermitidas,  boolean disponible, String motivoNoDisponible) {
+    public Habitacion( double precio, String descripcion,String servicios, int cantPersonas,  boolean disponible, String motivoNoDisponible) {
         this.id = contador++;
         this.precio = precio;
         this.descripcion = descripcion;
         this.servicios = servicios;
-        this.personasPermitidas =  personasPermitidas;
+        this.cantPersonas =  cantPersonas;
         this.disponible = disponible;
         this.motivoNoDisponible=motivoNoDisponible;
     }
@@ -60,7 +60,7 @@ public class Habitacion implements Identificable {
                 ", precio=" + precio +
                 ", descripcion='" + descripcion + '\'' +
                 ", servicios='" + servicios + '\'' +
-                ", personasPermitidas=" + personasPermitidas +
+                ", personasPermitidas=" + cantPersonas +
                 ", disponible=" + disponible +
                 ", motivoNoDisponible='" + motivoNoDisponible + '\'' +
                 '}';
