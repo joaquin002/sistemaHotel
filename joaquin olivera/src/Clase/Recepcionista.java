@@ -25,6 +25,7 @@ public class Recepcionista extends Usuario implements Identificable {
         this.clientes=new Registro<>();
         this.reservas=new Registro<>();
         this.puntos=new ArrayList<>();
+        this.registroVisitas=new ArrayList<>();
     }
 
 
@@ -36,6 +37,7 @@ public class Recepcionista extends Usuario implements Identificable {
         this.clientes=new Registro<>();
         this.reservas=new Registro<>();
         this.puntos=new ArrayList<>();
+        this.registroVisitas=new ArrayList<>();
     }
 
     public Recepcionista(int id, Hotel hotel) {

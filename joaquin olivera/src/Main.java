@@ -35,9 +35,9 @@ public class Main {
             System.out.println("\n=============================================");
             System.out.println("🏨  BIENVENIDO A HOTEL BELLAVISTA  🏨");
             System.out.println("=============================================");
-            System.out.println("1. Registrar usuario");
-            System.out.println("2. Iniciar Sesion");
-            System.out.println("3. Salir");
+            System.out.println("1. Registrar usuario"); //listo
+            System.out.println("2. Iniciar Sesion"); //listo
+            System.out.println("3. Salir"); //listo
             System.out.println("Seleccione una opción...");
             opcion = sc.nextInt();
             sc.nextLine();
@@ -146,8 +146,8 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("        Recepcionista    ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Hacer CheckIn"); // casi lista
-            System.out.println("2. Hacer CheckOut");
+            System.out.println("1. Hacer CheckIn"); // lista
+            System.out.println("2. Hacer CheckOut"); // revisar
             System.out.println("3. Consultar disponibilidad");
             System.out.println("4. Buscar reserva");
             System.out.println("5. Buscar cliente");
