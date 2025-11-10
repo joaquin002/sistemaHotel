@@ -6,40 +6,39 @@ import Interfaces.Identificable;
 public class Habitacion implements Identificable {
     private int id;
     private static int contador=1;
-    private int precio;
+    private double precio;
     private String descripcion;
     private String servicios;
     private int personasPermitidas;
     private boolean disponible; //false ocupada true disponible
+    private String motivoNoDisponible;
 
-    public Habitacion( int precio, String descripcion,String servicios, int personasPermitidas,  boolean disponible) {
+    public Habitacion( double precio, String descripcion,String servicios, int personasPermitidas,  boolean disponible, String motivoNoDisponible) {
         this.id = contador++;
         this.precio = precio;
         this.descripcion = descripcion;
         this.servicios = servicios;
         this.personasPermitidas =  personasPermitidas;
         this.disponible = disponible;
+        this.motivoNoDisponible=motivoNoDisponible;
+    }
+
+    public String getMotivoNoDisponible() {
+        return motivoNoDisponible;
+    }
+
+    public void setMotivoNoDisponible(String motivoNoDisponible) {
+        this.motivoNoDisponible = motivoNoDisponible;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public String getServicios() {
-        return servicios;
-    }
-
-    public int getPersonasPermitidas() {
-        return personasPermitidas;
-    }
 
     public boolean isDisponible() {
         return disponible;
@@ -62,6 +61,8 @@ public class Habitacion implements Identificable {
                 ", descripcion='" + descripcion + '\'' +
                 ", servicios='" + servicios + '\'' +
                 ", personasPermitidas=" + personasPermitidas +
+                ", disponible=" + disponible +
+                ", motivoNoDisponible='" + motivoNoDisponible + '\'' +
                 '}';
     }
 }

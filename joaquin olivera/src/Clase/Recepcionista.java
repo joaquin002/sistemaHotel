@@ -4,7 +4,6 @@ import Enums.MetodoPago;
 import Excepcion.DuplicadoEx;
 import Excepcion.NoRegistradoEx;
 import Interfaces.Identificable;
-import Interfaces.IhotelOperable;
 
 import java.util.ArrayList;
 
@@ -15,24 +14,12 @@ public class Recepcionista extends Usuario implements Identificable {
     private Registro<Reserva> reservas;
     private ArrayList<Punto> puntos;
     private ArrayList<RegistroVisita> registroVisitas;
-    //ver private IhotelOperable hotel; //una variable de tipo interface que solo te deja utilizar los metodos elegidos
     private Hotel hotel;
 
-    //para parte de usuario
-    public Recepcionista(int id, String nombreUsuario, String contrasenia) {
+    //para usuario
+    public Recepcionista(String nombreUsuario, String contrasenia, int id, Hotel hotel) {
         super(nombreUsuario, contrasenia, "Recepcionista");
-        this.id = contador++;
-        this.clientes=new Registro<>();
-        this.reservas=new Registro<>();
-        this.puntos=new ArrayList<>();
-        this.registroVisitas=new ArrayList<>();
-    }
-
-
-
-    public Recepcionista(int id, String nombreUsuario, String contrasenia, Hotel hotel) {
-        super(nombreUsuario, contrasenia, "Recepcionista");
-        this.id = id;
+        this.id = 1;
         this.hotel = hotel;
         this.clientes=new Registro<>();
         this.reservas=new Registro<>();
@@ -40,8 +27,9 @@ public class Recepcionista extends Usuario implements Identificable {
         this.registroVisitas=new ArrayList<>();
     }
 
+    //para cargar recepcionista
     public Recepcionista(int id, Hotel hotel) {
-        this.id = id;
+        this.id = 1;
         this.hotel = hotel;
         this.clientes = new Registro<>();
         this.reservas = new Registro<>();
@@ -60,7 +48,7 @@ public class Recepcionista extends Usuario implements Identificable {
 
     public Cliente registrarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
         Cliente c1 = new Cliente(nombre, dni, domicilio, metodoPago);
-        c1.setHotel(this.hotel);
+        c1.setHotel(this.hotel);//asocia el hotel al cliente
         clientes.agregar(c1);
         return c1;
     }
@@ -91,7 +79,7 @@ public class Recepcionista extends Usuario implements Identificable {
         Habitacion habitacionEncontrada = this.hotel.buscarHabitacion(idHabitacion);
 
         if (habitacionEncontrada == null) {
-            throw new NoRegistradoEx("a habitacion con id " + idHabitacion + " no existe.");
+            throw new NoRegistradoEx("la habitacion con id " + idHabitacion + " no existe.");
         }
         //verifica disponibilidad de la habitacion
         if (!habitacionEncontrada.isDisponible()) {
@@ -99,6 +87,7 @@ public class Recepcionista extends Usuario implements Identificable {
         }
 
         //crea reserva
+        //verificar si ya tiene reserva
         Reserva nuevaReserva = new Reserva(dniCliente, this.id, fechaEstadia, idHabitacion);
         guardarReserva(nuevaReserva);
 
@@ -110,8 +99,8 @@ public class Recepcionista extends Usuario implements Identificable {
         habitacionEncontrada.setDisponible(false);
 
         //para sumar los puntos por cada alquiler
-        int precioHabitacion=habitacionEncontrada.getPrecio();
-        int puntosGanados= precioHabitacion/100; // le vamos a asignar 1 punto por cada 100 pesos gastados.
+        double precioHabitacion=habitacionEncontrada.getPrecio();
+        int puntosGanados= (int)precioHabitacion/100; // le vamos a asignar 1 punto por cada 100 pesos gastados.
 
         Punto puntoNuevo= new Punto(puntos.size()+1, dniCliente,puntosGanados);
         puntos.add(puntoNuevo);
@@ -119,16 +108,16 @@ public class Recepcionista extends Usuario implements Identificable {
         //guarda o actualiza la visita
         boolean encontrado = false;
         for (RegistroVisita rv : registroVisitas) {
-            if (rv.getIdCliente() == dniCliente && rv.getIdHotel() == hotel.getIdHotel()) {
-                rv.setCantidad(rv.getCantidad() + 1);
-                rv.setFechaEstadia(fechaEstadia);
+            if (rv.getIdCliente() == dniCliente && rv.getIdHotel() == hotel.getIdBuscado()) {
+                rv.setCantidad(rv.getCantidad() + 1);//incrementa veces que va el cliente al hotel
+                rv.setFechaEstadia(fechaEstadia);//actualiza fecha
                 encontrado = true;
                 break;
             }
         }
 
         if (!encontrado) {
-            registroVisitas.add(new RegistroVisita(dniCliente, 1, hotel.getIdHotel(), fechaEstadia));
+            registroVisitas.add(new RegistroVisita(dniCliente, 1, hotel.getIdBuscado(), fechaEstadia));
         }
 
         System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la habitación " + idHabitacion + " en la fecha " + fechaEstadia);
@@ -162,18 +151,6 @@ public class Recepcionista extends Usuario implements Identificable {
         System.out.println("se realizo con exito el check-out de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada y recaudación actualizada.");
     }
 
-    public int getIdHotel() {
-        return this.hotel.getIdHotel();
-    }
-
-    public void agregarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) throws DuplicadoEx {
-        for (Cliente c : this.clientes.getLista()) {
-            if (c.getDni() == dni) {
-                throw new DuplicadoEx("cliente ya existente");
-            }
-        }
-        this.clientes.agregar(new Cliente(nombre, dni, domicilio, metodoPago));
-    }
 
     public String consultarDisponibilidad(){
         String rta="";
@@ -201,16 +178,10 @@ public class Recepcionista extends Usuario implements Identificable {
         return total;
     }
 
-
-    @Override
-    public String toString() {
-        return "Recepcionista{" +
+    public String mostrar() {
+        return super.toString()+"Recepcionista{" +
                 "id=" + id +
-                ", clientes=" + clientes +
-                ", reservas=" + reservas +
-                ", puntos=" + puntos +
-                ", registroVisitas=" + registroVisitas +
-                ", hotel=" + hotel.toString() +
+                ", hotel=" + hotel +
                 '}';
     }
 }

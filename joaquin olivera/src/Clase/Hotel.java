@@ -1,37 +1,34 @@
 package Clase;
 
-import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.NoRegistradoEx;
 import Interfaces.Identificable;
-import Interfaces.IhotelOperable;
 
-import java.util.ArrayList;
-
-public class Hotel implements Identificable, IhotelOperable {
+public class Hotel implements Identificable{
     private int id;
     private String nombre;
     private String direccion;
-    private int recaudacion;
+    private double recaudacion;
     private Registro<Habitacion> habitaciones;
 
     public Hotel(int id, String nombre, String direccion) {
         this.id = id;
+        this.recaudacion=0;
         this.nombre = nombre;
         this.direccion = direccion;
         this.habitaciones = new Registro<>();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Registro<Habitacion> getHabitaciones() {
         return habitaciones;
     }
 
-    @Override
-    public int getIdHotel() {
-        return this.id;
-    }
-
-    public int getRecaudacion() {
+    public double getRecaudacion() {
         return recaudacion;
     }
 
@@ -51,16 +48,16 @@ public class Hotel implements Identificable, IhotelOperable {
                 '}';
     }
 
-    public void agregarHabitacionEstandar( int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) {
-        Habitacion estandar=new Habitacion( precio, descripcion, servicios, personasPermitidas, estado);
+    public void agregarHabitacionEstandar(double precio, String descripcion,String servicios, int personasPermitidas, boolean estado, String motivoNoDisponible) {
+        Habitacion estandar=new Habitacion( precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
         this.habitaciones.agregar(estandar);
     }
-    public void agregarSuite( int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible){
-        Suite s1=new Suite( precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+    public void agregarSuite(double precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, String motivoNoDisponible) {
+        Suite s1=new Suite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
         this.habitaciones.agregar(s1);
     }
-    public void agregarDeluxe( int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible){
-        Deluxe d1=new Deluxe(precio, descripcion, servicios, personasPermitidas,  servicioEsepcialDeluxe, disponible);
+    public void agregarDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, String motivoNoDisponible) {
+        Deluxe d1=new Deluxe(precio, descripcion, servicios, personasPermitidas, servicioEspecialDeluxe, disponible, motivoNoDisponible);
         this.habitaciones.agregar(d1);
     }
 
@@ -89,14 +86,14 @@ public class Hotel implements Identificable, IhotelOperable {
     }
 
 
-    public void sumarRecaudacion(int recaudacion) {
+    public void sumarRecaudacion(double recaudacion) {
         if (recaudacion > 0) {
             this.recaudacion += recaudacion;
         }
     }
 
 
-    public String mostrarTodasLasHabitaciones(){
+    public String mostrarTodasLasHabitaciones(){ // ver
         String rta="";
         for (Habitacion h : this.habitaciones.getLista()) {
             rta+=h.toString()+'\n';

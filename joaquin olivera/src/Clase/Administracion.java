@@ -1,12 +1,9 @@
 package Clase;
 
-import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoEx;
 import Excepcion.NoRegistradoEx;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Administracion extends Usuario {
     private Hotel hotel;
@@ -18,7 +15,6 @@ public class Administracion extends Usuario {
         this.recepcionista=recepcionista;
     }
 
-
     public Hotel getHotel() {
         return hotel;
     }
@@ -27,50 +23,32 @@ public class Administracion extends Usuario {
         this.hotel = hotel;
     }
 
-    //hotel no va
-    public void cargarHotel(int id, String nombre, String direccion)throws DuplicadoEx {
-        if(this.hotel!=null){
-            throw new DuplicadoEx("Ya existe un hotel cargado en el sistema");
-        }
-        this.hotel = new Hotel(id, nombre, direccion);
-        System.out.println("Hotel cargado con exito:" +nombre);
-    }
-    //metodo modificar hotel -hacer-
-    public void eliminarHotel(){//fijarse si está bien
-        this.hotel = null;
-        System.out.println("Hotel eliminado con exito");
-    }
-
-    //no va
-    public String mostrarHotel(){
-        if(this.hotel==null){
-            return "No hay hotel cargado";
-        }
-        return this.hotel.toString();
+    public void setRecepcionista(Recepcionista recepcionista) {
+        this.recepcionista = recepcionista;
     }
 
     //habitaciones
-    public void agregarHabitacionEstandar( int precio, String descripcion,String servicios, int personasPermitidas, boolean estado) throws NoRegistradoEx{
+    public void agregarHabitacionEstandar(double precio, String descripcion,String servicios, int personasPermitidas, boolean estado, String motivoNoDisponoble) throws NoRegistradoEx{
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
 
-        this.hotel.agregarHabitacionEstandar( precio, descripcion, servicios, personasPermitidas, estado);
+        this.hotel.agregarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponoble);
     }
-    public void agregarHabitacionSuiete( int precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible)throws NoRegistradoEx{
+    public void agregarHabitacionSuiete(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, String motivoNoDisponible)throws NoRegistradoEx{
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
-        this.hotel.agregarSuite( precio, descripcion, servicios, personasPermitidas, especialSuite, disponible);
+        this.hotel.agregarSuite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
     }
-    public void agregarHabitacionDeluxe( int precio, String descripcion, String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible)throws NoRegistradoEx{
+    public void agregarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, String motivoNoDisponible)throws NoRegistradoEx{
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoEx("No hay hotel cargado");
         }
-        this.hotel.agregarDeluxe( precio, descripcion, servicios, personasPermitidas, servicioEsepcialDeluxe, disponible);
+        this.hotel.agregarDeluxe(precio, descripcion, servicios, personasPermitidas, servicioEspecialDeluxe, disponible, motivoNoDisponible);
     }
     public void eliminarHabitacion(int idHabitacion){
         try{
@@ -78,14 +56,6 @@ public class Administracion extends Usuario {
         }catch (NoRegistradoEx e){
             System.out.println(e.getMessage());
         }
-    }
-
-    //recepcion
-    public void cargarRecepcionista(int id) throws DuplicadoEx {
-        if (this.recepcionista!=null){
-            throw new DuplicadoEx("ya existe un recepcionista registrado");
-        }
-        this.recepcionista=new Recepcionista(id, this.hotel);
     }
 
     public boolean eliminarRecepcionista(){
@@ -97,11 +67,10 @@ public class Administracion extends Usuario {
         return encontrado;
     }
 
-    public String mostrarRecepcionista(int idRecepcionista) throws NoRegistradoEx{
+    public String mostrarRecepcionista() throws NoRegistradoEx{
         if (this.recepcionista==null){
             throw new NoRegistradoEx("No hay recepcionista registrado");
         }
-        return this.recepcionista.toString();
+        return this.recepcionista.mostrar();
     }
-
 }

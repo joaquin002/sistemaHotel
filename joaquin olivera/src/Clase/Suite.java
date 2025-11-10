@@ -8,8 +8,8 @@ import java.util.PrimitiveIterator;
 public class Suite extends Habitacion{
     private ServicioEspecialSuite especialSuite;
 
-    public Suite(int precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible) {
-        super( precio, descripcion,servicios, personasPermitidas, disponible);
+    public Suite(double precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible) {
+        super(precio, descripcion,servicios, personasPermitidas, disponible);
         this.especialSuite = especialSuite;
     }
 

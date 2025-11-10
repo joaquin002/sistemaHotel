@@ -1,11 +1,11 @@
 import Clase.SistemaHotel;
 import Enums.MetodoPago;
-import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoEx;
-import Excepcion.NoRegistradoEx;
 import Excepcion.UsuarioNoEncontradoEx;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -93,8 +93,8 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("Seleccione modo de acceso:");
             System.out.println("1. Administrador");
-            System.out.println("2. Cliente");
-            System.out.println("3. Recepcionista");
+            System.out.println("2. Recepcionista");
+            System.out.println("3. Cliente");
             System.out.println("4. salir");
             opcion = sc.nextInt();
             sc.nextLine();
@@ -105,21 +105,37 @@ public class Main {
                     String nameAdmin = sc.nextLine();
                     System.out.println("Ingrese contrasena:");
                     String passAdmin = sc.nextLine();
-                    sistema.registrarUsuario(1, nameAdmin, passAdmin, 1);
+                    try {
+                        sistema.registrarUsuario(nameAdmin, passAdmin, 1);
+                    }catch (DuplicadoEx e){
+                        System.out.println(e.getMessage());
+                    }
+
                     break;
                 case 2:
-                    System.out.println("Ingrese nombre de usuario:");
-                    String nameCliente = sc.nextLine();
-                    System.out.println("Ingrese contrasena:");
-                    String passCliente = sc.nextLine();
-                    sistema.registrarUsuario(1, nameCliente, passCliente, 2);
-                    break;
-                case 3:
                     System.out.println("Ingrese nombre de usuario:");
                     String nameRecep = sc.nextLine();
                     System.out.println("Ingrese contrasena:");
                     String passRecep = sc.nextLine();
-                    sistema.registrarUsuario(1, nameRecep, passRecep, 3);
+                    try {
+                        sistema.registrarUsuario(nameRecep, passRecep, 2);
+                    } catch (DuplicadoEx e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+                case 3:
+
+                    System.out.println("Ingrese nombre de usuario:");
+                    String nameCliente = sc.nextLine();
+                    System.out.println("Ingrese contrasena:");
+                    String passCliente = sc.nextLine();
+                    try {
+                        sistema.registrarUsuario(nameCliente, passCliente, 3);
+                    }catch (DuplicadoEx e){
+                        System.out.println(e.getMessage());
+                    }
+
                     break;
                 case 4:
                     encontrado = true;
@@ -146,26 +162,27 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("        Recepcionista    ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Hacer CheckIn"); // lista
-            System.out.println("2. Hacer CheckOut"); // revisar
+            System.out.println("1. Hacer CheckIn");
+            System.out.println("2. Hacer CheckOut");
             System.out.println("3. Consultar disponibilidad");
             System.out.println("4. Buscar reserva");
             System.out.println("5. Buscar cliente");
+            System.out.println("6. Ver clientes");
+            System.out.println("7. Ver reservas");
             opcion = sc.nextInt();
-
+            sc.nextLine(); //limpio el buffer
             switch (opcion) {
                 case 1:  // PONERLE UN CARTEL DE QUE HIZO EL CHECKIN CORRECTAMENTE
                     //pedirle datos al usuario
                     System.out.println("Ingrese DNI del cliente:");
                     int dni=sc.nextInt();
-                    sc.nextLine(); //limpio el buffer
+
 
                     System.out.println("Ingrese nombre del cliente:");
                     String nombre=sc.nextLine();
 
                     System.out.println("Ingrese numero de habitacion:");
                     int idHabitacion=sc.nextInt();
-                    sc.nextLine();
 
                     System.out.println("Ingrese fecha de ingreso (dd/mm/aaaa):");
                     String fecha=sc.nextLine();
@@ -173,29 +190,19 @@ public class Main {
                     System.out.println("Ingrese domicilio:");
                     String domicilio=sc.nextLine();
 
-                    System.out.println("Seleccione método de pago:");
-                    //para poder seleccionar un enum: (metodo de pago)
-                    for(MetodoPago m : MetodoPago.values()){
-                        System.out.println("- " + m);
-                    }
-                    String metodo=sc.nextLine().toUpperCase();
-                    MetodoPago metodoPago=null;
-                    try
-                    {
-                        metodoPago=MetodoPago.valueOf(metodo);
-                    }catch (IllegalArgumentException e)
-                    {
-                        System.out.println("Metodo de pago invalido. Se pondra EFECTIVO por defecto...");
-                        metodoPago =MetodoPago.EFECTIVO;
-                    }
+                    MetodoPago metodoPago=menuMetodoPago();
 
                     sistema.checkIn(dni,1,fecha,nombre,domicilio,metodoPago);
                     break;
                 case 2:
                     //pedirle datos al usuario
-                    int dniCliente=0;
-                    String fechaFinal="";
-                    sistema.checkOut(1, 1234, "15/11/2025");
+                    System.out.println("ingrese id reserva");
+                    int idReserva=sc.nextInt();
+                    System.out.println("ingrese dni del cliente");
+                    int dniCliente=sc.nextInt();
+                    System.out.println("ingrese fecha de salida");
+                    String fechaFinal=sc.nextLine();
+                    sistema.checkOut(idReserva, dniCliente, fechaFinal);
                     break;
                 case 3:
                     //consultar disponibilidad
@@ -203,11 +210,15 @@ public class Main {
                     break;
                 case 4:
                     //buscar reserva
-                    System.out.println(sistema.buscarReserva(1)); //probar
+                    System.out.println("ingrese id de reserva a buscar");
+                    int idRb=sc.nextInt();
+                    System.out.println(sistema.buscarReserva(idRb)); //probar
                     break;
                 case 5:
                     //buscar cliente
-                    System.out.println(sistema.buscarCliente(1)); //probar
+                    System.out.println("ingrese dni del cliente a buscar");
+                    int dniB=sc.nextInt();
+                    System.out.println(sistema.buscarCliente(dniB)); //probar
                     break;
                 default:
                     break;
@@ -229,13 +240,12 @@ public class Main {
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
             System.out.println("1. Mostrar hotel");//listo
-            System.out.println("2. Cargar recepcionista");//listo
-            System.out.println("3. Eliminar  recepcionista");//listo
-            System.out.println("5. Ver recepcionista");
-            System.out.println("6. Cargar habitacion");//listo
-            System.out.println("7. Buscar habitacion");
-            System.out.println("8. Ver habitaciones del hotel");//listo
-            System.out.println("9. Eliminar habitacion");
+            System.out.println("2. Eliminar  recepcionista");//VER
+            System.out.println("3. Ver recepcionista");
+            System.out.println("4. Cargar habitacion");//listo
+            System.out.println("5. Buscar habitacion");
+            System.out.println("6. Ver todas las habitaciones del hotel");//listo
+            System.out.println("7. Eliminar habitacion");
             opcion = sc.nextInt();
 
             switch (opcion) {
@@ -244,9 +254,6 @@ public class Main {
                     System.out.println(sistema.mostrarHotel());
                     break;
                 case 2:
-                    sistema.cargarRecepcionista(1);
-                    break;
-                case 3:
                     //eliminar recepcionista
                     encontrado=sistema.eliminarRecepcionista();
                     if (encontrado==true){
@@ -255,26 +262,26 @@ public class Main {
                         System.out.println("no se elimino el recepcionista");
                     }
                     break;
+                case 3:
+                    //ver recepcionista
+                    System.out.println(sistema.verRecepcionista());
+                    break;
                 case 4:
+                    //cargar habitacion funciona
+                    menuCargarHabitacion(sistema);
                     break;
                 case 5:
-                    //ver recepcionista
-                    System.out.println(sistema.verRecepcionista(1));
-                    break;
-                case 6:
-                    //cargar habitacion funciona
-                   menuCargarHabitacion(sistema);
-                    break;
-                case 7:
                     //buscar y mostrar habitacion funciona
                     System.out.println(sistema.mostrarHabitacion(123));
                     break;
-                case 8:
-                   //ver todas las habitaciones funciona
+                case 6:
+                    //ver todas las habitaciones funciona
                     System.out.println(sistema.mostrarHabitaciones());
                     break;
-                case 9:
-                    //sistema.eliminarHabitacion(); pedir el id al usuario
+                case 7:
+                    System.out.println("ingrese id de habitacion a eliminar");
+                    int idHabitacionB= sc.nextInt();
+                    sistema.eliminarHabitacion(idHabitacionB);
                     break;
                 default:
                     break;
@@ -302,7 +309,6 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    ///  PREGUNTA!!! aca le estoy pidiendo los mismos datos que voy a necesitar para el check in, esta bien hacerlo asi???
                     //hacer reserva
                     //pedirle los datos al usuario y descomentar
                     System.out.println("Ingrese nombre:");
@@ -311,10 +317,19 @@ public class Main {
                     int dniCliente = sc.nextInt();
                     System.out.println("Ingrese domicilio:");
                     String domicilio = sc.next();
+
+
+                    MetodoPago metodoPago=menuMetodoPago();
+
+                    System.out.println("Habitaciones disponibles:");
+                    System.out.println(sistema1.consultarDisponibilidad());
+
+                    System.out.println("Ingrese idHabitacion a reservar:");
+                    int idHabitacion = sc.nextInt();
+
                     System.out.println("Ingrese fecha:");
                     String fecha = sc.next();
-                    System.out.println("Ingrese metodo pago:");
-                    //System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha));
+                    System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha));
                     break;
                 case 2:
                     System.out.println("Ingrese DNI del cliente para ver sus puntos");
@@ -349,20 +364,61 @@ public class Main {
             switch (opcion){
                 case 1:
                     //estandar
-                    //pedir datos al usuario
-                    sistema.cargarHabitacionEstandar(1200, "muy buena", "varios", 2, true);
+
+                    System.out.println("Habitacion Estandar");
+
+                    System.out.println("Ingrese precio: ");
+                    double precio = sc.nextDouble();
+                    System.out.println("Ingrese descripcion: ");
+                    String descripcion = sc.nextLine();
+
+                    System.out.println("Ingrese servicios: ");
+                    String servicios = sc.nextLine();
+
+                    System.out.println("Ingrese cantidad de personas permitidas");
+                    int personasPermitidas=sc.nextInt();
+
+                    boolean estado=menuEstadoHabitacion();
+
+                    sistema.cargarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, "");
                     System.out.println("se agrego con exito la habitacion estandar");
                     break;
                 case 2:
                     //deluxe
-                    //pedir datos al usuario
-                    sistema.cargarHabitacionDeluxe( 2000, "desc", "servicios", 1, ServicioEsepcialDeluxe.BAR, true);
+
+                    System.out.println("Habitacion deluxe");
+                    System.out.println("ingrese precio");
+                    double precioD=sc.nextDouble();
+                    System.out.println("ingrese descripcion");
+                    String descripcionD=sc.nextLine();
+                    System.out.println("ingrese servicios");
+                    String serviciosD=sc.nextLine();
+                    System.out.println("ingrese cantidad de personas permitidas");
+                    int personasPermitidasD=sc.nextInt();
+
+                    ServicioEspecialDeluxe especialDeluxe=menuServicioDeluxe();
+                    boolean estadoD=menuEstadoHabitacion();
+
+                    sistema.cargarHabitacionDeluxe(precioD, descripcionD, serviciosD, personasPermitidasD, especialDeluxe, estadoD, "");
                     System.out.println("se agrego con exito la habitacion deluxe");
                     break;
                 case 3:
                     //suite
-                    //pedir datos al usuario
-                    sistema.cargarHabitacionSuite( 50000, "desc", "servicios", 1, ServicioEspecialSuite.CINE_INTERACTIVO, true);
+                    System.out.println("Habitacion Suite");
+
+                    System.out.println("Ingrese precio");
+                    double precioS=sc.nextDouble();
+                    System.out.println("Ingrese descripcion");
+                    String descripcionS=sc.nextLine();
+                    System.out.println("Ingrese servicios");
+                    String serviciosS=sc.nextLine();
+                    System.out.println("Ingrese cantidad de personas permitidas");
+                    int personasPermitidasS=sc.nextInt();
+
+                    ServicioEspecialSuite especialSuite=menuServicioSuite();
+                    boolean estadoS=menuEstadoHabitacion();
+
+                    sistema.cargarHabitacionSuite(precioS, descripcionS, serviciosS, personasPermitidasS, especialSuite, estadoS, "");
                     System.out.println("se agrego con exito la habitacion suite");
                     break;
                 case 4:
@@ -379,5 +435,156 @@ public class Main {
             }
         }while (seguir == 's');
 
+    }
+
+    public static MetodoPago menuMetodoPago() {
+        Scanner sc = new Scanner(System.in);
+        int opcion=0;
+        boolean valido=false;
+        MetodoPago metodoPago=null;
+        while (!valido){
+            try {
+                System.out.println("Seleccione metodo de pago");
+                System.out.println("1. Efectivo");
+                System.out.println("2. Debito");
+                System.out.println("3. Credito");
+                opcion=sc.nextInt();
+                switch (opcion){
+                    case 1:
+                        metodoPago=MetodoPago.EFECTIVO;
+                        valido=true;
+                        break;
+                    case 2:
+                        metodoPago=MetodoPago.DEBITO;
+                        valido=true;
+                        break;
+                    case 3:
+                        metodoPago=MetodoPago.CREDITO;
+                        valido=true;
+                        break;
+                    default:
+                        System.out.println("opcion invalida");
+                        break;
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Opcion no valida. Ingrese un numero: 1, 2 o 3");
+                sc.nextLine();
+            }
+        }
+        return metodoPago;
+    }
+
+    public static boolean menuEstadoHabitacion(){
+        Scanner sc = new Scanner(System.in);
+        boolean estado=false;
+        boolean entrada=false;
+        int opcion=0;
+        while (!entrada){
+            try {
+                System.out.println("Seleccione el estado de la habitacion");
+                System.out.println("1. Disponible");
+                System.out.println("2. Ocupada");
+                opcion=sc.nextInt();
+                switch (opcion){
+                    case 1:
+                        estado=true;
+                        entrada=true;
+                        break;
+                    case 2:
+                        estado=false;
+                        entrada=true;
+                        sc.nextLine();
+                        System.out.println("Ingrese motivo de no disponibilidad (limpieza, reparación, desinfección, etc.): ");
+                        String motivo = sc.nextLine();
+                        System.out.println("Motivo registrado: " + motivo);
+                        break;
+                    default:
+                        System.out.println("Opcion invalida. Ingrese opcion 1 o 2");
+                        break;
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Opcion invalida. Ingrese un numero: 1 o 2");
+                sc.nextLine();
+            }
+        }
+        return estado;
+    }
+
+    public static ServicioEspecialDeluxe menuServicioDeluxe(){
+        Scanner sc = new Scanner(System.in);
+        int opcion=0;
+        boolean valido=false;
+        ServicioEspecialDeluxe especialDeluxe=null;
+        while (!valido){
+            try {
+                System.out.println("Seleccione el servicio deluxe");
+                System.out.println("1. Jaccuzzi");
+                System.out.println("2. Vista personalizada");
+                System.out.println("3. Bar");
+                opcion=sc.nextInt();
+                switch (opcion){
+                    case 1:
+                        especialDeluxe= ServicioEspecialDeluxe.JACCUZZI;
+                        valido=true;
+                        break;
+                    case 2:
+                        especialDeluxe= ServicioEspecialDeluxe.VISTA_PERSONALIZADA;
+                        valido=true;
+                        break;
+                    case 3:
+                        especialDeluxe= ServicioEspecialDeluxe.BAR;
+                        valido=true;
+                        break;
+                    default:
+                        System.out.println("opcion no valida");
+                        break;
+            }
+            }catch (InputMismatchException e){
+                System.out.println("Opcion no valida. Ingrese opciones 1, 2 o 3");
+                sc.nextLine();
+            }
+        }
+        return especialDeluxe;
+    }
+
+    public static ServicioEspecialSuite menuServicioSuite(){
+        Scanner sc = new Scanner(System.in);
+        int opcion=0;
+        boolean valido=false;
+        ServicioEspecialSuite especialSuite=null;
+        while (!valido){
+            try {
+                System.out.println("Seleccione servicio suite");
+                System.out.println("1. Pileta climatizada");
+                System.out.println("2. Cine interactivo");
+                System.out.println("3. Helipuerto");
+                System.out.println("4. Limusina");
+                opcion=sc.nextInt();
+                switch (opcion){
+                    case 1:
+                        especialSuite=ServicioEspecialSuite.PILETA_CLIMATIZADA;
+                        valido=true;
+                        break;
+                    case 2:
+                        especialSuite=ServicioEspecialSuite.CINE_INTERACTIVO;
+                        valido=true;
+                        break;
+                    case 3:
+                        especialSuite=ServicioEspecialSuite.HELIPUERTO;
+                        valido=true;
+                        break;
+                    case 4:
+                        especialSuite=ServicioEspecialSuite.LIMUSINA;
+                        valido=true;
+                        break;
+                    default:
+                        System.out.println("Opcion no valida");
+                        break;
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Opcion no valida. Ingrese opciones 1, 2, 3 o 4");
+            }
+        }
+        return especialSuite;
     }
 }

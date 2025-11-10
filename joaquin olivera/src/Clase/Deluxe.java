@@ -1,23 +1,23 @@
 package Clase;
 
-import Enums.ServicioEsepcialDeluxe;
+import Enums.ServicioEspecialDeluxe;
 
 public class Deluxe extends Habitacion{
-    private ServicioEsepcialDeluxe servicioEsepcialDeluxe;
+    private ServicioEspecialDeluxe servicioEspecialDeluxe;
 
-    public Deluxe( int precio, String descripcion,String servicios, int personasPermitidas, ServicioEsepcialDeluxe servicioEsepcialDeluxe, boolean disponible) {
+    public Deluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible) {
         super( precio, descripcion,servicios, personasPermitidas, disponible);
-        this.servicioEsepcialDeluxe = servicioEsepcialDeluxe;
+        this.servicioEspecialDeluxe = servicioEspecialDeluxe;
     }
 
-    public ServicioEsepcialDeluxe getServicioEsepcialDeluxe() {
-        return servicioEsepcialDeluxe;
+    public ServicioEspecialDeluxe getServicioEsepcialDeluxe() {
+        return servicioEspecialDeluxe;
     }
 
     @Override
     public String toString() {
         return super.toString()+"Deluxe{" +
-                "servicioEsepcialDeluxe=" + servicioEsepcialDeluxe +
+                "servicioEsepcialDeluxe=" + servicioEspecialDeluxe +
                 '}';
     }
 }
