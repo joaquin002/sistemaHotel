@@ -1,6 +1,7 @@
 package Clase;
 
 import Enums.MetodoPago;
+import Enums.MotivoNoDisponible;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
@@ -108,7 +109,7 @@ public class SistemaHotel {
     }
 
     //cargar y muestra habitaciones
-    public void cargarHabitacionEstandar(double precio, String descripcion, String servicios, int personasPermitidas, boolean estado, String motivoNoDisponible) {
+    public void cargarHabitacionEstandar(double precio, String descripcion, String servicios, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
       try {
           admin.agregarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
       }catch (NoRegistradoException e){
@@ -116,7 +117,7 @@ public class SistemaHotel {
       }
     }
 
-    public void cargarHabitacionSuite(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, String motivoNoDisponible) {
+    public void cargarHabitacionSuite(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
        try {
            admin.agregarHabitacionSuite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
        }catch (NoRegistradoException e){
@@ -124,13 +125,14 @@ public class SistemaHotel {
        }
     }
 
-    public void cargarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, String motivoNoDisponible) {
+    public void cargarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
        try {
            admin.agregarHabitacionDeluxe( precio, descripcion, servicios, personasPermitidas, servicioEspecialDeluxe, disponible,  motivoNoDisponible);
        }catch (NoRegistradoException e){
            System.out.println(e.getMessage());
        }
     }
+
     public boolean eliminarHabitacion(int idHabitacion){
        return admin.eliminarHabitacion(idHabitacion);
     }
@@ -242,5 +244,13 @@ public class SistemaHotel {
     public String mostrarReservas()
     {
         return recepcionista.mostrarReservas();
+    }
+
+    public String verHabitacionesNoDisponiblesPorMotivo(){
+        return recepcionista.verHabitacionesNoDisponiblesPorMotivo();
+    }
+
+    public String verHabitacionesOcupadas(){
+        return recepcionista.verHabitacionesOcupadas();
     }
 }

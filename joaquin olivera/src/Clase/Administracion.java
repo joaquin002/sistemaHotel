@@ -1,5 +1,6 @@
 package Clase;
 
+import Enums.MotivoNoDisponible;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.NoRegistradoException;
@@ -29,7 +30,7 @@ public class Administracion extends Usuario {
     }
 
     //habitaciones
-    public void agregarHabitacionEstandar(double precio, String descripcion,String servicios, int personasPermitidas, boolean estado, String motivoNoDisponoble) throws NoRegistradoException {
+    public void agregarHabitacionEstandar(double precio, String descripcion,String servicios, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponoble) throws NoRegistradoException {
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoException("No hay hotel cargado");
@@ -37,14 +38,14 @@ public class Administracion extends Usuario {
 
         this.hotel.agregarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponoble);
     }
-    public void agregarHabitacionSuite(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, String motivoNoDisponible)throws NoRegistradoException {
+    public void agregarHabitacionSuite(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible)throws NoRegistradoException {
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoException("No hay hotel cargado");
         }
         this.hotel.agregarSuite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
     }
-    public void agregarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, String motivoNoDisponible)throws NoRegistradoException {
+    public void agregarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible)throws NoRegistradoException {
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoException("No hay hotel cargado");

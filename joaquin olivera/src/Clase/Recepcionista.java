@@ -173,6 +173,43 @@ public class Recepcionista extends Usuario implements Identificable {
         return rta;
     }
 
+    public String verHabitacionesNoDisponiblesPorMotivo(){
+        String rta="";
+        for (Habitacion h1: hotel.getHabitaciones().getLista()){
+            if (!h1.isDisponible()){
+                rta+=h1.toString()+"\n";
+            }
+        }
+        return rta;
+    }
+
+    public String verHabitacionesOcupadas(){
+        String rta="";
+        boolean encontrado = false;
+        for (Habitacion h1: hotel.getHabitaciones().getLista()){
+            if (!h1.isDisponible()){
+                for (Reserva r: reservas.getLista()){
+                    if (r.getIdHabitacion()==h1.getIdBuscado()){
+                        Cliente c=buscarCliente(r.getDniCliente());
+                        rta+="Habitacion id: "+h1.getIdBuscado()+"\n";
+                        if (c!=null){
+                            rta+="Cliente: "+ c.getNombre()+"\n";
+                            rta+="Dni: "+c.getDni()+"\n";
+                        }else {
+                            rta+="Cliente no registrado"+"\n";
+                        }
+                        rta+="Fecha de reserva: "+r.getFecha()+"\n";
+                        encontrado=true;
+                    }
+                }
+            }
+            if (encontrado==false){
+                rta="No hay habitaciones ocupadas";
+            }
+        }
+        return rta;
+    }
+
     /// AGREGAR AL MAIN VER PUNTOS X ID CLIENTE:
     public int consultarPuntosCliente(int dniCliente) {
         int total = 0;
