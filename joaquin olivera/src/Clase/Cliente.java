@@ -96,6 +96,59 @@ public class Cliente extends Usuario implements Identificable {
         this.hotel = hotel;
     }
 
+    // nuevo metodo de hacer reserva. Pensando bien el tema de las fechas, checkIn y checkOut
+    public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, Recepcionista recepcionista, String fechaCheckIn, String fechaCheckOut) throws NoRegistradoException {
+        if (hotel == null) {
+            throw new NoRegistradoException("El cliente no está asociado a ningún hotel");
+        }
+
+       /* // Actualizar datos del cliente si faltan
+        if (this.nombre == null || this.nombre.isEmpty()) this.nombre = nombre;
+        if (this.dni == 0) this.dni = dni;
+        if (this.domicilio == null || this.domicilio.isEmpty()) this.domicilio = domicilio;
+        if (this.metodoPago == null) this.metodoPago = metodoPago;*/
+
+        Habitacion h1 = hotel.buscarHabitacion(idHabitacion);
+        if (h1 == null) {
+            throw new NoRegistradoException("No se encontró la habitación con id: " + idHabitacion);
+        }
+
+        // Validación de fechas
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate nuevaCheckIn = LocalDate.parse(fechaCheckIn, formatter);
+        LocalDate nuevaCheckOut = LocalDate.parse(fechaCheckOut, formatter);
+
+        if (nuevaCheckOut.isBefore(nuevaCheckIn)) {
+            throw new NoRegistradoException("La fecha de salida no puede ser anterior a la de ingreso.");
+        }
+
+        // Validar disponibilidad según reservas del recepcionista
+        for (Reserva r : recepcionista.getReservas().getLista()) {
+            if (r.getIdHabitacion() == idHabitacion) {
+                LocalDate existenteCheckIn = LocalDate.parse(r.getFechaInicio(), formatter);
+                LocalDate existenteCheckOut = LocalDate.parse(r.getFechaFinalizacion(), formatter);
+
+                // si se solapan las fechas, no puede reservar
+                if (nuevaCheckIn.isBefore(existenteCheckOut) && nuevaCheckOut.isAfter(existenteCheckIn)) {
+                    throw new NoRegistradoException("❌ La habitación ya está reservada entre " +
+                            existenteCheckIn + " y " + existenteCheckOut);
+                }
+            }
+        }
+
+        // Crear y guardar la reserva si está libre
+        Reserva nuevaReserva = new Reserva(this.getDni(), recepcionista.getIdBuscado(),
+                fechaCheckIn, fechaCheckOut, idHabitacion);
+
+        this.reserva = nuevaReserva;
+        this.guardarHistorial(this.getDni(), fechaCheckIn);
+        recepcionista.guardarReserva(nuevaReserva);
+
+        return "✅ Reserva realizada exitosamente para la habitación " + idHabitacion +
+                " desde " + fechaCheckIn + " hasta " + fechaCheckOut;
+    }
+
+    /*  METODO DE ANTES. AHORA PRUEBO OTRO
     public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, Recepcionista recepcionista, String fechaCheckIn, String fechaCheckOut) throws NoRegistradoException {
         if (hotel==null){
             throw new NoRegistradoException("El cliente no esta asociado a ningun hotel");
@@ -148,6 +201,17 @@ public class Cliente extends Usuario implements Identificable {
                     throw new NoRegistradoException("La habitación ya está reservada entre " +
                             existenteCheckIn + " y " + existenteCheckOut);
                 }
+                Reserva nuevaReserva = new Reserva(this.getDni(), recepcionista.getIdBuscado(),fechaCheckIn, fechaCheckOut, idHabitacion);
+
+                this.reserva = nuevaReserva;
+                this.guardarHistorial(this.getDni(), fechaCheckIn);
+
+                h1.setDisponible(false); // opcional, si querés bloquear temporalmente
+                recepcionista.guardarReserva(nuevaReserva);
+
+                return "✅ Reserva realizada exitosamente para la habitación " + idHabitacion +
+                        " del " + fechaCheckIn + " al " + fechaCheckOut;
+
             }
         }
 
@@ -168,7 +232,7 @@ public class Cliente extends Usuario implements Identificable {
 
         return "Reserva realizada exitosamente para la habitación " + idHabitacion +
                 " desde " + fechaCheckIn + " hasta " + fechaCheckOut;
-    }
+    }*/
 
     @Override
     public String toString() {

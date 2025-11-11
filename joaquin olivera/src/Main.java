@@ -248,7 +248,7 @@ public class Main {
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
             System.out.println("1. Mostrar hotel");//listo
-            System.out.println("2. Eliminar  recepcionista REVISAAAAAR!!!!");/// VER
+            System.out.println("2. Eliminar  recepcionista REVISAAAAAR!!!!");/// VER. yo la borraria porque no se si la necesitamos. la borramos y listo
             System.out.println("3. Ver recepcionista");//listo
             System.out.println("4. Cargar habitacion");//listo
             System.out.println("5. Buscar habitacion"); //listo
@@ -318,8 +318,6 @@ public class Main {
             System.out.println("        Cliente     ");
             System.out.println("---------------------------------------------");
             System.out.println("1. Hacer reserva");
-            System.out.println("2. Ver puntos disponibles");
-            System.out.println("3. Canjear puntos disponibles");
             opcion = sc.nextInt();
 
             switch (opcion) {
@@ -347,12 +345,6 @@ public class Main {
                     System.out.println("ingrese fecha de salida");
                     String fechaSalida = sc.next();
                     System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fechaInicio, fechaSalida));
-                    break;
-                case 2:
-
-                    break;
-                case 3:
-                    break;
                 default:
                     break;
             }
