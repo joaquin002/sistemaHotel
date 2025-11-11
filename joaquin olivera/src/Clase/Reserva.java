@@ -40,9 +40,6 @@ public class Reserva implements Identificable {
         return dniCliente;
     }
 
-    public int getIdRecepcionista() {
-        return idRecepcionista;
-    }
 
     public String getFechaInicio() {
         return fechaInicio;
@@ -52,13 +49,6 @@ public class Reserva implements Identificable {
         return fechaFinalizacion;
     }
 
-    public void setFechaFinalizacion(String fechaFinalizacion) {
-        this.fechaFinalizacion = fechaFinalizacion;
-    }
-
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
 
     @Override
     public String toString() {

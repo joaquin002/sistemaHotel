@@ -19,25 +19,6 @@ public class Historial {
         this.fechaSalida = obj.getString("fechaSalida");
     }
 
-    public int getDniCliente() {
-        return dniCliente;
-    }
-
-    public String getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public String getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public void setFechaSalida(String fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
 
     @Override
     public String toString() {

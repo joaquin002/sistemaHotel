@@ -17,6 +17,7 @@ public class SistemaHotel {
     private Administracion admin;
     private Recepcionista recepcionista; //un único recepcionista
     private Hotel hotel; //para que no lo cargue administrador
+    private Usuario actual;
 
     public SistemaHotel() {
         this.usuarios = new ArrayList<>();
@@ -35,6 +36,10 @@ public class SistemaHotel {
         this.admin=new Administracion(admin);
         this.recepcionista=new Recepcionista(recepcionista);
         this.hotel=new Hotel(hotel);
+    }
+
+    public Usuario getActual() {
+        return actual;
     }
 
     public Administracion registrarAdministrador(String nombreUsuario, String contrasenia){
@@ -73,7 +78,6 @@ public class SistemaHotel {
                 nuevo=registrarAdministrador(nombreUsuario, contrasenia);
                 break;
             case 2: // recepcionista
-
                 if (this.recepcionista!=null){
                     throw new DuplicadoException("Ya existe un recepcionista registrado");
                 }
@@ -93,6 +97,7 @@ public class SistemaHotel {
     public String iniciarSesion(String nombreUsuario, String contrasenia) throws UsuarioNoEncontradoException {
         for (Usuario u: usuarios){
             if (u.validarUsuario(nombreUsuario, contrasenia)){
+                this.actual=u; //guarda quien está logueado
                 return u.getTipo();
             }
         }
@@ -118,10 +123,6 @@ public class SistemaHotel {
             System.out.println(e.getMessage());
         }
         return rta;
-    }
-
-    public boolean eliminarRecepcionista(){
-        return admin.eliminarRecepcionista();
     }
 
     //cargar y muestra habitaciones
@@ -220,17 +221,22 @@ public class SistemaHotel {
     }
 
     //metodos cliente
-    public String hacerReserva(String nombre, int dniCliente, String domicilio, MetodoPago metodoPago, int idHabitacion, String fechaInicio, String fechaSalida){
+    public String hacerReserva(int idHabitacion, String fechaInicio, String fechaSalida){
         try {
-            Cliente c1= recepcionista.buscarCliente(dniCliente);
-            if (c1==null){
-                c1 = new Cliente(nombre, dniCliente, domicilio, metodoPago);
-                recepcionista.registrarClienteExistente(c1);
-                c1.setHotel(hotel);
-                //return "reserva realizada con exito";
-            }else {
-                c1.setHotel(hotel); //asocio el hotel al cliente
+            if (!(actual instanceof Cliente)){
+                return "El usuario actual no es un cliente";
             }
+            Cliente c1= (Cliente) actual; //cliente logueado
+
+            if (recepcionista==null){
+                return "no hay recepcionista disponible";
+            }
+
+            if (hotel==null){
+                return "No hay hotel asociado";
+            }
+            c1.setHotel(hotel);
+
             return c1.hacerReserva(idHabitacion, recepcionista, fechaInicio, fechaSalida);
 
         }catch (NoRegistradoException e){
@@ -238,6 +244,27 @@ public class SistemaHotel {
         }
     }
 
+    public String completarDatosCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago){
+        if (actual instanceof Cliente){
+            Cliente c1= (Cliente) actual;
+            c1.setHotel(hotel);
+            c1.setNombre(nombre);
+            c1.setDni(dni);
+            c1.setDomicilio(domicilio);
+            c1.setMetodoPago(metodoPago);
+            return "Datos del cliente guardados correctamente.";
+        }else {
+            return "El usuario actual no es un cliente";
+        }
+    }
+
+    public String verMisReservas(){
+        if (!(actual instanceof Cliente)){
+            return "El usuario actual no es un cliente";
+        }
+        Cliente c1= (Cliente) actual;
+        return c1.verMisReservas(recepcionista);
+    }
 
     public String mostrarClientes()
     {

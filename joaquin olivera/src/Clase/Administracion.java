@@ -67,15 +67,6 @@ public class Administracion extends Usuario {
         return encontrado;
     }
 
-    public boolean eliminarRecepcionista(){
-       boolean encontrado=false;
-        if (this.recepcionista!=null){
-            this.recepcionista=null;
-            encontrado=true;
-        }
-        return encontrado;
-    }
-
     public String mostrarRecepcionista() throws NoRegistradoException {
         if (this.recepcionista==null){
             throw new NoRegistradoException("No hay recepcionista registrado");
