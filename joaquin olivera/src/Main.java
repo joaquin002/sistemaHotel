@@ -6,10 +6,14 @@ import Enums.MotivoNoDisponible;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
+import Excepcion.FechaIncorrectaException;
 import Excepcion.UsuarioNoEncontradoException;
 import org.json.JSONObject;
 
 import java.nio.channels.ScatteringByteChannel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -87,7 +91,14 @@ public class Main {
                                     MetodoPago metodoPagoC = menuMetodoPago();
                                     sistema.completarDatosCliente(nombreC, dniC, domicilioC, metodoPagoC);
                                 }
-                                opcionCliente(sistema);
+                                try
+                                {
+                                    opcionCliente(sistema);
+
+                                }catch (DateTimeParseException e)
+                                {
+                                    System.out.println(e.getMessage());
+                                }
                             }
                         } catch (UsuarioNoEncontradoException e) {
                             System.out.println(e.getMessage());
@@ -344,7 +355,7 @@ public class Main {
         } while (seguir == 's');
     }
 
-    public static void opcionCliente(SistemaHotel sistema1) {
+    public static void opcionCliente(SistemaHotel sistema1) throws FechaIncorrectaException {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
@@ -362,13 +373,35 @@ public class Main {
                         //hacer reserva
                         System.out.println("Habitaciones disponibles:");
                         System.out.println(sistema1.consultarDisponibilidad());
+
                         System.out.println("Ingrese idHabitacion a reservar:");
                         int idHabitacion = sc.nextInt();
+                        sc.nextLine();
+
                         System.out.println("Ingrese fecha de inicio:");
-                        String fechaInicio = sc.next();
+                        String fechaInicioStr = sc.next();
+
                         System.out.println("ingrese fecha de salida");
-                        String fechaSalida = sc.next();
-                        System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
+                        String fechaSalidaStr = sc.next();
+                        try
+                        {
+                            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                            LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, formato);
+                            LocalDate fechaSalida = LocalDate.parse(fechaSalidaStr, formato);
+
+                            if(fechaSalida.isBefore(fechaInicio))
+                            {
+                                throw new FechaIncorrectaException("La fecha de salida no puede ser anterior a la fecha de inicio");
+
+                            }
+                            System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio.toString(), fechaSalida.toString()));
+
+                        }catch (FechaIncorrectaException e)
+                        {
+                            System.out.println(e.getMessage());
+                        } catch (DateTimeParseException e2) {
+                    System.out.println("Error: formato de fecha inválido. Use dd/MM/yyyy (ejemplo: 15/11/2025).");
+                }
                         break;
                     case 2:
                         System.out.println(sistema1.verMisReservas());
