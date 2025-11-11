@@ -70,8 +70,7 @@ public class Recepcionista extends Usuario implements Identificable {
         reservas.agregar(reserva);
     }
 
-    public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago) throws NoRegistradoException {
-
+    public void checkIn(int dniCliente, int idHabitacion,int idReserva, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago) throws NoRegistradoException {
 
         //verifica si el cliente ya existe
         Cliente c1 = buscarCliente(dniCliente);
@@ -91,13 +90,11 @@ public class Recepcionista extends Usuario implements Identificable {
             throw new NoRegistradoException("la habitacion con id " + idHabitacion + " no esta disponible.");
         }
 
-        //crea reserva
         //verificar si ya tiene reserva
-        Reserva nuevaReserva = new Reserva(dniCliente, this.id, fechaEstadia, idHabitacion);
-        guardarReserva(nuevaReserva);
-
-        //asignar la reserva al cliente
-        c1.agregarReserva(nuevaReserva);
+        Reserva reservaCliente = buscarReserva(idReserva);
+        if (reservaCliente == null) {
+            throw new NoRegistradoException("no existe la reserva");
+        }
 
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
@@ -246,7 +243,7 @@ public class Recepcionista extends Usuario implements Identificable {
                 reservasJSON.put(r.toJSON());
             }
             json.put("reservas", reservasJSON);
-            
+
             JSONArray registroVisitasJSON = new JSONArray();
             for (RegistroVisita r:this.registroVisitas){
                 registroVisitasJSON.put(r.toJSON());
