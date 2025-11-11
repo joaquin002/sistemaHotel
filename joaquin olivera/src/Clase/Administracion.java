@@ -3,6 +3,8 @@ package Clase;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.NoRegistradoException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Administracion extends Usuario {
     private Hotel hotel;
@@ -73,5 +75,15 @@ public class Administracion extends Usuario {
             throw new NoRegistradoException("No hay recepcionista registrado");
         }
         return this.recepcionista.mostrar();
+    }
+    public JSONObject toJSON() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("hotel", this.hotel.toJSON());
+            obj.put("recepcionista",this.recepcionista);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 }
