@@ -81,7 +81,7 @@ public class Administracion extends Usuario {
         JSONObject obj = new JSONObject();
         try {
             obj.put("hotel", this.hotel.toJSON());
-            obj.put("recepcionista",this.recepcionista);
+            obj.put("recepcionista",this.recepcionista.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package Clase;
 import Enums.MetodoPago;
 import Excepcion.NoRegistradoException;
 import Interfaces.Identificable;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -251,4 +252,37 @@ public class Recepcionista extends Usuario implements Identificable {
                 '}';
     }
 
+    public JSONObject toJson(){
+        JSONObject json = new JSONObject();
+        try{
+            json.put("id", id);
+            json.put("hotel", hotel.toJSON());
+            JSONArray clienteJSON = new JSONArray();
+            for (Cliente c:this.clientes.getLista()){
+                clienteJSON.put(c.toJSON());
+            }
+            json.put("clientes", clienteJSON);
+
+            JSONArray reservasJSON = new JSONArray();
+            for (Reserva r:reservas.getLista()){
+                reservasJSON.put(r.toJSON());
+            }
+            json.put("reservas", reservasJSON);
+
+            JSONArray puntosJSON = new JSONArray();
+            for (Punto p:this.puntos){
+                puntosJSON.put(p.toJson());
+            }
+            json.put("puntos", puntosJSON);
+
+            JSONArray registroVisitasJSON = new JSONArray();
+            for (RegistroVisita r:this.registroVisitas){
+                registroVisitasJSON.put(r.toJSON());
+            }
+            json.put("registroVisitas", registroVisitasJSON);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
+    }
 }
