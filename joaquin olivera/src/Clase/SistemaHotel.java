@@ -7,6 +7,7 @@ import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
 import Excepcion.NoRegistradoException;
 import Excepcion.UsuarioNoEncontradoException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -245,5 +246,10 @@ public class SistemaHotel {
         JSONObject admin = new JSONObject();
         admin.put("administrador", this.admin.toJSON());
         JsonUtiles.subirJsonObject(admin);
+        JSONArray lista = new JSONArray();
+        for (Usuario u : usuarios){
+            lista.put(u.toJson());
+        }
+        JsonUtiles.subirJSonArray(lista);
     }
 }

@@ -34,6 +34,15 @@ public class Habitacion implements Identificable {
         this.cantPersonas = cantPersonas;
         this.disponible = disponible;
     }
+    public Habitacion(JSONObject obj) throws JSONException {
+        this.id = obj.getInt("id");
+        this.precio = obj.getDouble("precio");
+        this.descripcion = obj.getString("descripcion");
+        this.servicios = obj.getString("servicios");
+        this.cantPersonas = obj.getInt("cantPersonas");
+        this.disponible = obj.getBoolean("disponible");
+        this.motivoNoDisponible = obj.getEnum(MotivoNoDisponible.class,"motivoNoDisponible");
+    }
 
     public int getId() {
         return id;

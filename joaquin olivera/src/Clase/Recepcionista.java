@@ -33,6 +33,22 @@ public class Recepcionista extends Usuario implements Identificable {
         this.reservas = new Registro<>();
     }
 
+    public Recepcionista(JSONObject obj)throws JSONException {
+        this.id = obj.getInt("id");
+        JSONArray clientes = obj.getJSONArray("clientes");
+        for(int i = 0; i < clientes.length(); i++){
+            JSONObject cliente = clientes.getJSONObject(i);
+            this.clientes.agregar(new Cliente(cliente));
+        }
+        JSONArray reservas = obj.getJSONArray("reservas");
+        for(int i = 0; i < reservas.length(); i++){
+            JSONObject reserva = reservas.getJSONObject(i);
+            this.reservas.agregar(new Reserva(reserva));
+        }
+        JSONObject hotel = obj.getJSONObject("hotel");
+        this.hotel =  new Hotel(hotel);
+    }
+
     @Override
     public int getIdBuscado() {
         return this.id;

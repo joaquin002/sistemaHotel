@@ -48,6 +48,22 @@ public class Cliente extends Usuario implements Identificable {
         this.metodoPago = metodoPago;
         this.hotel = hotel;
     }
+    public Cliente(JSONObject obj) throws JSONException {
+        this.nombre = obj.getString("nombre");
+        this.dni=obj.getInt("dni");
+        this.domicilio=obj.getString("domicilio");
+        this.metodoPago=obj.getEnum(MetodoPago.class, "metodoPago");
+        JSONArray historial=obj.getJSONArray("historial");
+        for(int i=0;i<historial.length();i++){
+            JSONObject historialObj=historial.getJSONObject(i);
+            this.historial.add(new Historial(historialObj));
+        }
+
+        JSONObject reserva= obj.getJSONObject("reserva");
+        this.reserva=new Reserva(reserva);
+        JSONObject hotel=obj.getJSONObject("hotel");
+        this.hotel=new Hotel(hotel);
+    }
 
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {

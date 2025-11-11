@@ -13,6 +13,11 @@ public class Historial {
         this.fechaInicio = fechaInicio;
         this.fechaSalida = fechaSalida;
     }
+    public Historial(JSONObject obj) throws JSONException {
+        this.dniCliente = obj.getInt("dniCliente");
+        this.fechaInicio = obj.getString("fechaInicio");
+        this.fechaSalida = obj.getString("fechaSalida");
+    }
 
     public int getDniCliente() {
         return dniCliente;

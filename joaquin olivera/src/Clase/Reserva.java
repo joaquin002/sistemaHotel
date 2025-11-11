@@ -23,6 +23,14 @@ public class Reserva implements Identificable {
         this.fechaFinalizacion = fechaFinalizacion;
         this.idHabitacion = idHabitacion;
     }
+    public Reserva(JSONObject obj)throws JSONException {
+        this.idReserva = obj.getInt("idReserva");
+        this.dniCliente = obj.getInt("dniCliente");
+        this.idRecepcionista = obj.getInt("idRecepcionista");
+        this.fechaInicio = obj.getString("fechaInicio");
+        this.fechaFinalizacion = obj.getString("fechaFinalizacion");
+        this.idHabitacion = obj.getInt("idHabitacion");
+    }
 
     public int getIdHabitacion() {
         return idHabitacion;
