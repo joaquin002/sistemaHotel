@@ -1,5 +1,8 @@
 package Clase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public abstract class Usuario {
     private String nombreUsuario;
     private String contrasenia;
@@ -36,5 +39,16 @@ public abstract class Usuario {
                 "nombreUsuario='" + nombreUsuario + '\'' +
                 ", contraseña='" + contrasenia + '\'' +
                 '}';
+    }
+    public JSONObject toJson(){
+        JSONObject json = new JSONObject();
+        try{
+            json.put("nombreUsuario", nombreUsuario);
+            json.put("contrasenia", contrasenia);
+            json.put("tipo", tipo);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }
