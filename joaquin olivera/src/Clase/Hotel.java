@@ -33,7 +33,6 @@ public class Hotel implements Identificable{
             JSONObject habitacion=habitaciones.getJSONObject(i);
             this.habitaciones.agregar(new Habitacion(habitacion));
         }
-
     }
 
     public int getId() {
