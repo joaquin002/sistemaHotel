@@ -45,9 +45,9 @@ public class Main {
             System.out.println("\n=============================================");
             System.out.println("🏨  BIENVENIDO A HOTEL BELLAVISTA  🏨");
             System.out.println("=============================================");
-            System.out.println("1. Registrar usuario"); //listo
-            System.out.println("2. Iniciar Sesion"); //listo
-            System.out.println("3. Salir"); //listo
+            System.out.println("1. Registrar usuario"); 
+            System.out.println("2. Iniciar Sesion");
+            System.out.println("3. Salir");
             System.out.println("Seleccione una opción...");
 
             try
@@ -189,14 +189,14 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("        Recepcionista    ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Hacer CheckIn"); //listo
-            System.out.println("2. Hacer CheckOut"); //listo
-            System.out.println("3. Consultar disponibilidad de habitaciones"); //listo
+            System.out.println("1. Hacer CheckIn");
+            System.out.println("2. Hacer CheckOut");
+            System.out.println("3. Consultar disponibilidad de habitaciones");
             System.out.println("4. Buscar reserva"); ///listo pero A REVISAAAAR!!!
-            System.out.println("5. Buscar cliente");//listo
-            System.out.println("6. Ver clientes"); //listo
-            System.out.println("7. Ver reservas");//listo
-            System.out.println("8. Ver habitaciones no disponibles por motivo");
+            System.out.println("5. Buscar cliente");
+            System.out.println("6. Ver clientes");
+            System.out.println("7. Ver reservas");
+            System.out.println("8. Ver habitaciones no disponibles por motivo"); ///REVISAAAAR!! cuando la habitacion esta ocupada que salga que esta reservada
             System.out.println("9. Ver habitaciones ocupadas");
 
             try
@@ -234,7 +234,7 @@ public class Main {
                     //buscar reserva
                     System.out.println("ingrese id de reserva a buscar");
                     int idRb = sc.nextInt();
-                    System.out.println(sistema.buscarReserva(idRb)); //probar
+                    System.out.println(sistema.buscarReserva(idRb));
                     break;
                 case 5:
                     //buscar cliente
@@ -279,13 +279,12 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Mostrar hotel");//listo
-            System.out.println("2. Eliminar  recepcionista REVISAAAAAR!!!!");/// VER. yo la borraria porque no se si la necesitamos. la borramos y listo
-            System.out.println("3. Ver recepcionista");//listo
-            System.out.println("4. Cargar habitacion");//listo
-            System.out.println("5. Buscar habitacion"); //listo
-            System.out.println("6. Ver todas las habitaciones del hotel");//listo
-            System.out.println("7. Eliminar habitacion"); //listo
+            System.out.println("1. Mostrar hotel");
+            System.out.println("2. Ver recepcionista");
+            System.out.println("3. Cargar habitacion");
+            System.out.println("4. Buscar habitacion");
+            System.out.println("5. Ver todas las habitaciones del hotel");
+            System.out.println("6. Eliminar habitacion");
             try
             {
                 opcion = sc.nextInt();
@@ -296,33 +295,21 @@ public class Main {
                     System.out.println(sistema.mostrarHotel());
                     break;
                 case 2:
-                    //eliminar recepcionista
-                    encontrado = sistema.eliminarRecepcionista();
-                    if (encontrado == true) {
-                        System.out.println("se elimino el recepcionista");
-                    } else {
-                        System.out.println("no se elimino el recepcionista");
-                    }
-                    break;
-                case 3:
-                    //ver recepcionista
                     System.out.println(sistema.verRecepcionista());
                     break;
-                case 4:
-                    //cargar habitacion funciona
+                case 3:
                     menuCargarHabitacion(sistema);
                     break;
-                case 5:
-                    //buscar y mostrar habitacion funciona
+                case 4:
                     System.out.println("Ingrese id de la habitacion a buscar:");
                     int id = sc.nextInt();
                     System.out.println(sistema.mostrarHabitacion(id));
                     break;
-                case 6:
-                    //ver todas las habitaciones funciona
+                case 5:
                     System.out.println(sistema.mostrarHabitaciones());
+
                     break;
-                case 7:
+                case 6:
                     System.out.println("ingrese id de habitacion a eliminar");
                     int idHabitacionB = sc.nextInt();
                     boolean rta = sistema.eliminarHabitacion(idHabitacionB);
@@ -337,7 +324,7 @@ public class Main {
             }
 
                 }catch (InputMismatchException e) {
-                System.out.println(" Ingrese un número válido (1-7):");
+                System.out.println(" Ingrese un número válido (1-6):");
                 sc.nextLine();
             }
             System.out.println("¿Desea elegir otra opcion?");
@@ -364,14 +351,12 @@ public class Main {
             switch (opcion) {
                 case 1:
                     //hacer reserva
-                    //pedirle los datos al usuario y descomentar
                     System.out.println("Ingrese nombre:");
                     String nombre = sc.next();
                     System.out.println("Ingrese dni:");
                     int dniCliente = sc.nextInt();
                     System.out.println("Ingrese domicilio:");
                     String domicilio = sc.next();
-
 
                     MetodoPago metodoPago = menuMetodoPago();
 
@@ -423,7 +408,6 @@ public class Main {
             switch (opcion) {
                 case 1:
                     //estandar
-
                     System.out.println("Habitacion Estandar");
 
                     System.out.println("Ingrese precio: ");
@@ -450,7 +434,6 @@ public class Main {
                     break;
                 case 2:
                     //deluxe
-
                     System.out.println("Habitacion deluxe");
                     System.out.println("ingrese precio");
                     double precioD = sc.nextDouble();
