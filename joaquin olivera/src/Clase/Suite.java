@@ -1,5 +1,6 @@
 package Clase;
 
+import Enums.MotivoNoDisponible;
 import Enums.ServicioEspecialSuite;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +11,7 @@ import java.util.PrimitiveIterator;
 public class Suite extends Habitacion{
     private ServicioEspecialSuite especialSuite;
 
-    public Suite(double precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, String motivoNoDisponible) {
+    public Suite(double precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
         super(precio, descripcion,servicios, personasPermitidas, disponible, motivoNoDisponible);
         this.especialSuite = especialSuite;
     }

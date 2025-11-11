@@ -376,6 +376,9 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
+        MotivoNoDisponible motivoNoDisponible=null;
+        MotivoNoDisponible motivoNoDisponibleD=null;
+        MotivoNoDisponible motivoNoDisponibleS=null;
         do {
             System.out.println("Seleccione el tipo de habitacion a cargar: ");
             System.out.println("1. Estandar");
@@ -404,7 +407,11 @@ public class Main {
                     int personasPermitidas = sc.nextInt();
 
                     boolean estado = menuEstadoHabitacion();
-                    MotivoNoDisponible motivoNoDisponible=menuMotivoNoDisponible();
+                    if(!estado)
+                    {
+                        motivoNoDisponible=menuMotivoNoDisponible();
+                    }
+
                     sistema.cargarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
                     System.out.println("se agrego con exito la habitacion estandar");
                     break;
@@ -427,7 +434,12 @@ public class Main {
 
                     ServicioEspecialDeluxe especialDeluxe = menuServicioDeluxe();
                     boolean estadoD = menuEstadoHabitacion();
-                    MotivoNoDisponible motivoNoDisponibleD=menuMotivoNoDisponible();
+
+                    if(!estadoD)
+                    {
+                         motivoNoDisponibleD=menuMotivoNoDisponible();
+
+                    }
                     sistema.cargarHabitacionDeluxe(precioD, descripcionD, serviciosD, personasPermitidasD, especialDeluxe, estadoD, motivoNoDisponibleD);
                     System.out.println("se agrego con exito la habitacion deluxe");
                     break;
@@ -449,9 +461,11 @@ public class Main {
 
                     ServicioEspecialSuite especialSuite = menuServicioSuite();
                     boolean estadoS = menuEstadoHabitacion();
+                    if(!estadoS)
+                    {
+                        motivoNoDisponibleS = menuMotivoNoDisponible();
 
-                    System.out.println("Ingrese motivo de no disponibilidad");
-                    MotivoNoDisponible motivoNoDisponibleS = menuMotivoNoDisponible();
+                    }
                     sistema.cargarHabitacionSuite(precioS, descripcionS, serviciosS, personasPermitidasS, especialSuite, estadoS, motivoNoDisponibleS);
 
                     System.out.println("se agrego con exito la habitacion suite");
@@ -530,9 +544,7 @@ public class Main {
                         estado = false;
                         entrada = true;
                         sc.nextLine();
-                        System.out.println("Ingrese motivo de no disponibilidad (limpieza, reparación, desinfección, etc.): ");
-                        String motivo = sc.nextLine();
-                        System.out.println("Motivo registrado: " + motivo);
+
                         break;
                     default:
                         System.out.println("Opcion invalida. Ingrese opcion 1 o 2");
@@ -631,7 +643,7 @@ public class Main {
         MotivoNoDisponible motivoNoDisponible = null;
         while (!valido) {
             try {
-                System.out.println("Seleccione metodo de pago");
+                System.out.println("Seleccione motivo de no disponibilidad de la habitacion:");
                 System.out.println("1. Limpieza");
                 System.out.println("2. Desinfeccion");
                 System.out.println("3. Reparacion");
