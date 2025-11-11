@@ -2,6 +2,8 @@ package Clase;
 
 
 import Interfaces.Identificable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Habitacion implements Identificable {
     private int id;
@@ -64,5 +66,20 @@ public class Habitacion implements Identificable {
                 ", disponible=" + disponible +
                 ", motivoNoDisponible='" + motivoNoDisponible + '\'' +
                 '}';
+    }
+    public JSONObject toJson(){
+        JSONObject json = new JSONObject();
+        try{
+            json.put("id",id);
+            json.put("precio",precio);
+            json.put("descripcion",descripcion);
+            json.put("servicios",servicios);
+            json.put("personasPermitidas",cantPersonas);
+            json.put("disponible",disponible);
+            json.put("motivoNoDisponible",motivoNoDisponible);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

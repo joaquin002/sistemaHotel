@@ -1,6 +1,8 @@
 package Clase;
 
 import Enums.ServicioEspecialDeluxe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Deluxe extends Habitacion{
     private ServicioEspecialDeluxe servicioEspecialDeluxe;
@@ -19,5 +21,17 @@ public class Deluxe extends Habitacion{
         return super.toString()+"Deluxe{" +
                 "servicioEsepcialDeluxe=" + servicioEspecialDeluxe +
                 '}';
+    }
+
+    @Override
+    public JSONObject toJson(){
+        JSONObject json = new JSONObject();
+        try{
+            json =  super.toJson();
+            json.put("servicioEspcialDeluxe",servicioEspecialDeluxe);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

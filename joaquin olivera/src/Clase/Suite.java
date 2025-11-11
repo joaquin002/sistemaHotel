@@ -1,6 +1,8 @@
 package Clase;
 
 import Enums.ServicioEspecialSuite;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.PrimitiveIterator;
@@ -22,5 +24,17 @@ public class Suite extends Habitacion{
         return super.toString()+"Suite{" +
                 "especialSuite=" + especialSuite +
                 '}';
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+         try{
+             json = super.toJson();
+             json.put("especialSuite",especialSuite);
+         }catch (JSONException e){
+             e.printStackTrace();
+         }
+         return json;
     }
 }
