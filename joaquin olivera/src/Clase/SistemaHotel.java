@@ -257,6 +257,6 @@ public class SistemaHotel {
     public void toJSON(String nomrbeArchivo){
         JSONObject admin = new JSONObject();
         admin.put("administrador", this.admin.toJSON());
-        JsonUtiles.subirJsonObject(admin, nomrbeArchivo);
+        JsonUtiles.subirJsonObject(admin);
     }
 }

@@ -1,0 +1,43 @@
+{
+  "administrador": {
+    "recepcionista": {
+      "reservas": [],
+      "hotel": {
+        "habitaciones": [
+          {
+            "descripcion": "qwe",
+            "servicios": "nose",
+            "precio": 1000,
+            "id": 1,
+            "personasPermitidas": 3,
+            "disponible": true
+          }
+        ],
+        "direccion": "Avenida Siempre Viva 742",
+        "id": 1,
+        "recaudacion": 0,
+        "nombre": "Hotel BellaVista "
+      },
+      "id": 1,
+      "clientes": [],
+      "puntos": [],
+      "registroVisitas": []
+    },
+    "hotel": {
+      "habitaciones": [
+        {
+          "descripcion": "qwe",
+          "servicios": "nose",
+          "precio": 1000,
+          "id": 1,
+          "personasPermitidas": 3,
+          "disponible": true
+        }
+      ],
+      "direccion": "Avenida Siempre Viva 742",
+      "id": 1,
+      "recaudacion": 0,
+      "nombre": "Hotel BellaVista "
+    }
+  }
+}

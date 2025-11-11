@@ -15,7 +15,8 @@ public class Main {
 
         SistemaHotel sistema = new SistemaHotel();
         menuPrincipal(sistema);
-
+        String archi = "archivoJson.json";
+        sistema.toJSON(archi);
 
     }
 
