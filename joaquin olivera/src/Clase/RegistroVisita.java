@@ -1,5 +1,8 @@
 package Clase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class RegistroVisita {
     private int id;
     private static int cont = 1;
@@ -45,5 +48,18 @@ public class RegistroVisita {
                 ", idHotel=" + idHotel +
                 ", fechaEstadia='" + fechaEstadia + '\'' +
                 '}';
+    }
+    public JSONObject toJSON(){
+        JSONObject json = new JSONObject();
+        try{
+            json.put("id", id);
+            json.put("dniCliente", dniCliente);
+            json.put("cantidad", cantidad);
+            json.put("idHotel", idHotel);
+            json.put("fechaEstadia", fechaEstadia);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

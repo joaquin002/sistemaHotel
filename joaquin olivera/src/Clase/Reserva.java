@@ -1,6 +1,8 @@
 package Clase;
 
 import Interfaces.Identificable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Reserva implements Identificable {
     private int idReserva;
@@ -55,5 +57,18 @@ public class Reserva implements Identificable {
     @Override
     public int getIdBuscado() {
         return this.idReserva;
+    }
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+        try{
+            json.put("idReserva", idReserva);
+            json.put("dniCliente", dniCliente);
+            json.put("idRecepcionista", idRecepcionista);
+            json.put("fecha", fecha);
+            json.put("idHabitacion", idHabitacion);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

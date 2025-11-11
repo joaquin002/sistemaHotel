@@ -3,6 +3,8 @@ package Clase;
 import Enums.MetodoPago;
 import Excepcion.NoRegistradoException;
 import Interfaces.Identificable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -211,4 +213,5 @@ public class Recepcionista extends Usuario implements Identificable {
                 ", hotel=" + hotel +
                 '}';
     }
+
 }

@@ -3,6 +3,9 @@ package Clase;
 import Enums.MetodoPago;
 import Excepcion.NoRegistradoException;
 import Interfaces.Identificable;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -148,5 +151,24 @@ public class Cliente extends Usuario implements Identificable {
                 ", historial=" + historial +
                 ", reserva=" + reserva +
                 '}';
+    }
+    public JSONObject toJSON(){
+        JSONObject obj=new JSONObject();
+        try{
+            obj.put("nombre", nombre);
+            obj.put("dni", dni);
+            obj.put("domicilio", domicilio);
+            obj.put("metodoPago", metodoPago);
+            obj.put("hotel", hotel.toJSON());
+            obj.put("reserva", reserva.toJSON());
+            JSONArray historialJson = new JSONArray();
+            for (Historial historial : this.historial){
+                historialJson.put(historial.toJSON());
+            }
+            obj.put("historial", historialJson);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return obj;
     }
 }

@@ -1,5 +1,8 @@
 package Clase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Punto {
     private int id;
     private int dniCliente;
@@ -30,5 +33,16 @@ public class Punto {
                 ", dniCliente=" + dniCliente +
                 ", cantidad=" + cantidad +
                 '}';
+    }
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", id);
+            json.put("dniCliente", dniCliente);
+            json.put("cantidad", cantidad);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }
