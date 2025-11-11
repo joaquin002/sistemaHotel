@@ -4,6 +4,9 @@ import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.NoRegistradoException;
 import Interfaces.Identificable;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Hotel implements Identificable{
     private int id;
@@ -100,6 +103,23 @@ public class Hotel implements Identificable{
         }
         return rta;
     }
+    public JSONObject toJSON(){
+        JSONObject obj=new JSONObject();
 
+        try{
+            obj.put("id",id);
+            obj.put("nombre",nombre);
+            obj.put("direccion",direccion);
+            obj.put("recaudacion",recaudacion);
+            JSONArray habitacionJson=new JSONArray();
+            for (Habitacion h:this.habitaciones.getLista()) {
+                habitacionJson.put(h.toJson());
+            }
+            obj.put("habitaciones",habitacionJson);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return obj;
+    }
 
 }
