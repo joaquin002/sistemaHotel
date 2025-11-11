@@ -6,6 +6,7 @@ import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
 import Excepcion.UsuarioNoEncontradoException;
 
+import java.nio.channels.ScatteringByteChannel;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class Main {
     // Menu principal. Va a contener el resto de los metodos necesarios para que funcione
     public static void menuPrincipal(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
-        int opcion;
+        int opcion=0;
         String nombre = "";
         String contrasenia = "";
 
@@ -38,8 +39,13 @@ public class Main {
             System.out.println("2. Iniciar Sesion"); //listo
             System.out.println("3. Salir"); //listo
             System.out.println("Seleccione una opción...");
+
+            try
+            {
+
             opcion = sc.nextInt();
             sc.nextLine();
+
             switch (opcion) {
                 case 1:
                     menuInterno(sistema);
@@ -73,6 +79,10 @@ public class Main {
                     System.out.println("Error. Opcion no valida. Intente nuevamente.");
                     break;
             }
+                } catch (InputMismatchException e) {
+                System.out.println("Ingrese un número válido (1, 2 o 3).");
+                sc.nextLine();
+            }
             if (opcion != 3) {
                 System.out.println("\n¿Desea realizar otra accion? (s/n): ");
                 seguir = sc.next().charAt(0);
@@ -83,7 +93,7 @@ public class Main {
     // Tengo que llamar en los parametros al sistema creado en el main porque sino lo que yo cargue en estos metodos no se va a guardar.
     public static void menuInterno(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
-        int opcion;
+        int opcion=0;
         char seguir = 's';
         boolean encontrado = false;
         do {
@@ -95,6 +105,9 @@ public class Main {
             System.out.println("2. Recepcionista");
             System.out.println("3. Cliente");
             System.out.println("4. salir");
+
+            try
+            {
             opcion = sc.nextInt();
             sc.nextLine();
 
@@ -143,6 +156,11 @@ public class Main {
                     System.out.println("Error. Opcion no valida...");
                     break;
             }
+
+                }catch (InputMismatchException e) {
+                System.out.println("Ingrese un número válido (1,2,3 o 4).");
+                sc.nextLine();
+            }
             if (!encontrado) {
                 System.out.println("¿Desea registrarse en otro modo?");
                 seguir = sc.next().charAt(0);
@@ -154,7 +172,7 @@ public class Main {
 
     public static void opcionRecepcionista(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
-        int opcion;
+        int opcion=0;
         char seguir = 's';
 
         do {
@@ -170,6 +188,9 @@ public class Main {
             System.out.println("7. Ver reservas");//listo
             System.out.println("8. Ver habitaciones no disponibles por motivo");
             System.out.println("9. Ver habitaciones ocupadas");
+
+            try
+            {
             opcion = sc.nextInt();
             sc.nextLine(); //limpio el buffer
             switch (opcion) {
@@ -227,6 +248,11 @@ public class Main {
                     System.out.println("opcion no valida");
                     break;
             }
+
+                }catch (InputMismatchException e) {
+                System.out.println(" Ingrese un número válido (1-9):");
+                sc.nextLine();
+            }
             System.out.println("¿Desea elegir otra opcion?");
             seguir = sc.next().charAt(0);
 
@@ -250,7 +276,9 @@ public class Main {
             System.out.println("5. Buscar habitacion"); //listo
             System.out.println("6. Ver todas las habitaciones del hotel");//listo
             System.out.println("7. Eliminar habitacion"); //listo
-            opcion = sc.nextInt();
+            try
+            {
+                opcion = sc.nextInt();
 
             switch (opcion) {
                 case 1:
@@ -297,6 +325,11 @@ public class Main {
                 default:
                     break;
             }
+
+                }catch (InputMismatchException e) {
+                System.out.println(" Ingrese un número válido (1-7):");
+                sc.nextLine();
+            }
             System.out.println("¿Desea elegir otra opcion?");
             seguir = sc.next().charAt(0);
 
@@ -314,7 +347,9 @@ public class Main {
             System.out.println("        Cliente     ");
             System.out.println("---------------------------------------------");
             System.out.println("1. Hacer reserva");
-            opcion = sc.nextInt();
+            try
+            {
+                opcion = sc.nextInt();
 
             switch (opcion) {
                 case 1:
@@ -342,7 +377,13 @@ public class Main {
                     String fechaSalida = sc.next();
                     System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fechaInicio, fechaSalida));
                 default:
+                    System.out.println("opcion no valida");
                     break;
+            }
+
+                }catch (InputMismatchException e) {
+                System.out.println("Ingrese un número válido (1).");
+                sc.nextLine();
             }
             System.out.println("¿Desea elegir otra opcion?");
             seguir = sc.next().charAt(0);
@@ -364,6 +405,9 @@ public class Main {
             System.out.println("2. Deluxe");
             System.out.println("3. Suite");
             System.out.println("4. Salir");
+
+            try
+            {
             opcion = sc.nextInt();
             sc.nextLine();
             switch (opcion) {
@@ -456,6 +500,11 @@ public class Main {
                     System.out.println("opcion invalida");
                     break;
             }
+
+                }catch (InputMismatchException e){
+                System.out.println(" Ingrese un número válido (1-4).");
+                sc.nextLine();
+            }
             if (opcion != 4) {
                 System.out.println("Desea cargar otra habitacion? (s/n)");
                 seguir = sc.next().charAt(0);
@@ -476,6 +525,7 @@ public class Main {
                 System.out.println("1. Efectivo");
                 System.out.println("2. Debito");
                 System.out.println("3. Credito");
+
                 opcion = sc.nextInt();
                 sc.nextLine();
                 switch (opcion) {
