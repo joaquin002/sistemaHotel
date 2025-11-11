@@ -158,18 +158,18 @@ public class SistemaHotel {
     }
 
     //recepcionista metodos
-    public void checkIn(int dniCliente, int idReserva, String fechaSalida){
+    public void checkIn(int dniCliente, int idReserva){
 
         try {
-            recepcionista.checkIn(dniCliente, idReserva, fechaSalida);
+            recepcionista.checkIn(dniCliente, idReserva);
         }catch (NoRegistradoException e){
             System.out.println(e.getMessage());
         }
     }
 
-    public void checkOut(int idReserva, int dniCliente, String fecha){
+    public void checkOut(int idReserva, int dniCliente){
         try {
-            recepcionista.checkOut(idReserva, dniCliente, fecha);
+            recepcionista.checkOut(idReserva, dniCliente);
         } catch (NoRegistradoException e) {
             System.out.println(e.getMessage());
         }

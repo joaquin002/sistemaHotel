@@ -184,10 +184,7 @@ public class Main {
                     int idReserva = sc.nextInt();
                     sc.nextLine();
 
-                    System.out.println("Ingrese fecha de salida (dd/mm/aaaa):");
-                    String fechaSalida = sc.nextLine();
-
-                    sistema.checkIn(dni, idReserva, fechaSalida);
+                    sistema.checkIn(dni, idReserva);
                     break;
                 case 2:
                     //pedirle datos al usuario
@@ -195,9 +192,8 @@ public class Main {
                     int idReserva2 = sc.nextInt();
                     System.out.println("ingrese dni del cliente");
                     int dniCliente = sc.nextInt();
-                    System.out.println("ingrese fecha de salida");
-                    String fechaFinal = sc.nextLine();
-                    sistema.checkOut(idReserva2, dniCliente, fechaFinal);
+
+                    sistema.checkOut(idReserva2, dniCliente);
                     break;
                 case 3:
                     //consultar disponibilidad

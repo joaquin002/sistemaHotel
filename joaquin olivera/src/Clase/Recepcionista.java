@@ -14,7 +14,6 @@ public class Recepcionista extends Usuario implements Identificable {
     private int id;
     private Registro<Cliente> clientes;
     private Registro<Reserva> reservas;
-    private ArrayList<RegistroVisita> registroVisitas;
     private Hotel hotel;
 
     //para usuario
@@ -24,7 +23,6 @@ public class Recepcionista extends Usuario implements Identificable {
         this.hotel = hotel;
         this.clientes=new Registro<>();
         this.reservas=new Registro<>();
-        this.registroVisitas=new ArrayList<>();
     }
 
     //para cargar recepcionista
@@ -33,7 +31,6 @@ public class Recepcionista extends Usuario implements Identificable {
         this.hotel = hotel;
         this.clientes = new Registro<>();
         this.reservas = new Registro<>();
-        this.registroVisitas = new ArrayList<>();
     }
 
     @Override
@@ -71,7 +68,7 @@ public class Recepcionista extends Usuario implements Identificable {
         reservas.agregar(reserva);
     }
 
-    public void checkIn(int dniCliente, int idReserva, String fechaSalida) throws NoRegistradoException {
+    public void checkIn(int dniCliente, int idReserva) throws NoRegistradoException {
 
         //verifica si el cliente ya existe
         Cliente c1 = buscarCliente(dniCliente);
@@ -86,26 +83,24 @@ public class Recepcionista extends Usuario implements Identificable {
             throw new NoRegistradoException("no existe la reserva");
         }
 
-
-        //guarda o actualiza la visita
-        boolean encontrado = false;
-        for (RegistroVisita rv : registroVisitas) {
-            if (rv.getDniCliente() == dniCliente && rv.getIdHotel() == hotel.getIdBuscado()) {
-                rv.setCantidad(rv.getCantidad() + 1);//incrementa veces que va el cliente al hotel
-                rv.setFechaEstadia(fechaSalida);//actualiza fecha
-                encontrado = true;
-                break;
-            }
+        Habitacion h1 = hotel.buscarHabitacion(reservaCliente.getIdHabitacion());
+        if (h1 == null) {
+            throw new NoRegistradoException("No se encontró la habitación con id: " + reservaCliente.getIdHabitacion());
         }
 
-        if (!encontrado) {
-            registroVisitas.add(new RegistroVisita(dniCliente, 1, hotel.getIdBuscado(), fechaSalida));
-        }
+        //Marcar como ocupada al hacer el check-in
+        h1.setDisponible(false);
 
-        System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la fecha " + fechaSalida);
+        c1.guardarHistorial(dniCliente, reservaCliente.getFechaInicio(), reservaCliente.getFechaFinalizacion());
+
+
+        System.out.println("✅ Check-In realizado con éxito del cliente " + dniCliente +
+                " para la reserva " + idReserva +
+                ". Fecha de ingreso: " + reservaCliente.getFechaInicio() +
+                ", fecha de salida: " + reservaCliente.getFechaFinalizacion());
     }
 
-    public void checkOut(int idReserva, int dniCliente, String fechaSalida) throws NoRegistradoException {
+    public void checkOut(int idReserva, int dniCliente) throws NoRegistradoException {
         Reserva r2 = buscarReserva(idReserva); //buscar la reserva
         if (r2 == null) {
             throw new NoRegistradoException("la reserva con id: " + idReserva + " no esta registrada");
@@ -128,9 +123,12 @@ public class Recepcionista extends Usuario implements Identificable {
         if (c1 == null) {
             throw new NoRegistradoException("no se encontro el cliente con dni: " + dniCliente);
         }
-        c1.guardarHistorial(dniCliente, fechaSalida);
 
-        System.out.println("se realizo con exito el check-out de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada y recaudación actualizada.");
+
+
+        System.out.println("✅ Check-Out realizado con éxito de la reserva " + idReserva +
+                ". Habitación " + h1.getIdBuscado() + " liberada. " +
+                "Fecha de estadía: " + r2.getFechaInicio() + " → " + r2.getFechaFinalizacion());
     }
 
 
@@ -213,7 +211,6 @@ public String consultarDisponibilidad()
                 "id=" + id +
                 ", clientes=" + clientes +
                 ", reservas=" + reservas +
-                ", registroVisitas=" + registroVisitas +
                 ", hotel=" + hotel +
                 '}';
     }
@@ -235,11 +232,6 @@ public String consultarDisponibilidad()
             }
             json.put("reservas", reservasJSON);
 
-            JSONArray registroVisitasJSON = new JSONArray();
-            for (RegistroVisita r:this.registroVisitas){
-                registroVisitasJSON.put(r.toJSON());
-            }
-            json.put("registroVisitas", registroVisitasJSON);
         }catch (JSONException e){
             e.printStackTrace();
         }
