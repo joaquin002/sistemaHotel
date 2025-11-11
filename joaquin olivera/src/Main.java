@@ -160,19 +160,19 @@ public class Main {
             System.out.println("=============================================");
             System.out.println("        Recepcionista    ");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Hacer CheckIn");
-            System.out.println("2. Hacer CheckOut");
-            System.out.println("3. Consultar disponibilidad");
-            System.out.println("4. Buscar reserva");
-            System.out.println("5. Buscar cliente");
-            System.out.println("6. Ver clientes");
-            System.out.println("7. Ver reservas");
+            System.out.println("1. Hacer CheckIn"); //listo
+            System.out.println("2. Hacer CheckOut"); //listo
+            System.out.println("3. Consultar disponibilidad"); //listo
+            System.out.println("4. Buscar reserva"); ///listo pero A REVISAAAAR!!!
+            System.out.println("5. Buscar cliente");//listo
+            System.out.println("6. Ver clientes"); //listo
+            System.out.println("7. Ver reservas");//listo
             opcion = sc.nextInt();
             sc.nextLine(); //limpio el buffer
             switch (opcion) {
                 case 1:  // PONERLE UN CARTEL DE QUE HIZO EL CHECKIN CORRECTAMENTE
                     //pedirle datos al usuario
-                    
+
                     System.out.println("Ingrese DNI del cliente:");
                     int dni=sc.nextInt();
                     sc.nextLine();
@@ -193,7 +193,7 @@ public class Main {
 
                     MetodoPago metodoPago=menuMetodoPago();
 
-                    sistema.checkIn(dni,1,fecha,nombre,domicilio,metodoPago);
+                    sistema.checkIn(dni,idHabitacion,fecha,nombre,domicilio,metodoPago);
                     break;
                 case 2:
                     //pedirle datos al usuario
@@ -221,6 +221,12 @@ public class Main {
                     int dniB=sc.nextInt();
                     System.out.println(sistema.buscarCliente(dniB)); //probar
                     break;
+                case 6:
+                    System.out.println(sistema.mostrarClientes());
+                    break;
+                case 7:
+                    System.out.println(sistema.mostrarReservas());
+                    break;
                 default:
                     break;
             }
@@ -242,7 +248,7 @@ public class Main {
             System.out.println("---------------------------------------------");
             System.out.println("1. Mostrar hotel");//listo
             System.out.println("2. Eliminar  recepcionista REVISAAAAAR!!!!");/// VER
-            System.out.println("3. Ver recepcionista");
+            System.out.println("3. Ver recepcionista");//listo
             System.out.println("4. Cargar habitacion");//listo
             System.out.println("5. Buscar habitacion"); //listo
             System.out.println("6. Ver todas las habitaciones del hotel");//listo
@@ -367,7 +373,7 @@ public class Main {
             System.out.println("1. Estandar");
             System.out.println("2. Deluxe");
             System.out.println("3. Suite");
-            System.out.println("4. Volver al menu anterior");
+            System.out.println("4. Salir");
             opcion = sc.nextInt();
             sc.nextLine();
             switch (opcion){
@@ -378,6 +384,8 @@ public class Main {
 
                     System.out.println("Ingrese precio: ");
                     double precio = sc.nextDouble();
+                    sc.nextLine();
+
                     System.out.println("Ingrese descripcion: ");
                     String descripcion = sc.nextLine();
 
@@ -398,10 +406,14 @@ public class Main {
                     System.out.println("Habitacion deluxe");
                     System.out.println("ingrese precio");
                     double precioD=sc.nextDouble();
+                    sc.nextLine();
+
                     System.out.println("ingrese descripcion");
                     String descripcionD=sc.nextLine();
+
                     System.out.println("ingrese servicios");
                     String serviciosD=sc.nextLine();
+
                     System.out.println("ingrese cantidad de personas permitidas");
                     int personasPermitidasD=sc.nextInt();
 
@@ -417,8 +429,11 @@ public class Main {
 
                     System.out.println("Ingrese precio");
                     double precioS=sc.nextDouble();
+                    sc.nextLine();
+
                     System.out.println("Ingrese descripcion");
                     String descripcionS=sc.nextLine();
+
                     System.out.println("Ingrese servicios");
                     String serviciosS=sc.nextLine();
                     System.out.println("Ingrese cantidad de personas permitidas");
@@ -458,6 +473,7 @@ public class Main {
                 System.out.println("2. Debito");
                 System.out.println("3. Credito");
                 opcion=sc.nextInt();
+                sc.nextLine();
                 switch (opcion){
                     case 1:
                         metodoPago=MetodoPago.EFECTIVO;
