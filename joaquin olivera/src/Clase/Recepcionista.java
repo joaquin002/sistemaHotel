@@ -234,8 +234,8 @@ public String consultarDisponibilidad()
     public JSONObject toJson(){
         JSONObject json = new JSONObject();
         try{
-            json.put("id", id);
-            json.put("hotel", hotel.toJSON());
+            json.put("id", this.id);
+            json.put("hotel", this.hotel.toJSON());
             JSONArray clienteJSON = new JSONArray();
             for (Cliente c:this.clientes.getLista()){
                 clienteJSON.put(c.toJSON());

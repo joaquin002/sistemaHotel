@@ -117,12 +117,11 @@ public class Hotel implements Identificable{
     }
     public JSONObject toJSON(){
         JSONObject obj=new JSONObject();
-
         try{
-            obj.put("id",id);
-            obj.put("nombre",nombre);
-            obj.put("direccion",direccion);
-            obj.put("recaudacion",recaudacion);
+            obj.put("id", this.id);
+            obj.put("nombre", this.nombre);
+            obj.put("direccion", this.direccion);
+            obj.put("recaudacion", this.recaudacion);
             JSONArray habitacionJson=new JSONArray();
             for (Habitacion h:this.habitaciones.getLista()) {
                 habitacionJson.put(h.toJson());

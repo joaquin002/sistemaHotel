@@ -26,10 +26,9 @@ public class Deluxe extends Habitacion{
 
     @Override
     public JSONObject toJson(){
-        JSONObject json = new JSONObject();
+        JSONObject json = super.toJson();
         try{
-            json =  super.toJson();
-            json.put("servicioEspcialDeluxe",servicioEspecialDeluxe);
+            json.put("servicioEspcialDeluxe", this.servicioEspecialDeluxe);
         }catch (JSONException e){
             e.printStackTrace();
         }

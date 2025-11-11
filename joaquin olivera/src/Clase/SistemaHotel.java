@@ -287,12 +287,54 @@ public class SistemaHotel {
         JSONObject admin = new JSONObject();
         admin.put("administrador", this.admin.toJSON());
         //JsonUtiles.subirJsonObject(admin);
-        JsonUtiles.subirArchivoObj(admin);
+       // JsonUtiles.subirArchivoObj(admin);
         JSONArray lista = new JSONArray();
         for (Usuario u : usuarios){
             lista.put(u.toJson());
         }
         //JsonUtiles.subirArchivo(lista);
-        JsonUtiles.subirArchivo(lista);
+        //JsonUtiles.subirArchivo(lista);
+    }
+
+    public JSONObject pasarAJSON() {
+        JSONObject obj = new JSONObject();
+        try {
+            //hotel
+            if (hotel != null)
+                obj.put("hotel", hotel.toJSON());
+
+            //administrador
+            if (admin != null)
+                obj.put("admin", admin.toJSON());
+
+            //recepcionista
+            if (recepcionista != null)
+                obj.put("recepcionista", recepcionista.toJson());
+
+            //usuarios
+            JSONArray usuariosArray = new JSONArray();
+            for (Usuario u : usuarios) {
+                usuariosArray.put(u.toJson());
+            }
+            obj.put("usuarios", usuariosArray);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
+
+    public String mostrarJson(){
+        JSONObject obj = this.pasarAJSON();
+        return obj.toString();
+    }
+
+    public void subirJsonArchivo(String nombreArchivo){
+        JSONObject obj=pasarAJSON();
+        JsonUtiles.subirArchivoObj(nombreArchivo, obj);
+    }
+
+    public String mostrarArchivo(String nombreArchivo){
+        return JsonUtiles.descargarJson(nombreArchivo);
     }
 }

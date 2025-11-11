@@ -73,6 +73,7 @@ public class Administracion extends Usuario {
         }
         return this.recepcionista.mostrar();
     }
+
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         try {

@@ -81,13 +81,13 @@ public class Habitacion implements Identificable {
     public JSONObject toJson(){
         JSONObject json = new JSONObject();
         try{
-            json.put("id",id);
-            json.put("precio",precio);
-            json.put("descripcion",descripcion);
-            json.put("servicios",servicios);
-            json.put("personasPermitidas",cantPersonas);
-            json.put("disponible",disponible);
-            json.put("motivoNoDisponible",motivoNoDisponible);
+            json.put("id", this.id);
+            json.put("precio", this.precio);
+            json.put("descripcion", this.descripcion);
+            json.put("servicios", this.servicios);
+            json.put("personasPermitidas", this.cantPersonas);
+            json.put("disponible", this.disponible);
+            json.put("motivoNoDisponible", this.motivoNoDisponible);
         }catch(JSONException e){
             e.printStackTrace();
         }

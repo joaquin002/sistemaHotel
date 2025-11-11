@@ -48,9 +48,9 @@ public class Usuario {
     public JSONObject toJson(){
         JSONObject json = new JSONObject();
         try{
-            json.put("nombreUsuario", nombreUsuario);
-            json.put("contrasenia", contrasenia);
-            json.put("tipo", tipo);
+            json.put("nombreUsuario", this.nombreUsuario);
+            json.put("contrasenia", this.contrasenia);
+            json.put("tipo", this.tipo);
         }catch (JSONException e){
             e.printStackTrace();
         }

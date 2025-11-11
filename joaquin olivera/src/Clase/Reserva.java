@@ -69,12 +69,12 @@ public class Reserva implements Identificable {
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
         try{
-            json.put("idReserva", idReserva);
-            json.put("dniCliente", dniCliente);
-            json.put("idRecepcionista", idRecepcionista);
+            json.put("idReserva", this.idReserva);
+            json.put("dniCliente", this.dniCliente);
+            json.put("idRecepcionista", this.idRecepcionista);
             json.put("fecha", this.fechaInicio);
             json.put("fechaFinalizacion", this.fechaFinalizacion);
-            json.put("idHabitacion", idHabitacion);
+            json.put("idHabitacion", this.idHabitacion);
         }catch (JSONException e){
             e.printStackTrace();
         }

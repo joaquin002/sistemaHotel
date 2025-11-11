@@ -24,6 +24,11 @@ public class Main {
 
         SistemaHotel sistema = new SistemaHotel();
         menuPrincipal(sistema);
+        sistema.pasarAJSON();
+        System.out.println(sistema.mostrarJson());
+        sistema.subirJsonArchivo("hotel");
+        System.out.println(sistema.mostrarArchivo("hotel"));
+        /*
         String archi = "archivoJson.json";
         sistema.toJSON(archi);
         System.out.println(JsonUtiles.descargarJson(archi));
@@ -32,6 +37,8 @@ public class Main {
         JSONObject obj = new JSONObject(rta);
         SistemaHotel s1 = new SistemaHotel(obj);
         System.out.println(s1.toString());
+
+         */
 
     }
 
@@ -379,10 +386,10 @@ public class Main {
                         sc.nextLine();
 
                         System.out.println("Ingrese fecha de inicio:");
-                        String fechaInicioStr = sc.next();
+                        String fechaInicioStr = sc.nextLine();
 
                         System.out.println("ingrese fecha de salida");
-                        String fechaSalidaStr = sc.next();
+                        String fechaSalidaStr = sc.nextLine();
                         try
                         {
                             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -545,7 +552,7 @@ public class Main {
         MetodoPago metodoPago = null;
         while (!valido) {
             try {
-                System.out.println("Seleccione metodo de pago");
+                System.out.println("Seleccione metodo de pago a utilizar: ");
                 System.out.println("1. Efectivo");
                 System.out.println("2. Debito");
                 System.out.println("3. Credito");

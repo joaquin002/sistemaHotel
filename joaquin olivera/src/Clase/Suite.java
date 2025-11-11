@@ -36,8 +36,7 @@ public class Suite extends Habitacion{
     public JSONObject toJson() {
         JSONObject json = super.toJson();
          try{
-             json = super.toJson();
-             json.put("especialSuite",especialSuite);
+             json.put("especialSuite", this.especialSuite);
          }catch (JSONException e){
              e.printStackTrace();
          }

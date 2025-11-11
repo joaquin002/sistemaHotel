@@ -18,9 +18,9 @@ public class JsonUtiles {
             }
         }
 
-    public static void subirArchivo(JSONArray jsonArray){
+    public static void subirArchivo(String nombreArchivo, JSONArray jsonArray){
         try{
-            BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json", true));
+            BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json", true));
             salida.write(jsonArray.toString());
             salida.flush();
             salida.close();
@@ -29,9 +29,9 @@ public class JsonUtiles {
         }
     }
 
-    public static void subirArchivoObj(JSONObject jsonObject){
+    public static void subirArchivoObj(String nombreArchivo, JSONObject jsonObject){
         try{
-            BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json",  true));
+            BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json",  true));
             salida.write(jsonObject.toString());
             salida.flush();
             salida.close();

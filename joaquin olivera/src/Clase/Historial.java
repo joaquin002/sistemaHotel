@@ -32,9 +32,9 @@ public class Historial {
     public JSONObject toJSON(){
         JSONObject json = new JSONObject();
         try {
-            json.put("dniCliente", dniCliente);
-            json.put("fechaInicio", fechaInicio);
-            json.put("fechaSalida", fechaSalida);
+            json.put("dniCliente", this.dniCliente);
+            json.put("fechaInicio", this.fechaInicio);
+            json.put("fechaSalida", this.fechaSalida);
         }catch (JSONException e){
             e.printStackTrace();
         }
