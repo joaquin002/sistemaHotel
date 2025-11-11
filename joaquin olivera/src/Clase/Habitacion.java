@@ -1,6 +1,7 @@
 package Clase;
 
 
+import Enums.MotivoNoDisponible;
 import Interfaces.Identificable;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,9 +14,9 @@ public class Habitacion implements Identificable {
     private String servicios;
     private int cantPersonas;
     private boolean disponible; //false ocupada true disponible
-    private String motivoNoDisponible;
+    private MotivoNoDisponible motivoNoDisponible;
 
-    public Habitacion( double precio, String descripcion,String servicios, int cantPersonas,  boolean disponible, String motivoNoDisponible) {
+    public Habitacion( double precio, String descripcion,String servicios, int cantPersonas,  boolean disponible, MotivoNoDisponible motivoNoDisponible) {
         this.id = contador++;
         this.precio = precio;
         this.descripcion = descripcion;
@@ -25,12 +26,13 @@ public class Habitacion implements Identificable {
         this.motivoNoDisponible=motivoNoDisponible;
     }
 
-    public String getMotivoNoDisponible() {
-        return motivoNoDisponible;
-    }
-
-    public void setMotivoNoDisponible(String motivoNoDisponible) {
-        this.motivoNoDisponible = motivoNoDisponible;
+    public Habitacion( double precio, String descripcion, String servicios, int cantPersonas, boolean disponible) {
+        this.id = contador++;
+        this.precio = precio;
+        this.descripcion = descripcion;
+        this.servicios = servicios;
+        this.cantPersonas = cantPersonas;
+        this.disponible = disponible;
     }
 
     public int getId() {
