@@ -23,6 +23,18 @@ public class Hotel implements Identificable{
         this.direccion = direccion;
         this.habitaciones = new Registro<>();
     }
+    public Hotel (JSONObject obj) throws JSONException{
+        this.id = obj.getInt("id");
+        this.nombre = obj.getString("nombre");
+        this.direccion = obj.getString("direccion");
+        this.recaudacion = obj.getDouble("recaudacion");
+        JSONArray habitaciones=obj.getJSONArray("habitaciones");
+        for (int i = 0; i < habitaciones.length(); i++) {
+            JSONObject habitacion=habitaciones.getJSONObject(i);
+            this.habitaciones.agregar(new Habitacion(habitacion));
+        }
+
+    }
 
     public int getId() {
         return id;

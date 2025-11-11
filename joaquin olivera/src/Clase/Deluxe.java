@@ -12,7 +12,10 @@ public class Deluxe extends Habitacion{
         super( precio, descripcion,servicios, personasPermitidas, disponible, motivoNoDisponible);
         this.servicioEspecialDeluxe = servicioEspecialDeluxe;
     }
-
+    public Deluxe(JSONObject obj) throws JSONException {
+        super(obj);
+        this.servicioEspecialDeluxe=obj.getEnum(ServicioEspecialDeluxe.class,"servicioEspecialDeluxe");
+    }
 
     @Override
     public String toString() {

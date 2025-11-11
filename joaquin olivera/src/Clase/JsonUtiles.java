@@ -7,7 +7,7 @@ import java.io.*;
 
 public class JsonUtiles {
     private static final String archivo = "archivoJson";
-        public static void subirJSonArray(JSONArray jsonArray, String archive){
+        public static void subirJSonArray(JSONArray jsonArray){
             try{
                 BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json"));
                 salida.write(jsonArray.toString());
