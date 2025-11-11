@@ -9,7 +9,7 @@ public class JsonUtiles {
     private static final String archivo = "archivoJson";
         public static void subirJSonArray(JSONArray jsonArray, String archive){
             try{
-                BufferedWriter salida = new BufferedWriter(new FileWriter(archive+".txt"));
+                BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json"));
                 salida.write(jsonArray.toString());
                 salida.flush();
                 salida.close();
@@ -34,7 +34,7 @@ public class JsonUtiles {
             String lectura= "";
             try
             {
-                BufferedReader entrada = new BufferedReader(new FileReader(archive+".txt"));
+                BufferedReader entrada = new BufferedReader(new FileReader(archivo+".json"));
                 while((lectura = entrada.readLine())!=null){
                     contenido.append(lectura);
                 }
