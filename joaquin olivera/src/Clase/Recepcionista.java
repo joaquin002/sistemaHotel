@@ -51,6 +51,12 @@ public class Recepcionista extends Usuario implements Identificable {
         return c1;
     }
 
+    public void registrarClienteExistente(Cliente c1) {
+        c1.setHotel(this.hotel);
+        clientes.agregar(c1);
+    }
+
+
     //busca una reserva
     public Reserva buscarReserva(int id) {
         return this.reservas.buscar(id);
@@ -182,6 +188,17 @@ public class Recepcionista extends Usuario implements Identificable {
                 ", hotel=" + hotel +
                 '}';
     }
+
+    public String mostrarClientes()
+        {
+
+        return clientes.mostrar();
+        }
+
+        public String mostrarReservas()
+        {
+            return reservas.mostrar();
+        }
 
     @Override
     public String toString() {

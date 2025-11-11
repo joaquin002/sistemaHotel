@@ -206,11 +206,15 @@ public class SistemaHotel {
         try {
             Cliente c1= recepcionista.buscarCliente(dniCliente);
             if (c1==null){
-                return "No se encontro ningun cliente con el dni: "+dniCliente;
+                c1 = new Cliente(nombre, dniCliente, domicilio, metodoPago);
+                recepcionista.registrarClienteExistente(c1);
+                c1.setHotel(hotel);
+                //return "reserva realizada con exito";
             }else {
                 c1.setHotel(hotel); //asocio el hotel al cliente
-                return c1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha, recepcionista);
             }
+            return c1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha, recepcionista);
+
         }catch (NoRegistradoException e){
             return e.getMessage();
         }
@@ -228,5 +232,15 @@ public class SistemaHotel {
             }
         }
         return total;
+    }
+
+    public String mostrarClientes()
+    {
+        return recepcionista.mostrarClientes();
+    }
+
+    public String mostrarReservas()
+    {
+        return recepcionista.mostrarReservas();
     }
 }
