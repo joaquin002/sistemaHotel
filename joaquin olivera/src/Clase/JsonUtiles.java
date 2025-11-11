@@ -18,7 +18,30 @@ public class JsonUtiles {
             }
         }
 
-        public static void subirJsonObject(JSONObject jsonObject){
+    public static void subirArchivo(JSONArray jsonArray){
+        try{
+            BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json", true));
+            salida.write(jsonArray.toString());
+            salida.flush();
+            salida.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void subirArchivoObj(JSONObject jsonObject){
+        try{
+            BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json",  true));
+            salida.write(jsonObject.toString());
+            salida.flush();
+            salida.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void subirJsonObject(JSONObject jsonObject){
             try{
                 BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json"));
                 salida.write(jsonObject.toString());

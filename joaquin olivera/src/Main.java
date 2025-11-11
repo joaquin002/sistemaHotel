@@ -1,3 +1,4 @@
+import Clase.JsonUtiles;
 import Clase.SistemaHotel;
 import Enums.MetodoPago;
 import Enums.MotivoNoDisponible;
@@ -5,6 +6,7 @@ import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
 import Excepcion.UsuarioNoEncontradoException;
+import org.json.JSONObject;
 
 import java.nio.channels.ScatteringByteChannel;
 import java.util.InputMismatchException;
@@ -14,10 +16,18 @@ public class Main {
 
     public static void main(String[] args) {
 
+
+
         SistemaHotel sistema = new SistemaHotel();
         menuPrincipal(sistema);
         String archi = "archivoJson.json";
         sistema.toJSON(archi);
+        System.out.println(JsonUtiles.descargarJson(archi));
+
+        String rta=JsonUtiles.descargarJson(archi);
+        JSONObject obj = new JSONObject(rta);
+        SistemaHotel s1 = new SistemaHotel(obj);
+        System.out.println(s1.toString());
 
     }
 

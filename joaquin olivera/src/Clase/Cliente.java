@@ -113,7 +113,7 @@ public class Cliente extends Usuario implements Identificable {
     }
 
     // nuevo metodo de hacer reserva. Pensando bien el tema de las fechas, checkIn y checkOut
-    public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, Recepcionista recepcionista, String fechaCheckIn, String fechaCheckOut) throws NoRegistradoException {
+    public String hacerReserva(int idHabitacion, Recepcionista recepcionista, String fechaCheckIn, String fechaCheckOut) throws NoRegistradoException {
         if (hotel == null) {
             throw new NoRegistradoException("El cliente no está asociado a ningún hotel");
         }

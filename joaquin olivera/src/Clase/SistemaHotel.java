@@ -23,6 +23,20 @@ public class SistemaHotel {
         this.hotel=new Hotel(1, "Hotel BellaVista ", "Avenida Siempre Viva 742");//crea el hotel
     }
 
+    public SistemaHotel(JSONObject obj) {
+        JSONArray usuarios=obj.getJSONArray("usuarios");
+        for (int i = 0; i < usuarios.length(); i++) {
+            JSONObject usuario=usuarios.getJSONObject(i);
+            this.usuarios.add(new Usuario(usuario));
+        }
+        JSONObject admin=obj.getJSONObject("admin");
+        JSONObject recepcionista=obj.getJSONObject("recepcionista");
+        JSONObject hotel=obj.getJSONObject("hotel");
+        this.admin=new Administracion(admin);
+        this.recepcionista=new Recepcionista(recepcionista);
+        this.hotel=new Hotel(hotel);
+    }
+
     public Administracion registrarAdministrador(String nombreUsuario, String contrasenia){
         this.admin = new Administracion(nombreUsuario, contrasenia);
         //asignar el hotel creado al administrador
@@ -217,7 +231,7 @@ public class SistemaHotel {
             }else {
                 c1.setHotel(hotel); //asocio el hotel al cliente
             }
-            return c1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, recepcionista, fechaInicio, fechaSalida);
+            return c1.hacerReserva(idHabitacion, recepcionista, fechaInicio, fechaSalida);
 
         }catch (NoRegistradoException e){
             return e.getMessage();
@@ -245,11 +259,13 @@ public class SistemaHotel {
     public void toJSON(String nomrbeArchivo){
         JSONObject admin = new JSONObject();
         admin.put("administrador", this.admin.toJSON());
-        JsonUtiles.subirJsonObject(admin);
+        //JsonUtiles.subirJsonObject(admin);
+        JsonUtiles.subirArchivoObj(admin);
         JSONArray lista = new JSONArray();
         for (Usuario u : usuarios){
             lista.put(u.toJson());
         }
-        JsonUtiles.subirJSonArray(lista);
+        //JsonUtiles.subirArchivo(lista);
+        JsonUtiles.subirArchivo(lista);
     }
 }

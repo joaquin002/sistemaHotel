@@ -17,6 +17,11 @@ public class Administracion extends Usuario {
         this.recepcionista=recepcionista;
     }
 
+    public Administracion(JSONObject obj) throws JSONException {
+        this.hotel=new Hotel(obj.getJSONObject("hotel"));
+        this.recepcionista=new Recepcionista(obj.getJSONObject("recepcionista"));
+    }
+
     public Hotel getHotel() {
         return hotel;
     }
