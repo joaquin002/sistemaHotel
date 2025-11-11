@@ -13,7 +13,6 @@ public class Recepcionista extends Usuario implements Identificable {
     private int id;
     private Registro<Cliente> clientes;
     private Registro<Reserva> reservas;
-    private ArrayList<Punto> puntos;
     private ArrayList<RegistroVisita> registroVisitas;
     private Hotel hotel;
 
@@ -24,7 +23,6 @@ public class Recepcionista extends Usuario implements Identificable {
         this.hotel = hotel;
         this.clientes=new Registro<>();
         this.reservas=new Registro<>();
-        this.puntos=new ArrayList<>();
         this.registroVisitas=new ArrayList<>();
     }
 
@@ -34,7 +32,6 @@ public class Recepcionista extends Usuario implements Identificable {
         this.hotel = hotel;
         this.clientes = new Registro<>();
         this.reservas = new Registro<>();
-        this.puntos = new ArrayList<>();
         this.registroVisitas = new ArrayList<>();
     }
 
@@ -104,13 +101,6 @@ public class Recepcionista extends Usuario implements Identificable {
 
         //marca la habitacion como ocupada
         habitacionEncontrada.setDisponible(false);
-
-        //para sumar los puntos por cada alquiler
-        double precioHabitacion=habitacionEncontrada.getPrecio();
-        int puntosGanados= (int)precioHabitacion/100; // le vamos a asignar 1 punto por cada 100 pesos gastados.
-
-        Punto puntoNuevo= new Punto(puntos.size()+1, dniCliente,puntosGanados);
-        puntos.add(puntoNuevo);
 
         //guarda o actualiza la visita
         boolean encontrado = false;
@@ -211,17 +201,6 @@ public class Recepcionista extends Usuario implements Identificable {
         return rta;
     }
 
-    /// AGREGAR AL MAIN VER PUNTOS X ID CLIENTE:
-    public int consultarPuntosCliente(int dniCliente) {
-        int total = 0;
-        for (Punto p : puntos) {
-            if (p.getDniCliente() == dniCliente) {
-                total += p.getCantidad();
-            }
-        }
-        return total;
-    }
-
     public String mostrar() {
         return super.toString()+"Recepcionista{" +
                 "id=" + id +
@@ -246,7 +225,6 @@ public class Recepcionista extends Usuario implements Identificable {
                 "id=" + id +
                 ", clientes=" + clientes +
                 ", reservas=" + reservas +
-                ", puntos=" + puntos +
                 ", registroVisitas=" + registroVisitas +
                 ", hotel=" + hotel +
                 '}';
@@ -268,13 +246,7 @@ public class Recepcionista extends Usuario implements Identificable {
                 reservasJSON.put(r.toJSON());
             }
             json.put("reservas", reservasJSON);
-
-            JSONArray puntosJSON = new JSONArray();
-            for (Punto p:this.puntos){
-                puntosJSON.put(p.toJson());
-            }
-            json.put("puntos", puntosJSON);
-
+            
             JSONArray registroVisitasJSON = new JSONArray();
             for (RegistroVisita r:this.registroVisitas){
                 registroVisitasJSON.put(r.toJSON());
