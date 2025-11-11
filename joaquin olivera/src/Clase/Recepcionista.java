@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Recepcionista extends Usuario implements Identificable {
@@ -70,25 +71,14 @@ public class Recepcionista extends Usuario implements Identificable {
         reservas.agregar(reserva);
     }
 
-    public void checkIn(int dniCliente, int idHabitacion,int idReserva, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago) throws NoRegistradoException {
+    public void checkIn(int dniCliente, int idReserva, String fechaSalida) throws NoRegistradoException {
 
         //verifica si el cliente ya existe
         Cliente c1 = buscarCliente(dniCliente);
         if (c1 == null) {
-            //registra el cliente
-            c1 = registrarCliente(nombre, dniCliente, domicilio, metodoPago);
+            throw new NoRegistradoException("No existe el cliente con el dni: "+dniCliente);
         }
 
-        //verifica habitación
-        Habitacion habitacionEncontrada = this.hotel.buscarHabitacion(idHabitacion);
-
-        if (habitacionEncontrada == null) {
-            throw new NoRegistradoException("la habitacion con id " + idHabitacion + " no existe.");
-        }
-        //verifica disponibilidad de la habitacion
-        if (!habitacionEncontrada.isDisponible()) {
-            throw new NoRegistradoException("la habitacion con id " + idHabitacion + " no esta disponible.");
-        }
 
         //verificar si ya tiene reserva
         Reserva reservaCliente = buscarReserva(idReserva);
@@ -96,25 +86,23 @@ public class Recepcionista extends Usuario implements Identificable {
             throw new NoRegistradoException("no existe la reserva");
         }
 
-        //marca la habitacion como ocupada
-        habitacionEncontrada.setDisponible(false);
 
         //guarda o actualiza la visita
         boolean encontrado = false;
         for (RegistroVisita rv : registroVisitas) {
             if (rv.getDniCliente() == dniCliente && rv.getIdHotel() == hotel.getIdBuscado()) {
                 rv.setCantidad(rv.getCantidad() + 1);//incrementa veces que va el cliente al hotel
-                rv.setFechaEstadia(fechaEstadia);//actualiza fecha
+                rv.setFechaEstadia(fechaSalida);//actualiza fecha
                 encontrado = true;
                 break;
             }
         }
 
         if (!encontrado) {
-            registroVisitas.add(new RegistroVisita(dniCliente, 1, hotel.getIdBuscado(), fechaEstadia));
+            registroVisitas.add(new RegistroVisita(dniCliente, 1, hotel.getIdBuscado(), fechaSalida));
         }
 
-        System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la habitación " + idHabitacion + " en la fecha " + fechaEstadia);
+        System.out.println("Check-In realizado con éxito del cliente " + dniCliente + " en la fecha " + fechaSalida);
     }
 
     public void checkOut(int idReserva, int dniCliente, String fechaSalida) throws NoRegistradoException {
@@ -146,20 +134,23 @@ public class Recepcionista extends Usuario implements Identificable {
     }
 
 
-    public String consultarDisponibilidad(){
-        String rta="";
-        boolean encontrado = false;
-        for (Habitacion h1: hotel.getHabitaciones().getLista()){
-            if (h1.isDisponible()){
-                rta+=h1.toString()+"\n";
-                encontrado=true;
-            }
+
+public String consultarDisponibilidad()
+{
+    String rta="";
+    boolean encontrado=false;
+    for (Habitacion h1: hotel.getHabitaciones().getLista())
+    {
+        if(h1.isDisponible()){
+            rta+=h1.toString()+"\n";
+            encontrado=true;
         }
-        if (encontrado==false){
-            rta="No hay habitaciones disponibles";
-        }
-        return rta;
     }
+    if(!encontrado){
+        rta="No hay habitaciones disponibles";
+    }
+    return rta;
+}
 
     public String verHabitacionesNoDisponiblesPorMotivo(){
         String rta="";
@@ -186,7 +177,7 @@ public class Recepcionista extends Usuario implements Identificable {
                         }else {
                             rta+="Cliente no registrado"+"\n";
                         }
-                        rta+="Fecha de reserva: "+r.getFecha()+"\n";
+                        rta+="Fecha de reserva: "+r.getFechaInicio()+" fecha de finalizacion: "+r.getFechaFinalizacion() +"\n";
                         encontrado=true;
                     }
                 }

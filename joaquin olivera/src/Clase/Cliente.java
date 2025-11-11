@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Cliente extends Usuario implements Identificable {
@@ -20,13 +22,13 @@ public class Cliente extends Usuario implements Identificable {
     private Hotel hotel; //para asociar al cliente cuando hace la reserva
 
     //constructor normal:
-    public Cliente(String nombreUsuario, String contrasenia, String nombre, int dni, String domicilio, MetodoPago metodoPago, int idReserva, int dniCliente, int idRecepcionista, String fecha, int idHabitacion) {
+    public Cliente(String nombreUsuario, String contrasenia, String nombre, int dni, String domicilio, MetodoPago metodoPago, int idReserva, int dniCliente, String fechaInicio, String fechaFinalizacion, int idHabitacion) {
         super(nombreUsuario, contrasenia, "Cliente");
         this.nombre = nombre;
         this.dni = dni;
         this.domicilio = domicilio;
         this.metodoPago = metodoPago;
-        this.reserva=new Reserva(idReserva, dniCliente, fecha, idHabitacion);
+        this.reserva=new Reserva(idReserva, dniCliente, fechaInicio, fechaFinalizacion, idHabitacion);
         this.historial = new ArrayList<>();
     }
 
@@ -94,7 +96,7 @@ public class Cliente extends Usuario implements Identificable {
         this.hotel = hotel;
     }
 
-    public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, String fecha, Recepcionista recepcionista) throws NoRegistradoException {
+    public String hacerReserva(String nombre, int dni, String domicilio, MetodoPago metodoPago, int idHabitacion, Recepcionista recepcionista, String fechaCheckIn, String fechaCheckOut) throws NoRegistradoException {
         if (hotel==null){
             throw new NoRegistradoException("El cliente no esta asociado a ningun hotel");
         }
@@ -126,19 +128,46 @@ public class Cliente extends Usuario implements Identificable {
             throw new NoRegistradoException("la habitacion seleccionada no esta disponible");
         }
 
-        //el cliente crea la reserva
-        Reserva nuevaReserva = new Reserva(this.getDni(), recepcionista.getIdBuscado(), fecha, idHabitacion);
+        // === VALIDACIÓN DE FECHAS ===
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate nuevaCheckIn = LocalDate.parse(fechaCheckIn, formatter);
+        LocalDate nuevaCheckOut = LocalDate.parse(fechaCheckOut, formatter);
 
-        //guarda la reserva
-        this.reserva=nuevaReserva;
-        this.guardarHistorial(this.getDni(), fecha);
+        if (nuevaCheckOut.isBefore(nuevaCheckIn)) {
+            throw new NoRegistradoException("La fecha de salida no puede ser anterior a la de ingreso.");
+        }
 
-        //marcar habitación como ocupada
+        // Buscar reservas del recepcionista que correspondan a la misma habitación
+        for (Reserva r : recepcionista.getReservas().getLista()) {
+            if (r.getIdHabitacion() == idHabitacion) {
+                LocalDate existenteCheckIn = LocalDate.parse(r.getFechaInicio(), formatter);
+                LocalDate existenteCheckOut = LocalDate.parse(r.getFechaFinalizacion(), formatter);
+
+                // si se solapan las fechas, no puede reservar
+                if (nuevaCheckIn.isBefore(existenteCheckOut) && nuevaCheckOut.isAfter(existenteCheckIn)) {
+                    throw new NoRegistradoException("La habitación ya está reservada entre " +
+                            existenteCheckIn + " y " + existenteCheckOut);
+                }
+            }
+        }
+
+
+        // El cliente crea la reserva (con check-in y check-out)
+        Reserva nuevaReserva = new Reserva(this.getDni(), recepcionista.getIdBuscado(),
+                fechaCheckIn, fechaCheckOut, idHabitacion);
+
+        // Guarda la reserva
+        this.reserva = nuevaReserva;
+        this.guardarHistorial(this.getDni(), fechaCheckIn);
+
+        // Marcar habitación como ocupada (puede volver a disponible luego del check-out)
         h1.setDisponible(false);
 
+        // Guardar la reserva en el registro del recepcionista
         recepcionista.guardarReserva(nuevaReserva);
 
-        return "Reserva realizada exitosamente para la habitación " + idHabitacion + " en la fecha " + fecha;
+        return "Reserva realizada exitosamente para la habitación " + idHabitacion +
+                " desde " + fechaCheckIn + " hasta " + fechaCheckOut;
     }
 
     @Override

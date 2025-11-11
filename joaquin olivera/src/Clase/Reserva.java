@@ -11,11 +11,11 @@ public class Reserva implements Identificable {
     private static int cont=1;
     private int dniCliente;
     private int idRecepcionista;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFinalizacion;
+    private String fechaInicio;
+    private String fechaFinalizacion;
     private int idHabitacion;
 
-    public Reserva(int dniCliente, int idRecepcionista,LocalDate fechaInicio,LocalDate fechaFinalizacion, int idHabitacion) {
+    public Reserva(int dniCliente, int idRecepcionista,String fechaInicio,String fechaFinalizacion, int idHabitacion) {
         this.idReserva = cont++;
         this.dniCliente = dniCliente;
         this.idRecepcionista = idRecepcionista;
@@ -36,14 +36,14 @@ public class Reserva implements Identificable {
         return idRecepcionista;
     }
 
-    public LocalDate getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
 
-    public LocalDate getFechaFinalizacion() {
+    public String getFechaFinalizacion() {
         return fechaFinalizacion;
     }
-    
+
     @Override
     public String toString() {
         return "Reserva{" +

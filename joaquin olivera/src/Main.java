@@ -180,33 +180,24 @@ public class Main {
                     int dni = sc.nextInt();
                     sc.nextLine();
 
-
-                    System.out.println("Ingrese nombre del cliente:");
-                    String nombre = sc.nextLine();
-
-                    System.out.println("Ingrese numero de habitacion:");
-                    int idHabitacion = sc.nextInt();
+                    System.out.println("Ingrese Id reserva:");
+                    int idReserva = sc.nextInt();
                     sc.nextLine();
 
-                    System.out.println("Ingrese fecha de ingreso (dd/mm/aaaa):");
-                    String fecha = sc.nextLine();
+                    System.out.println("Ingrese fecha de salida (dd/mm/aaaa):");
+                    String fechaSalida = sc.nextLine();
 
-                    System.out.println("Ingrese domicilio:");
-                    String domicilio = sc.nextLine();
-
-                    MetodoPago metodoPago = menuMetodoPago();
-
-                    sistema.checkIn(dni, idHabitacion, fecha, nombre, domicilio, metodoPago);
+                    sistema.checkIn(dni, idReserva, fechaSalida);
                     break;
                 case 2:
                     //pedirle datos al usuario
                     System.out.println("ingrese id reserva");
-                    int idReserva = sc.nextInt();
+                    int idReserva2 = sc.nextInt();
                     System.out.println("ingrese dni del cliente");
                     int dniCliente = sc.nextInt();
                     System.out.println("ingrese fecha de salida");
                     String fechaFinal = sc.nextLine();
-                    sistema.checkOut(idReserva, dniCliente, fechaFinal);
+                    sistema.checkOut(idReserva2, dniCliente, fechaFinal);
                     break;
                 case 3:
                     //consultar disponibilidad
@@ -351,15 +342,14 @@ public class Main {
                     System.out.println("Ingrese idHabitacion a reservar:");
                     int idHabitacion = sc.nextInt();
 
-                    System.out.println("Ingrese fecha:");
-                    String fecha = sc.next();
-                    System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha));
+                    System.out.println("Ingrese fecha de inicio:");
+                    String fechaInicio = sc.next();
+                    System.out.println("ingrese fecha de salida");
+                    String fechaSalida = sc.next();
+                    System.out.println(sistema1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fechaInicio, fechaSalida));
                     break;
                 case 2:
-                    System.out.println("Ingrese DNI del cliente para ver sus puntos");
-                    int dniBuscado = sc.nextInt();
-                    int puntos = sistema1.consultarPuntosCliente(dniBuscado);
-                    System.out.println("El cliente con dni " + dniBuscado + " posee " + puntos + " puntos");
+
                     break;
                 case 3:
                     break;

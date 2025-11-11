@@ -158,10 +158,10 @@ public class SistemaHotel {
     }
 
     //recepcionista metodos
-    public void checkIn(int dniCliente, int idHabitacion, String fechaEstadia, String nombre, String domicilio, MetodoPago metodoPago){
+    public void checkIn(int dniCliente, int idReserva, String fechaSalida){
 
         try {
-            recepcionista.checkIn(dniCliente, idHabitacion, fechaEstadia, nombre, domicilio, metodoPago);
+            recepcionista.checkIn(dniCliente, idReserva, fechaSalida);
         }catch (NoRegistradoException e){
             System.out.println(e.getMessage());
         }
@@ -205,7 +205,7 @@ public class SistemaHotel {
     }
 
     //metodos cliente
-    public String hacerReserva(String nombre, int dniCliente, String domicilio, MetodoPago metodoPago, int idHabitacion, String fecha){
+    public String hacerReserva(String nombre, int dniCliente, String domicilio, MetodoPago metodoPago, int idHabitacion, String fechaInicio, String fechaSalida){
         try {
             Cliente c1= recepcionista.buscarCliente(dniCliente);
             if (c1==null){
@@ -216,26 +216,13 @@ public class SistemaHotel {
             }else {
                 c1.setHotel(hotel); //asocio el hotel al cliente
             }
-            return c1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, fecha, recepcionista);
+            return c1.hacerReserva(nombre, dniCliente, domicilio, metodoPago, idHabitacion, recepcionista, fechaInicio, fechaSalida);
 
         }catch (NoRegistradoException e){
             return e.getMessage();
         }
     }
 
-    /// AGREGAR AL MAIN VER PUNTOS X ID CLIENTE:
-    public int consultarPuntosCliente(int dniCliente) {
-        int total=0;
-        for(Usuario u:usuarios)
-        {
-            if(u instanceof Recepcionista)
-            {
-                Recepcionista r1= (Recepcionista) u;
-                total=r1.consultarPuntosCliente(dniCliente);
-            }
-        }
-        return total;
-    }
 
     public String mostrarClientes()
     {
