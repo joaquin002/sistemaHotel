@@ -3,7 +3,7 @@ package Clase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Usuario {
+public abstract class Usuario {
     private String nombreUsuario;
     private String contrasenia;
     private String tipo;

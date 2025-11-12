@@ -14,13 +14,18 @@ public class Administracion extends Usuario {
     //constructor para usuario
     public Administracion(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia, "Administrador");
-        this.recepcionista=recepcionista;
+        this.recepcionista=null;
     }
 
     public Administracion(JSONObject obj) throws JSONException {
-        this.hotel=new Hotel(obj.getJSONObject("hotel"));
-        this.recepcionista=new Recepcionista(obj.getJSONObject("recepcionista"));
+        // Cargar solo los datos del usuario administrador
+        super(obj.getString("nombreUsuario"), obj.getString("contrasenia"), obj.getString("tipo"));
+
+        // Inicializar referencias a null
+        this.hotel = null;
+        this.recepcionista = null;
     }
+
 
     public Hotel getHotel() {
         return hotel;

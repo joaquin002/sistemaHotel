@@ -1,4 +1,5 @@
 import Clase.Cliente;
+import Clase.JsonUtiles;
 import Clase.SistemaHotel;
 import Enums.MetodoPago;
 import Enums.MotivoNoDisponible;
@@ -7,6 +8,8 @@ import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
 import Excepcion.NoRegistradoException;
 import Excepcion.UsuarioNoEncontradoException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
@@ -17,11 +20,20 @@ public class Main {
     public static void main(String[] args) {
 
 
+
         SistemaHotel sistema = new SistemaHotel();
         menuPrincipal(sistema);
-        sistema.pasarAJSONaArchivo(archivo);
 
+        //serializar:
+        sistema.pasarAJSONaArchivo(archivo);
         System.out.println(sistema.mostrarArchivo(archivo));
+
+        //deserializar:
+        String informacion= JsonUtiles.descargarJson(archivo);
+        JSONObject objetoJson= new JSONObject(informacion);
+        SistemaHotel sistema2=new SistemaHotel(objetoJson);//le paso el JsonObject y me lo convierte en un objeto.
+
+        System.out.println(sistema2.toString()); //aca muestro que pase el json a objeto java.
 
     }
 
@@ -382,6 +394,7 @@ public class Main {
                             System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
                         }catch (NoRegistradoException e){
                             System.out.println(e.getMessage());
+                            break;
                         }
                         break;
                     case 2:

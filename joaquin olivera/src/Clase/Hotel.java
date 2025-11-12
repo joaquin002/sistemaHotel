@@ -28,7 +28,10 @@ public class Hotel implements Identificable{
         this.nombre = obj.getString("nombre");
         this.direccion = obj.getString("direccion");
         this.recaudacion = obj.getDouble("recaudacion");
+        this.habitaciones = new Registro<>();
+
         JSONArray habitaciones=obj.getJSONArray("habitaciones");
+
         for (int i = 0; i < habitaciones.length(); i++) {
             JSONObject habitacion=habitaciones.getJSONObject(i);
             this.habitaciones.agregar(new Habitacion(habitacion));

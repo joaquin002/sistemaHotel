@@ -23,20 +23,66 @@ public class SistemaHotel {
         this.usuarios = new ArrayList<>();
         this.hotel=new Hotel(1, "Hotel BellaVista ", "Avenida Siempre Viva 742");//crea el hotel
     }
-
     public SistemaHotel(JSONObject obj) {
-        JSONArray usuarios=obj.getJSONArray("usuarios");
-        for (int i = 0; i < usuarios.length(); i++) {
-            JSONObject usuario=usuarios.getJSONObject(i);
-            this.usuarios.add(new Usuario(usuario));
+        this.usuarios = new ArrayList<>();
+
+        // 🔹 Deserializar hotel
+        if (obj.has("hotel") && !obj.isNull("hotel")) {
+            this.hotel = new Hotel(obj.getJSONObject("hotel"));
+        } else {
+            this.hotel = null;
+            System.out.println("⚠ No se encontró el hotel en el JSON.");
         }
-        JSONObject admin=obj.getJSONObject("admin");
-        JSONObject recepcionista=obj.getJSONObject("recepcionista");
-        JSONObject hotel=obj.getJSONObject("hotel");
-        this.admin=new Administracion(admin);
-        this.recepcionista=new Recepcionista(recepcionista);
-        this.hotel=new Hotel(hotel);
+
+        // 🔹 Deserializar admin
+        if (obj.has("admin") && !obj.isNull("admin")) {
+            this.admin = new Administracion(obj.getJSONObject("admin"));
+        } else {
+            this.admin = null;
+            System.out.println("⚠ No se encontró el administrador en el JSON.");
+        }
+
+        // 🔹 Deserializar recepcionista
+        if (obj.has("recepcionista") && !obj.isNull("recepcionista")) {
+            this.recepcionista = new Recepcionista(obj.getJSONObject("recepcionista"));
+        } else {
+            this.recepcionista = null;
+            System.out.println("⚠ No se encontró el recepcionista en el JSON.");
+        }
+
+        // 🔹 Deserializar lista de usuarios (según tipo)
+        if (obj.has("usuarios") && !obj.isNull("usuarios")) {
+            JSONArray usuariosArray = obj.getJSONArray("usuarios");
+
+            for (int i = 0; i < usuariosArray.length(); i++) {
+                JSONObject usuarioJSON = usuariosArray.getJSONObject(i);
+
+                String tipo = usuarioJSON.optString("tipo", "");
+
+                switch (tipo) {
+                    case "Administrador":
+                        this.usuarios.add(new Administracion(usuarioJSON));
+                        break;
+
+                    case "Recepcionista":
+                        this.usuarios.add(new Recepcionista(usuarioJSON));
+                        break;
+
+                    case "Cliente":
+                        this.usuarios.add(new Cliente(usuarioJSON));
+                        break;
+
+                    default:
+                        System.out.println("⚠ Tipo de usuario desconocido: " + tipo);
+                        break;
+                }
+            }
+        } else {
+            System.out.println("⚠ No se encontró la lista de usuarios en el JSON.");
+        }
     }
+
+
 
     public Usuario getActual() {
         return actual;
@@ -331,10 +377,18 @@ public class SistemaHotel {
         }
     }
 
-
-
-
     public String mostrarArchivo(String nombreArchivo){
         return JsonUtiles.descargarJson(nombreArchivo);
+    }
+
+    @Override
+    public String toString() {
+        return "SistemaHotel{" +
+                "usuarios=" + usuarios +
+                ", admin=" + admin +
+                ", recepcionista=" + recepcionista +
+                ", hotel=" + hotel +
+                ", actual=" + actual +
+                '}';
     }
 }

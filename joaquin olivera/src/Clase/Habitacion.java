@@ -26,14 +26,6 @@ public class Habitacion implements Identificable {
         this.motivoNoDisponible=motivoNoDisponible;
     }
 
-    public Habitacion( double precio, String descripcion, String servicios, int cantPersonas, boolean disponible) {
-        this.id = contador++;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.servicios = servicios;
-        this.cantPersonas = cantPersonas;
-        this.disponible = disponible;
-    }
     public Habitacion(JSONObject obj) throws JSONException {
         this.id = obj.getInt("id");
         this.precio = obj.getDouble("precio");
