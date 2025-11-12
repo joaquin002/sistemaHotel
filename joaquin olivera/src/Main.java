@@ -231,12 +231,13 @@ public class Main {
             System.out.println("1. Hacer CheckIn");
             System.out.println("2. Hacer CheckOut");
             System.out.println("3. Consultar disponibilidad de habitaciones");
-            System.out.println("4. Buscar reserva"); ///listo pero A REVISAAAAR!!!
+            System.out.println("4. Buscar reserva");
             System.out.println("5. Buscar cliente");
             System.out.println("6. Ver clientes");
             System.out.println("7. Ver reservas");
-            System.out.println("8. Ver habitaciones no disponibles por motivo"); ///REVISAAAAR!! cuando la habitacion esta ocupada que salga que esta reservada
+            System.out.println("8. Ver habitaciones no disponibles por motivo");
             System.out.println("9. Ver habitaciones ocupadas");
+
 
             try {
                 opcion = sc.nextInt();
@@ -311,7 +312,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
-        boolean encontrado = false;
+
         do {
             System.out.println("=============================================");
             System.out.println("      Administrador   ");
