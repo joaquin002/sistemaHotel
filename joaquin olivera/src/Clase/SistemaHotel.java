@@ -221,7 +221,7 @@ public class SistemaHotel {
     }
 
     //metodos cliente
-    public String hacerReserva(int idHabitacion, String fechaInicio, String fechaSalida){
+    public String hacerReserva(int idHabitacion, String fechaInicio, String fechaSalida) throws NoRegistradoException{
         try {
             if (!(actual instanceof Cliente)){
                 return "El usuario actual no es un cliente";
@@ -229,11 +229,11 @@ public class SistemaHotel {
             Cliente c1= (Cliente) actual; //cliente logueado
 
             if (recepcionista==null){
-                return "no hay recepcionista disponible";
+                throw new NoRegistradoException("no hay recepcionista disponible") ;
             }
 
             if (hotel==null){
-                return "No hay hotel asociado";
+               throw new NoRegistradoException("no hay hotel asociado");
             }
             c1.setHotel(hotel);
 
@@ -244,7 +244,7 @@ public class SistemaHotel {
         }
     }
 
-    public String completarDatosCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago){
+    public String completarDatosCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) throws NoRegistradoException{
         if (actual instanceof Cliente){
             Cliente c1= (Cliente) actual;
             c1.setHotel(hotel);
@@ -252,6 +252,9 @@ public class SistemaHotel {
             c1.setDni(dni);
             c1.setDomicilio(domicilio);
             c1.setMetodoPago(metodoPago);
+            if (recepcionista==null){
+                throw new NoRegistradoException("no hay recepcionista registrado.");
+            }
             recepcionista.registrarClienteExistente(c1);
             return "Datos del cliente guardados correctamente.";
         }else {
@@ -297,7 +300,7 @@ public class SistemaHotel {
         //JsonUtiles.subirArchivo(lista);
     }
 
-    public JSONObject pasarAJSON() {
+    public void pasarAJSONaArchivo(String nombreArchivo) {
         JSONObject obj = new JSONObject();
         try {
             //hotel
@@ -309,8 +312,11 @@ public class SistemaHotel {
                 obj.put("admin", admin.toJSON());
 
             //recepcionista
-            if (recepcionista != null)
+            if (recepcionista != null){
                 obj.put("recepcionista", recepcionista.toJson());
+            } else{
+                obj.put("recepcionista", JSONObject.NULL);
+            }
 
             //usuarios
             JSONArray usuariosArray = new JSONArray();
@@ -318,22 +324,15 @@ public class SistemaHotel {
                 usuariosArray.put(u.toJson());
             }
             obj.put("usuarios", usuariosArray);
+            JsonUtiles.subirArchivoObj(nombreArchivo, obj);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return obj;
     }
 
-    public String mostrarJson(){
-        JSONObject obj = this.pasarAJSON();
-        return obj.toString();
-    }
 
-    public void subirJsonArchivo(String nombreArchivo){
-        JSONObject obj=pasarAJSON();
-        JsonUtiles.subirArchivoObj(nombreArchivo, obj);
-    }
+
 
     public String mostrarArchivo(String nombreArchivo){
         return JsonUtiles.descargarJson(nombreArchivo);

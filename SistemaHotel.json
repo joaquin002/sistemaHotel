@@ -1,0 +1,27 @@
+{
+  "recepcionista": null,
+  "hotel": {
+    "habitaciones": [],
+    "direccion": "Avenida Siempre Viva 742",
+    "id": 1,
+    "recaudacion": 0,
+    "nombre": "Hotel BellaVista "
+  },
+  "admin": {
+    "recepcionista": null,
+    "hotel": {
+      "habitaciones": [],
+      "direccion": "Avenida Siempre Viva 742",
+      "id": 1,
+      "recaudacion": 0,
+      "nombre": "Hotel BellaVista "
+    }
+  },
+  "usuarios": [
+    {
+      "tipo": "Administrador",
+      "contrasenia": "123",
+      "nombreUsuario": "admin"
+    }
+  ]
+}

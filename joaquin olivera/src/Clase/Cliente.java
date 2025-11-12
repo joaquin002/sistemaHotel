@@ -101,6 +101,10 @@ public class Cliente extends Usuario implements Identificable {
             throw new NoRegistradoException("El cliente no está asociado a ningún hotel");
         }
 
+        if (recepcionista == null) {
+            throw new NoRegistradoException("No hay recepcionista registrado");
+        }
+
         Habitacion h1 = hotel.buscarHabitacion(idHabitacion);
         if (h1 == null) {
             throw new NoRegistradoException("No se encontró la habitación con id: " + idHabitacion);
@@ -134,7 +138,7 @@ public class Cliente extends Usuario implements Identificable {
         this.reserva = nuevaReserva;
 
         recepcionista.guardarReserva(nuevaReserva);
-        this.historial.add(new Historial(this.getDni(), nuevaReserva.getFechaInicio(), nuevaReserva.getFechaFinalizacion()));
+        guardarHistorial(dni, nuevaReserva.getFechaInicio(), nuevaReserva.getFechaFinalizacion());
 
         return "Reserva realizada exitosamente para la habitación " + idHabitacion + " desde " + fechaCheckIn + " hasta " + fechaCheckOut;
     }

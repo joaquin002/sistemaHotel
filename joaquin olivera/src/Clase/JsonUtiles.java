@@ -6,31 +6,10 @@ import org.json.JSONObject;
 import java.io.*;
 
 public class JsonUtiles {
-        public static void subirJSonArray(JSONArray jsonArray, String nombreArchivo){
-            try{
-                BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json"));
-                salida.write(jsonArray.toString());
-                salida.flush();
-                salida.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-
-    public static void subirArchivo(String nombreArchivo, JSONArray jsonArray){
-        try{
-            BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json", true));
-            salida.write(jsonArray.toString());
-            salida.flush();
-            salida.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
 
     public static void subirArchivoObj(String nombreArchivo, JSONObject jsonObject){
         try{
-            BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json",  true));
+            BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json"));
             salida.write(jsonObject.toString());
             salida.flush();
             salida.close();
@@ -39,17 +18,6 @@ public class JsonUtiles {
         }
     }
 
-
-    public static void subirJsonObject(JSONObject jsonObject, String nombreArchivo){
-            try{
-                BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json"));
-                salida.write(jsonObject.toString());
-                salida.flush();
-                salida.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
 
         public static String descargarJson(String nombreArchivo){
             StringBuilder contenido = new StringBuilder();

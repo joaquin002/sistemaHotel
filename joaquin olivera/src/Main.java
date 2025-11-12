@@ -5,6 +5,7 @@ import Enums.MotivoNoDisponible;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
+import Excepcion.NoRegistradoException;
 import Excepcion.UsuarioNoEncontradoException;
 
 import java.time.format.DateTimeParseException;
@@ -12,27 +13,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-
+    public static final String archivo="SistemaHotel";
     public static void main(String[] args) {
 
 
         SistemaHotel sistema = new SistemaHotel();
         menuPrincipal(sistema);
-        sistema.pasarAJSON();
-        System.out.println(sistema.mostrarJson());
-        sistema.subirJsonArchivo("hotel");
-        System.out.println(sistema.mostrarArchivo("hotel"));
-        /*
-        String archi = "archivoJson.json";
-        sistema.toJSON(archi);
-        System.out.println(JsonUtiles.descargarJson(archi));
+        sistema.pasarAJSONaArchivo(archivo);
 
-        String rta = JsonUtiles.descargarJson(archi);
-        JSONObject obj = new JSONObject(rta);
-        SistemaHotel s1 = new SistemaHotel(obj);
-        System.out.println(s1.toString());
-
-         */
+        System.out.println(sistema.mostrarArchivo(archivo));
 
     }
 
@@ -90,7 +79,12 @@ public class Main {
                                     System.out.print("Domicilio: ");
                                     String domicilioC = sc.nextLine();
                                     MetodoPago metodoPagoC = menuMetodoPago();
-                                    sistema.completarDatosCliente(nombreC, dniC, domicilioC, metodoPagoC);
+                                    try {
+                                        sistema.completarDatosCliente(nombreC, dniC, domicilioC, metodoPagoC);
+                                    } catch (NoRegistradoException e) {
+                                        System.out.println(e.getMessage());
+                                    }
+
                                 }
                                 try
                                 {
@@ -384,10 +378,11 @@ public class Main {
 
                         System.out.println("ingrese fecha de salida");
                         String fechaSalida = sc.nextLine();
-
-
+                        try {
                             System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
-
+                        }catch (NoRegistradoException e){
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 2:
                         System.out.println(sistema1.verMisReservas());
