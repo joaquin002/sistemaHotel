@@ -18,13 +18,24 @@ public class Administracion extends Usuario {
     }
 
     public Administracion(JSONObject obj) throws JSONException {
-        // Cargar solo los datos del usuario administrador
+        // Cargar datos básicos del usuario
         super(obj.getString("nombreUsuario"), obj.getString("contrasenia"), obj.getString("tipo"));
 
-        // Inicializar referencias a null
-        this.hotel = null;
-        this.recepcionista = null;
+        // Cargar el hotel si está presente
+        if (obj.has("hotel") && !obj.isNull("hotel")) {
+            this.hotel = new Hotel(obj.getJSONObject("hotel"));
+        } else {
+            this.hotel = null;
+        }
+
+        // Cargar el recepcionista si está presente
+        if (obj.has("recepcionista") && !obj.isNull("recepcionista")) {
+            this.recepcionista = new Recepcionista(obj.getJSONObject("recepcionista"));
+        } else {
+            this.recepcionista = null;
+        }
     }
+
 
 
     public Hotel getHotel() {
@@ -80,19 +91,28 @@ public class Administracion extends Usuario {
     }
 
     public JSONObject toJSON() {
-        JSONObject obj = new JSONObject();
+        JSONObject obj = super.toJson(); // 🔹 Incluye nombreUsuario, contrasenia y tipo
+
         try {
-            obj.put("hotel", this.hotel.toJSON());
-            // recepcionista
-            if (this.recepcionista != null){
+            // 🔹 Agregar hotel si existe
+            if (this.hotel != null) {
+                obj.put("hotel", this.hotel.toJSON());
+            } else {
+                obj.put("hotel", JSONObject.NULL);
+            }
+
+            // 🔹 Agregar recepcionista si existe
+            if (this.recepcionista != null) {
                 obj.put("recepcionista", this.recepcionista.toJson());
-            }else {
+            } else {
                 obj.put("recepcionista", JSONObject.NULL);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return obj;
     }
+
 }

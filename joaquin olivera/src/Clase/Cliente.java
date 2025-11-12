@@ -31,21 +31,33 @@ public class Cliente extends Usuario implements Identificable {
     }
 
     public Cliente(JSONObject obj) throws JSONException {
-        this.nombre = obj.getString("nombre");
-        this.dni=obj.getInt("dni");
-        this.domicilio=obj.getString("domicilio");
-        this.metodoPago=obj.getEnum(MetodoPago.class, "metodoPago");
-        JSONArray historial=obj.getJSONArray("historial");
-        for(int i=0;i<historial.length();i++){
-            JSONObject historialObj=historial.getJSONObject(i);
-            this.historial.add(new Historial(historialObj));
+        this.nombre = obj.optString("nombre", "Desconocido"); // valor por defecto si no existe
+        this.dni = obj.optInt("dni", 0);
+        this.domicilio = obj.optString("domicilio", "No registrado");
+
+        String metodoPagoStr = obj.optString("metodoPago", "EFECTIVO"); // por ejemplo
+        this.metodoPago = MetodoPago.valueOf(metodoPagoStr);
+
+        this.historial = new ArrayList<>();
+        JSONArray historialArray = obj.optJSONArray("historial");
+        if (historialArray != null) {
+            for (int i = 0; i < historialArray.length(); i++) {
+                JSONObject historialObj = historialArray.getJSONObject(i);
+                this.historial.add(new Historial(historialObj));
+            }
         }
 
-        JSONObject reserva= obj.getJSONObject("reserva");
-        this.reserva=new Reserva(reserva);
-        JSONObject hotel=obj.getJSONObject("hotel");
-        this.hotel=new Hotel(hotel);
+        JSONObject reservaObj = obj.optJSONObject("reserva");
+        if (reservaObj != null) {
+            this.reserva = new Reserva(reservaObj);
+        }
+
+        JSONObject hotelObj = obj.optJSONObject("hotel");
+        if (hotelObj != null) {
+            this.hotel = new Hotel(hotelObj);
+        }
     }
+
 
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {

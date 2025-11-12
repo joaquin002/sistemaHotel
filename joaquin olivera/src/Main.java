@@ -19,8 +19,6 @@ public class Main {
     public static final String archivo="SistemaHotel";
     public static void main(String[] args) {
 
-
-
         SistemaHotel sistema = new SistemaHotel();
         menuPrincipal(sistema);
 
