@@ -6,10 +6,9 @@ import org.json.JSONObject;
 import java.io.*;
 
 public class JsonUtiles {
-    private static final String archivo = "archivoJson";
-        public static void subirJSonArray(JSONArray jsonArray){
+        public static void subirJSonArray(JSONArray jsonArray, String nombreArchivo){
             try{
-                BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json"));
+                BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json"));
                 salida.write(jsonArray.toString());
                 salida.flush();
                 salida.close();
@@ -41,9 +40,9 @@ public class JsonUtiles {
     }
 
 
-    public static void subirJsonObject(JSONObject jsonObject){
+    public static void subirJsonObject(JSONObject jsonObject, String nombreArchivo){
             try{
-                BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json"));
+                BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json"));
                 salida.write(jsonObject.toString());
                 salida.flush();
                 salida.close();
@@ -52,12 +51,12 @@ public class JsonUtiles {
             }
         }
 
-        public static String descargarJson(String archive){
+        public static String descargarJson(String nombreArchivo){
             StringBuilder contenido = new StringBuilder();
             String lectura= "";
             try
             {
-                BufferedReader entrada = new BufferedReader(new FileReader(archivo+".json"));
+                BufferedReader entrada = new BufferedReader(new FileReader(nombreArchivo+".json"));
                 while((lectura = entrada.readLine())!=null){
                     contenido.append(lectura);
                 }

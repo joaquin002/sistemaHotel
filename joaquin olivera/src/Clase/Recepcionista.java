@@ -107,10 +107,7 @@ public class Recepcionista extends Usuario implements Identificable {
         //Marcar como ocupada al hacer el check-in
         h1.setDisponible(false);
 
-        c1.guardarHistorial(dniCliente, reservaCliente.getFechaInicio(), reservaCliente.getFechaFinalizacion());
-
-
-        System.out.println("✅ Check-In realizado con éxito del cliente " + dniCliente +
+        System.out.println(" Check-In realizado con éxito del cliente " + dniCliente +
                 " para la reserva " + idReserva +
                 ". Fecha de ingreso: " + reservaCliente.getFechaInicio() +
                 ", fecha de salida: " + reservaCliente.getFechaFinalizacion());
@@ -142,7 +139,7 @@ public class Recepcionista extends Usuario implements Identificable {
 
 
 
-        System.out.println("✅ Check-Out realizado con éxito de la reserva " + idReserva +
+        System.out.println(" Check-Out realizado con éxito de la reserva " + idReserva +
                 ". Habitación " + h1.getIdBuscado() + " liberada. " +
                 "Fecha de estadía: " + r2.getFechaInicio() + " → " + r2.getFechaFinalizacion());
     }

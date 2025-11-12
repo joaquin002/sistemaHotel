@@ -252,6 +252,7 @@ public class SistemaHotel {
             c1.setDni(dni);
             c1.setDomicilio(domicilio);
             c1.setMetodoPago(metodoPago);
+            recepcionista.registrarClienteExistente(c1);
             return "Datos del cliente guardados correctamente.";
         }else {
             return "El usuario actual no es un cliente";

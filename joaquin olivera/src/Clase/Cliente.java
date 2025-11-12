@@ -50,6 +50,7 @@ public class Cliente extends Usuario implements Identificable {
     //constructor para usuario
     public Cliente(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia,"Cliente");
+        this.historial=new ArrayList<>();
     }
 
     public void guardarHistorial(int dniCliente, String fechaInicio, String fechaSalida){
@@ -133,6 +134,7 @@ public class Cliente extends Usuario implements Identificable {
         this.reserva = nuevaReserva;
 
         recepcionista.guardarReserva(nuevaReserva);
+        this.historial.add(new Historial(this.getDni(), nuevaReserva.getFechaInicio(), nuevaReserva.getFechaFinalizacion()));
 
         return "Reserva realizada exitosamente para la habitación " + idHabitacion + " desde " + fechaCheckIn + " hasta " + fechaCheckOut;
     }

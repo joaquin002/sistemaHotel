@@ -1,18 +1,12 @@
 import Clase.Cliente;
-import Clase.JsonUtiles;
 import Clase.SistemaHotel;
 import Enums.MetodoPago;
 import Enums.MotivoNoDisponible;
 import Enums.ServicioEspecialDeluxe;
 import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
-import Excepcion.FechaIncorrectaException;
 import Excepcion.UsuarioNoEncontradoException;
-import org.json.JSONObject;
 
-import java.nio.channels.ScatteringByteChannel;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -362,7 +356,7 @@ public class Main {
         } while (seguir == 's');
     }
 
-    public static void opcionCliente(SistemaHotel sistema1) throws FechaIncorrectaException {
+    public static void opcionCliente(SistemaHotel sistema1) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
@@ -386,29 +380,14 @@ public class Main {
                         sc.nextLine();
 
                         System.out.println("Ingrese fecha de inicio:");
-                        String fechaInicioStr = sc.nextLine();
+                        String fechaInicio = sc.nextLine();
 
                         System.out.println("ingrese fecha de salida");
-                        String fechaSalidaStr = sc.nextLine();
-                        try
-                        {
-                            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                            LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, formato);
-                            LocalDate fechaSalida = LocalDate.parse(fechaSalidaStr, formato);
+                        String fechaSalida = sc.nextLine();
 
-                            if(fechaSalida.isBefore(fechaInicio))
-                            {
-                                throw new FechaIncorrectaException("La fecha de salida no puede ser anterior a la fecha de inicio");
 
-                            }
-                            System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio.toString(), fechaSalida.toString()));
+                            System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
 
-                        }catch (FechaIncorrectaException e)
-                        {
-                            System.out.println(e.getMessage());
-                        } catch (DateTimeParseException e2) {
-                    System.out.println("Error: formato de fecha inválido. Use dd/MM/yyyy (ejemplo: 15/11/2025).");
-                }
                         break;
                     case 2:
                         System.out.println(sistema1.verMisReservas());
