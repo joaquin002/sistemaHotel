@@ -2,12 +2,12 @@
   "hotel": {
     "habitaciones": [
       {
-        "descripcion": "muy barata",
+        "descripcion": "desc",
         "servicios": "wifi",
-        "precio": 1,
+        "precio": 100,
         "id": 1,
         "cantPersonas": 4,
-        "disponible": false
+        "disponible": true
       }
     ],
     "direccion": "Avenida Siempre Viva 742",
@@ -19,54 +19,20 @@
     {
       "tipo": "Administrador",
       "contrasenia": "123",
-      "nombreUsuario": "joaco"
+      "nombreUsuario": "admin"
     },
     {
       "tipo": "Recepcionista",
-      "reservas": [
-        {
-          "fecha": "12/11/2025",
-          "idRecepcionista": 1,
-          "dniCliente": 1,
-          "idHabitacion": 1,
-          "idReserva": 1,
-          "fechaFinalizacion": "19/11/2025"
-        }
-      ],
-      "contrasenia": "456",
-      "nombreUsuario": "pepe",
+      "reservas": [],
+      "contrasenia": "123",
+      "nombreUsuario": "recep",
       "id": 1,
-      "clientes": [
-        {
-          "metodoPago": "EFECTIVO",
-          "tipo": "Cliente",
-          "domicilio": "calle invenbtada",
-          "historial": [
-            {
-              "fechaInicio": "12/11/2025",
-              "fechaSalida": "19/11/2025",
-              "dniCliente": 1
-            }
-          ],
-          "contrasenia": "789",
-          "nombreUsuario": "ema",
-          "reserva": {
-            "fecha": "12/11/2025",
-            "idRecepcionista": 1,
-            "dniCliente": 1,
-            "idHabitacion": 1,
-            "idReserva": 1,
-            "fechaFinalizacion": "19/11/2025"
-          },
-          "nombre": "ema",
-          "dni": 1
-        }
-      ]
+      "clientes": []
     },
     {
       "tipo": "Cliente",
-      "contrasenia": "789",
-      "nombreUsuario": "ema"
+      "contrasenia": "123",
+      "nombreUsuario": "cli"
     }
   ]
 }

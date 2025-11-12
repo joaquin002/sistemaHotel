@@ -18,26 +18,26 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static final String archivo="SistemaHotel";
 
     public static void main(String[] args) {
         SistemaHotel sistemaHotel = descargarInfo();
         System.out.println(sistemaHotel.toString());
         menuPrincipal(sistemaHotel);
         try{
-            sistemaHotel.pasarAJSONaArchivo(archivo);
+            sistemaHotel.pasarAJSONaArchivo();
             //mostrando el archivo:
-            System.out.println(JsonUtiles.descargarJson(archivo));
+            System.out.println(JsonUtiles.descargarJson());
         }catch (JSONException e){
             e.printStackTrace();
         }
 
     }
 
+    // deserializacion:
     public static SistemaHotel descargarInfo(){
         SistemaHotel envolvente;
         try{
-            String info=JsonUtiles.descargarJson(archivo);
+            String info=JsonUtiles.descargarJson();
             JSONObject lista = new JSONObject(info);
             envolvente = new SistemaHotel(lista);
         }catch(JSONException e){

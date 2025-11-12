@@ -6,9 +6,11 @@ import org.json.JSONObject;
 import java.io.*;
 
 public class JsonUtiles {
-    public static void subirArchivoObj(JSONObject jsonObject, String nombreArchivo) {
+    public static final String archivo="SistemaHotel";
+
+    public static void subirArchivoObj(JSONObject jsonObject) {
         try{
-            BufferedWriter salida = new BufferedWriter(new FileWriter(nombreArchivo+".json"));
+            BufferedWriter salida = new BufferedWriter(new FileWriter(archivo+".json"));
             salida.write(jsonObject.toString());
             salida.flush();
             salida.close();
@@ -18,12 +20,12 @@ public class JsonUtiles {
     }
 
 
-        public static String descargarJson(String nombreArchivo){
+        public static String descargarJson(){
             StringBuilder contenido = new StringBuilder();
             String lectura= "";
             try
             {
-                BufferedReader entrada = new BufferedReader(new FileReader(nombreArchivo+".json"));
+                BufferedReader entrada = new BufferedReader(new FileReader(archivo+".json"));
                 while((lectura = entrada.readLine())!=null){
                     contenido.append(lectura);
                 }
