@@ -33,7 +33,7 @@ public class Habitacion implements Identificable {
         this.servicios = obj.getString("servicios");
         this.cantPersonas = obj.getInt("cantPersonas");
         this.disponible = obj.getBoolean("disponible");
-        this.motivoNoDisponible = obj.getEnum(MotivoNoDisponible.class,"motivoNoDisponible");
+        this.motivoNoDisponible = obj.optEnum(MotivoNoDisponible.class, "motivoNoDisponible", null);
     }
 
     public int getId() {
@@ -77,7 +77,7 @@ public class Habitacion implements Identificable {
             json.put("precio", this.precio);
             json.put("descripcion", this.descripcion);
             json.put("servicios", this.servicios);
-            json.put("personasPermitidas", this.cantPersonas);
+            json.put("cantPersonas", this.cantPersonas);
             json.put("disponible", this.disponible);
             json.put("motivoNoDisponible", this.motivoNoDisponible);
         }catch(JSONException e){

@@ -19,9 +19,8 @@ public class Administracion extends Usuario {
 
     public Administracion(JSONObject obj) throws JSONException {
         // Cargar datos básicos del usuario
-        super(obj.getString("nombreUsuario"), obj.getString("contrasenia"), obj.getString("tipo"));
+        super(obj);
 
-        // Cargar el hotel si está presente
         if (obj.has("hotel") && !obj.isNull("hotel")) {
             this.hotel = new Hotel(obj.getJSONObject("hotel"));
         } else {
@@ -91,27 +90,7 @@ public class Administracion extends Usuario {
     }
 
     public JSONObject toJSON() {
-        JSONObject obj = super.toJson(); // 🔹 Incluye nombreUsuario, contrasenia y tipo
-
-        try {
-            // 🔹 Agregar hotel si existe
-            if (this.hotel != null) {
-                obj.put("hotel", this.hotel.toJSON());
-            } else {
-                obj.put("hotel", JSONObject.NULL);
-            }
-
-            // 🔹 Agregar recepcionista si existe
-            if (this.recepcionista != null) {
-                obj.put("recepcionista", this.recepcionista.toJson());
-            } else {
-                obj.put("recepcionista", JSONObject.NULL);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        JSONObject obj = super.toJson();
         return obj;
     }
 

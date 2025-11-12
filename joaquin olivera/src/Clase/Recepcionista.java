@@ -34,19 +34,33 @@ public class Recepcionista extends Usuario implements Identificable {
     }
 
     public Recepcionista(JSONObject obj)throws JSONException {
-        this.id = obj.getInt("id");
-        JSONArray clientes = obj.getJSONArray("clientes");
-        for(int i = 0; i < clientes.length(); i++){
-            JSONObject cliente = clientes.getJSONObject(i);
-            this.clientes.agregar(new Cliente(cliente));
+        super(obj);
+        this.clientes = new Registro<>();
+        this.reservas = new Registro<>();
+
+        this.id = obj.optInt("id",0);
+
+        JSONArray clientes = obj.optJSONArray("clientes");
+        if (clientes != null) {
+            for(int i = 0; i < clientes.length(); i++){
+                JSONObject cliente = clientes.getJSONObject(i);
+                this.clientes.agregar(new Cliente(cliente));
+            }
         }
-        JSONArray reservas = obj.getJSONArray("reservas");
-        for(int i = 0; i < reservas.length(); i++){
-            JSONObject reserva = reservas.getJSONObject(i);
-            this.reservas.agregar(new Reserva(reserva));
+        JSONArray reservas = obj.optJSONArray("reservas");
+        if (reservas != null) {
+            for(int i = 0; i < reservas.length(); i++){
+                JSONObject reserva = reservas.getJSONObject(i);
+                this.reservas.agregar(new Reserva(reserva));
+            }
         }
-        JSONObject hotel = obj.getJSONObject("hotel");
-        this.hotel =  new Hotel(hotel);
+
+        JSONObject hotel = obj.optJSONObject("hotel");
+        if (hotel != null) {
+            this.hotel =  new Hotel(hotel);
+        }else {
+            this.hotel = null;
+        }
     }
 
     @Override
@@ -56,6 +70,10 @@ public class Recepcionista extends Usuario implements Identificable {
 
     public Registro<Reserva> getReservas() {
         return reservas;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
     public Cliente registrarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
@@ -229,10 +247,9 @@ public String consultarDisponibilidad()
     }
 
     public JSONObject toJson(){
-        JSONObject json = new JSONObject();
+        JSONObject json = super.toJson();
         try{
             json.put("id", this.id);
-            json.put("hotel", this.hotel.toJSON());
             JSONArray clienteJSON = new JSONArray();
             for (Cliente c:this.clientes.getLista()){
                 clienteJSON.put(c.toJSON());

@@ -31,12 +31,11 @@ public class Cliente extends Usuario implements Identificable {
     }
 
     public Cliente(JSONObject obj) throws JSONException {
-        this.nombre = obj.optString("nombre", "Desconocido"); // valor por defecto si no existe
-        this.dni = obj.optInt("dni", 0);
-        this.domicilio = obj.optString("domicilio", "No registrado");
-
-        String metodoPagoStr = obj.optString("metodoPago", "EFECTIVO"); // por ejemplo
-        this.metodoPago = MetodoPago.valueOf(metodoPagoStr);
+        super(obj);
+        this.nombre = obj.optString("nombre","");
+        this.dni=obj.optInt("dni",0);
+        this.domicilio = obj.optString("domicilio","");
+        this.metodoPago = obj.optEnum(MetodoPago.class,"metodoPago",null);
 
         this.historial = new ArrayList<>();
         JSONArray historialArray = obj.optJSONArray("historial");
@@ -191,13 +190,12 @@ public class Cliente extends Usuario implements Identificable {
                 '}';
     }
     public JSONObject toJSON(){
-        JSONObject obj=new JSONObject();
+        JSONObject obj = super.toJson();
         try{
             obj.put("nombre", this.nombre);
             obj.put("dni", this.dni);
             obj.put("domicilio", this.domicilio);
             obj.put("metodoPago", this.metodoPago);
-            obj.put("hotel", this.hotel.toJSON());
             obj.put("reserva", this.reserva.toJSON());
             JSONArray historialJson = new JSONArray();
             for (Historial historial : this.historial){

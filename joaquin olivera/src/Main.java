@@ -8,31 +8,40 @@ import Enums.ServicioEspecialSuite;
 import Excepcion.DuplicadoException;
 import Excepcion.NoRegistradoException;
 import Excepcion.UsuarioNoEncontradoException;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static final String archivo="SistemaHotel";
+
     public static void main(String[] args) {
+        SistemaHotel sistemaHotel = descargarInfo();
+        System.out.println(sistemaHotel.toString());
+        menuPrincipal(sistemaHotel);
+        try{
+            sistemaHotel.pasarAJSONaArchivo();
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
 
-        SistemaHotel sistema = new SistemaHotel();
-        menuPrincipal(sistema);
+    }
 
-        //serializar:
-        sistema.pasarAJSONaArchivo(archivo);
-        System.out.println(sistema.mostrarArchivo(archivo));
-
-        //deserializar:
-        String informacion= JsonUtiles.descargarJson(archivo);
-        JSONObject objetoJson= new JSONObject(informacion);
-        SistemaHotel sistema2=new SistemaHotel(objetoJson);//le paso el JsonObject y me lo convierte en un objeto.
-
-        System.out.println(sistema2.toString()); //aca muestro que pase el json a objeto java.
-
+    public static SistemaHotel descargarInfo(){
+        SistemaHotel envolvente;
+        try{
+            String info=JsonUtiles.descargarJson();
+            JSONObject lista = new JSONObject(info);
+            envolvente = new SistemaHotel(lista);
+        }catch(JSONException e){
+            envolvente = new SistemaHotel();
+            System.out.println("Error al abrir el archivo");
+        }
+        return envolvente;
     }
 
     // Menu principal. Va a contener el resto de los metodos necesarios para que funcione
