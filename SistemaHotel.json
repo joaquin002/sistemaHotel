@@ -1,1 +1,72 @@
-{"hotel":{"habitaciones":[{"descripcion":"muy barata","servicios":"wifi","precio":1,"id":1,"cantPersonas":4,"disponible":false}],"direccion":"Avenida Siempre Viva 742","id":1,"recaudacion":0,"nombre":"Hotel BellaVista "},"usuarios":[{"tipo":"Administrador","contrasenia":"123","nombreUsuario":"joaco"},{"tipo":"Recepcionista","reservas":[{"fecha":"12/11/2025","idRecepcionista":1,"dniCliente":1,"idHabitacion":1,"idReserva":1,"fechaFinalizacion":"19/11/2025"}],"contrasenia":"456","nombreUsuario":"pepe","id":1,"clientes":[{"metodoPago":"EFECTIVO","tipo":"Cliente","domicilio":"calle invenbtada","historial":[{"fechaInicio":"12/11/2025","fechaSalida":"19/11/2025","dniCliente":1}],"contrasenia":"789","nombreUsuario":"ema","reserva":{"fecha":"12/11/2025","idRecepcionista":1,"dniCliente":1,"idHabitacion":1,"idReserva":1,"fechaFinalizacion":"19/11/2025"},"nombre":"ema","dni":1}]},{"tipo":"Cliente","contrasenia":"789","nombreUsuario":"ema"}]}
+{
+  "hotel": {
+    "habitaciones": [
+      {
+        "descripcion": "muy barata",
+        "servicios": "wifi",
+        "precio": 1,
+        "id": 1,
+        "cantPersonas": 4,
+        "disponible": false
+      }
+    ],
+    "direccion": "Avenida Siempre Viva 742",
+    "id": 1,
+    "recaudacion": 0,
+    "nombre": "Hotel BellaVista "
+  },
+  "usuarios": [
+    {
+      "tipo": "Administrador",
+      "contrasenia": "123",
+      "nombreUsuario": "joaco"
+    },
+    {
+      "tipo": "Recepcionista",
+      "reservas": [
+        {
+          "fecha": "12/11/2025",
+          "idRecepcionista": 1,
+          "dniCliente": 1,
+          "idHabitacion": 1,
+          "idReserva": 1,
+          "fechaFinalizacion": "19/11/2025"
+        }
+      ],
+      "contrasenia": "456",
+      "nombreUsuario": "pepe",
+      "id": 1,
+      "clientes": [
+        {
+          "metodoPago": "EFECTIVO",
+          "tipo": "Cliente",
+          "domicilio": "calle invenbtada",
+          "historial": [
+            {
+              "fechaInicio": "12/11/2025",
+              "fechaSalida": "19/11/2025",
+              "dniCliente": 1
+            }
+          ],
+          "contrasenia": "789",
+          "nombreUsuario": "ema",
+          "reserva": {
+            "fecha": "12/11/2025",
+            "idRecepcionista": 1,
+            "dniCliente": 1,
+            "idHabitacion": 1,
+            "idReserva": 1,
+            "fechaFinalizacion": "19/11/2025"
+          },
+          "nombre": "ema",
+          "dni": 1
+        }
+      ]
+    },
+    {
+      "tipo": "Cliente",
+      "contrasenia": "789",
+      "nombreUsuario": "ema"
+    }
+  ]
+}

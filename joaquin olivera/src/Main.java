@@ -18,13 +18,16 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    public static final String archivo="SistemaHotel";
 
     public static void main(String[] args) {
         SistemaHotel sistemaHotel = descargarInfo();
         System.out.println(sistemaHotel.toString());
         menuPrincipal(sistemaHotel);
         try{
-            sistemaHotel.pasarAJSONaArchivo();
+            sistemaHotel.pasarAJSONaArchivo(archivo);
+            //mostrando el archivo:
+            System.out.println(JsonUtiles.descargarJson(archivo));
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -34,7 +37,7 @@ public class Main {
     public static SistemaHotel descargarInfo(){
         SistemaHotel envolvente;
         try{
-            String info=JsonUtiles.descargarJson();
+            String info=JsonUtiles.descargarJson(archivo);
             JSONObject lista = new JSONObject(info);
             envolvente = new SistemaHotel(lista);
         }catch(JSONException e){
@@ -215,7 +218,7 @@ public class Main {
 
 
     }
-
+// menu con las opciones para un recepcionista
     public static void opcionRecepcionista(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -239,9 +242,8 @@ public class Main {
                 opcion = sc.nextInt();
                 sc.nextLine(); //limpio el buffer
                 switch (opcion) {
-                    case 1:  // PONERLE UN CARTEL DE QUE HIZO EL CHECKIN CORRECTAMENTE
-                        //pedirle datos al usuario
-
+                    case 1:
+                        //pedimos los datos al usuario
                         System.out.println("Ingrese dni del cliente:");
                         int dni = sc.nextInt();
                         sc.nextLine();
@@ -253,7 +255,6 @@ public class Main {
                         sistema.checkIn(dni, idReserva);
                         break;
                     case 2:
-                        //pedirle datos al usuario
                         System.out.println("ingrese id reserva");
                         int idReserva2 = sc.nextInt();
                         System.out.println("ingrese dni del cliente");
@@ -305,6 +306,7 @@ public class Main {
         } while (seguir == 's');
     }
 
+    //menu para las opciones del administrador:
     public static void opcionAdministrador(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -357,7 +359,7 @@ public class Main {
                         System.out.println("opcion no valida");
                         break;
                 }
-
+       // esta excepcion es para que el usuario no ponga una letra o un nro invalido cuando le pedimos por teclado.
             } catch (InputMismatchException e) {
                 System.out.println(" Ingrese un número válido (1-6):");
                 sc.nextLine();
@@ -369,6 +371,7 @@ public class Main {
         } while (seguir == 's');
     }
 
+    //menu de opciones del cliente:
     public static void opcionCliente(SistemaHotel sistema1) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -386,20 +389,20 @@ public class Main {
                     case 1:
                         //hacer reserva
                         System.out.println("Habitaciones disponibles:");
-                        System.out.println(sistema1.consultarDisponibilidad());
+                        System.out.println(sistema1.consultarDisponibilidad()); //mostramos las habitaciones que tenemos en el hotel disponibles
 
                         System.out.println("Ingrese idHabitacion a reservar:");
                         int idHabitacion = sc.nextInt();
                         sc.nextLine();
 
-                        System.out.println("Ingrese fecha de inicio:");
+                        System.out.println("Ingrese fecha de ingreso:");
                         String fechaInicio = sc.nextLine();
 
                         System.out.println("ingrese fecha de salida");
                         String fechaSalida = sc.nextLine();
                         try {
                             System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
-                        }catch (NoRegistradoException e){
+                        }catch (NoRegistradoException e){ // excepcion si no llega a estar registrado el cliente
                             System.out.println(e.getMessage());
                             break;
                         }
@@ -423,6 +426,7 @@ public class Main {
         } while (seguir == 's');
     }
 
+    //menu para elegir las opciones de habitacion. tenemos 3 tipos de habitaciones
     public static void menuCargarHabitacion(SistemaHotel sistema) {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -539,6 +543,7 @@ public class Main {
 
     }
 
+    //menu del metodo de pago que va a utilizar el cliente. es un enum
     public static MetodoPago menuMetodoPago() {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -578,6 +583,7 @@ public class Main {
         return metodoPago;
     }
 
+    //menu para cuando cargamos una habitacion saber si esta disponible u ocupada por algun motivo especifico.
     public static boolean menuEstadoHabitacion() {
         Scanner sc = new Scanner(System.in);
         boolean estado = false;
@@ -612,6 +618,7 @@ public class Main {
         return estado;
     }
 
+    //menu de los servicios de la categoria deluxe
     public static ServicioEspecialDeluxe menuServicioDeluxe() {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -649,6 +656,7 @@ public class Main {
         return especialDeluxe;
     }
 
+    //menu de los servicios para la categoria Suite
     public static ServicioEspecialSuite menuServicioSuite() {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
@@ -690,6 +698,7 @@ public class Main {
         return especialSuite;
     }
 
+    //cuando cargamos que la habitacion no esta disponible por algun motivo, debemos seleccionar alguno de estos 3 motivos que estan en el enum
     public static MotivoNoDisponible menuMotivoNoDisponible() {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;

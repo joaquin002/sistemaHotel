@@ -26,10 +26,6 @@ public abstract class Usuario {
         return nombreUsuario;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
     public String getTipo() {
         return tipo;
     }

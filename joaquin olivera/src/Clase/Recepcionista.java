@@ -25,13 +25,6 @@ public class Recepcionista extends Usuario implements Identificable {
         this.reservas=new Registro<>();
     }
 
-    //para cargar recepcionista
-    public Recepcionista(Hotel hotel) {
-        this.id = 1;
-        this.hotel = hotel;
-        this.clientes = new Registro<>();
-        this.reservas = new Registro<>();
-    }
 
     public Recepcionista(JSONObject obj)throws JSONException {
         super(obj);
@@ -76,12 +69,6 @@ public class Recepcionista extends Usuario implements Identificable {
         this.hotel = hotel;
     }
 
-    public Cliente registrarCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) {
-        Cliente c1 = new Cliente(nombre, dni, domicilio, metodoPago);
-        c1.setHotel(this.hotel);// asocia el hotel al cliente para hacer la reserva. porque no tiene sentido hacer una reserva en una habitacion sin un hotel.
-        clientes.agregar(c1);
-        return c1;
-    }
 
     public void registrarClienteExistente(Cliente c1) {
         c1.setHotel(this.hotel);

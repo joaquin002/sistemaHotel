@@ -21,10 +21,6 @@ public class Suite extends Habitacion{
         this.especialSuite=obj.getEnum(ServicioEspecialSuite.class, "especialSuite");
     }
 
-    public ServicioEspecialSuite getEspecialSuite() {
-        return especialSuite;
-    }
-
     @Override
     public String toString() {
         return super.toString()+"Suite{" +

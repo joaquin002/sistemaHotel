@@ -324,7 +324,7 @@ public class SistemaHotel {
         //JsonUtiles.subirArchivo(lista);
     }
 
-    public void pasarAJSONaArchivo() {
+    public void pasarAJSONaArchivo(String nombreArchivo) {
         JSONObject obj = new JSONObject();
         try {
 
@@ -339,7 +339,7 @@ public class SistemaHotel {
                 usuariosArray.put(u.toJson());
             }
             obj.put("usuarios", usuariosArray);
-            JsonUtiles.subirArchivoObj(obj);
+            JsonUtiles.subirArchivoObj(obj, nombreArchivo);
 
         } catch (JSONException e) {
             e.printStackTrace();

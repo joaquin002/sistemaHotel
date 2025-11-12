@@ -38,10 +38,6 @@ public class Hotel implements Identificable{
         }
     }
 
-    public int getId() {
-        return id;
-    }
-
     public Registro<Habitacion> getHabitaciones() {
         return habitaciones;
     }
@@ -93,7 +89,7 @@ public class Hotel implements Identificable{
         return this.habitaciones.mostrarPorId(idBuscado);
     }
 
-    // REVISAR
+
     public Habitacion buscarHabitacion(int idHabitacion) {
         for (Habitacion h : this.habitaciones.getLista()) {
             if (h.getId() == idHabitacion) {
