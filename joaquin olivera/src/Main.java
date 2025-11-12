@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         SistemaHotel sistemaHotel = descargarInfo();
-        System.out.println(sistemaHotel.toString());
+       // System.out.println(sistemaHotel.toString());
         menuPrincipal(sistemaHotel);
         try{
             sistemaHotel.pasarAJSONaArchivo();
