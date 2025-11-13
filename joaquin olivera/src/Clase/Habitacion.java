@@ -60,16 +60,16 @@ public class Habitacion implements Identificable {
 
     @Override
     public String toString() {
-        return "Habitacion{" +
-                "id=" + id +
-                ", precio=" + precio +
-                ", descripcion='" + descripcion + '\'' +
-                ", servicios='" + servicios + '\'' +
-                ", personasPermitidas=" + cantPersonas +
-                ", disponible=" + disponible +
-                ", motivoNoDisponible='" + motivoNoDisponible + '\'' +
-                '}';
+        return "----------Habitacion-----------" + '\n'+
+                "id= " + id + '\n' +
+                "precio= " + precio +
+                "descripcion= " + descripcion + '\'' +
+                "servicios= " + servicios + '\n' +
+                "cantPersonas= " + cantPersonas +'\n'+
+                "disponible= " + disponible + '\n'+
+                "motivo no disponible= " + motivoNoDisponible +'\n';
     }
+
     public JSONObject toJson(){
         JSONObject json = new JSONObject();
         try{

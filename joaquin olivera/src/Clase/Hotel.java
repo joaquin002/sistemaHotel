@@ -53,13 +53,12 @@ public class Hotel implements Identificable{
 
     @Override
     public String toString() {
-        return "Hotel{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", recaudacion=" + recaudacion +
-                ", habitaciones=" + mostrarHabitaciones()+
-                '}';
+        return "--------------HOTEL----------------" +'\n' +
+                "id= " + id + '\n'+
+                "nombre= " + nombre + '\n' +
+                "direccion= " + direccion + '\n' +
+                "recaudacion= " + recaudacion + '\n'+
+                "habitaciones registradas... " + mostrarHabitaciones()+ '\n';
     }
 
     public void agregarHabitacionEstandar(double precio, String descripcion,String servicios, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
