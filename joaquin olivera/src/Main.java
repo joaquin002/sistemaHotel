@@ -13,6 +13,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -377,6 +380,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
+        // para que el usuario tenga una mejor experiencia le ponemos el mensaje de error apenas escriba mal la fecha:
         do {
             System.out.println("=============================================");
             System.out.println("        Cliente     ");
@@ -396,16 +400,81 @@ public class Main {
                         int idHabitacion = sc.nextInt();
                         sc.nextLine();
 
-                        System.out.println("Ingrese fecha de ingreso:");
-                        String fechaInicio = sc.nextLine();
+                        //para la fecha de ingreso
+                        LocalDate hoy= LocalDate.now();
+                        LocalDate checkIn=null;
+                        LocalDate checkOut=null;
+                        boolean fechaValida=false;
 
-                        System.out.println("ingrese fecha de salida");
-                        String fechaSalida = sc.nextLine();
+                        while(!fechaValida){
+                            System.out.println("\n --- Fecha de ingreso ---");
+                            System.out.println("Anio: ");
+                            int anio = sc.nextInt();
+                            sc.nextLine();
+
+                            System.out.println("Mes: ");
+                            int mes = sc.nextInt();
+                            sc.nextLine();
+
+                            System.out.println("Dia: ");
+                            int dia = sc.nextInt();
+                            sc.nextLine(); // limpio el buffer
+
+
+                            try
+                            {
+                                checkIn = LocalDate.of(anio, mes, dia);
+                                if(checkIn.isBefore(hoy))
+                                {
+                                    System.out.println("La fecha de ingreso no puede ser anterior a la fecha actual ("+ hoy +").");
+                                }
+                                else
+                                {
+                                    fechaValida=true;
+                                }
+
+                            }catch (DateTimeException e){
+                                System.out.println("Fecha invalida. Intente nuevamente...");
+                            }
+
+                        }
+
+                        fechaValida=false;
+                        while(!fechaValida){
+                            System.out.println("\n--- Fecha de salida ---");
+                            System.out.println("Anio: ");
+                            int anio = sc.nextInt();
+                            sc.nextLine();
+                            System.out.print("Mes: ");
+                            int mes = sc.nextInt();
+                            sc.nextLine();
+                            System.out.print("Dia: ");
+                            int dia = sc.nextInt();
+                            sc.nextLine();
+
+                            try
+                            {
+                                checkOut = LocalDate.of(anio, mes, dia);
+                                if(checkOut.isBefore(checkIn))
+                                {
+                                    System.out.println("La fecha de salida no puede ser anterior a la de ingrero ("+ checkIn +").");
+                                }
+                                else {
+                                    fechaValida=true;
+                                }
+                            }catch (DateTimeException e){
+                                System.out.println("Fecha invalida. Intente nuevamente...");
+                            }
+                        }
+                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        String fechaInicio = checkIn.format(formatter);
+                        String fechaSalida = checkOut.format(formatter);
+
+                        // Crear reserva
                         try {
                             System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
-                        }catch (NoRegistradoException e){ // excepcion si no llega a estar registrado el cliente
+                        } catch (NoRegistradoException e) {
                             System.out.println(e.getMessage());
-                            break;
                         }
                         break;
                     case 2:

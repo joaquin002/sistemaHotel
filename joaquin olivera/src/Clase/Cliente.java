@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -125,9 +126,20 @@ public class Cliente extends Usuario implements Identificable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate nuevaCheckIn = LocalDate.parse(fechaCheckIn, formatter);
         LocalDate nuevaCheckOut = LocalDate.parse(fechaCheckOut, formatter);
+        LocalDate hoy = LocalDate.now();
 
+
+        if (nuevaCheckIn.isBefore(hoy)) {
+            throw new NoRegistradoException("La fecha de ingreso no puede ser anterior a la fecha actual (" + hoy.format(formatter) + ").");
+        }
+
+        if (nuevaCheckOut.isBefore(hoy)) {
+            throw new NoRegistradoException("La fecha de salida no puede ser anterior a la fecha actual (" + hoy.format(formatter) + ").");
+        }
+
+        //  No permitir que la salida sea anterior al ingreso
         if (nuevaCheckOut.isBefore(nuevaCheckIn)) {
-            throw new NoRegistradoException("La fecha de salida no puede ser anterior a la de ingreso.");
+            throw new NoRegistradoException("La fecha de salida no puede ser anterior a la de ingreso (" + fechaCheckIn + ").");
         }
 
         // Validar disponibilidad según reservas del recepcionista
