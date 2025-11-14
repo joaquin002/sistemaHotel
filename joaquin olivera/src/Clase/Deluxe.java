@@ -8,8 +8,8 @@ import org.json.JSONObject;
 public class Deluxe extends Habitacion{
     private ServicioEspecialDeluxe servicioEspecialDeluxe;
 
-    public Deluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
-        super( precio, descripcion,servicios, personasPermitidas, disponible, motivoNoDisponible);
+    public Deluxe(double precio, String descripcion, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+        super( precio, descripcion, personasPermitidas, disponible, motivoNoDisponible);
         this.servicioEspecialDeluxe = servicioEspecialDeluxe;
     }
     public Deluxe(JSONObject obj) throws JSONException {

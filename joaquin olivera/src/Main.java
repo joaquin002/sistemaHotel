@@ -408,15 +408,15 @@ public class Main {
 
                         while(!fechaValida){
                             System.out.println("\n --- Fecha de ingreso ---");
-                            System.out.println("Anio: ");
+                            System.out.println("Ingrese anio: ");
                             int anio = sc.nextInt();
                             sc.nextLine();
 
-                            System.out.println("Mes: ");
+                            System.out.println("Ingrese mes: ");
                             int mes = sc.nextInt();
                             sc.nextLine();
 
-                            System.out.println("Dia: ");
+                            System.out.println("Ingrese dia: ");
                             int dia = sc.nextInt();
                             sc.nextLine(); // limpio el buffer
 
@@ -442,13 +442,13 @@ public class Main {
                         fechaValida=false;
                         while(!fechaValida){
                             System.out.println("\n--- Fecha de salida ---");
-                            System.out.println("Anio: ");
+                            System.out.println("Ingrese anio: ");
                             int anio = sc.nextInt();
                             sc.nextLine();
-                            System.out.print("Mes: ");
+                            System.out.print("Ingrese mes: ");
                             int mes = sc.nextInt();
                             sc.nextLine();
-                            System.out.print("Dia: ");
+                            System.out.print("Ingrese dia: ");
                             int dia = sc.nextInt();
                             sc.nextLine();
 
@@ -526,9 +526,6 @@ public class Main {
                         System.out.println("Ingrese descripcion: ");
                         String descripcion = sc.nextLine();
 
-                        System.out.println("Ingrese servicios: ");
-                        String servicios = sc.nextLine();
-
                         System.out.println("Ingrese cantidad de personas permitidas");
                         int personasPermitidas = sc.nextInt();
 
@@ -537,7 +534,9 @@ public class Main {
                             motivoNoDisponible = menuMotivoNoDisponible();
                         }
 
-                        sistema.cargarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
+                        sistema.cargarHabitacionEstandar(precio, descripcion, personasPermitidas, estado, motivoNoDisponible);
+                        //pidiendole los servicios (me parece que queda mal)
+                        //sistema.cargarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
                         System.out.println("se agrego con exito la habitacion estandar");
                         break;
                     case 2:
@@ -550,8 +549,6 @@ public class Main {
                         System.out.println("ingrese descripcion");
                         String descripcionD = sc.nextLine();
 
-                        System.out.println("ingrese servicios");
-                        String serviciosD = sc.nextLine();
 
                         System.out.println("ingrese cantidad de personas permitidas");
                         int personasPermitidasD = sc.nextInt();
@@ -563,7 +560,7 @@ public class Main {
                             motivoNoDisponibleD = menuMotivoNoDisponible();
 
                         }
-                        sistema.cargarHabitacionDeluxe(precioD, descripcionD, serviciosD, personasPermitidasD, especialDeluxe, estadoD, motivoNoDisponibleD);
+                        sistema.cargarHabitacionDeluxe(precioD, descripcionD, personasPermitidasD, especialDeluxe, estadoD, motivoNoDisponibleD);
                         System.out.println("se agrego con exito la habitacion deluxe");
                         break;
                     case 3:
@@ -577,8 +574,7 @@ public class Main {
                         System.out.println("Ingrese descripcion");
                         String descripcionS = sc.nextLine();
 
-                        System.out.println("Ingrese servicios");
-                        String serviciosS = sc.nextLine();
+
                         System.out.println("Ingrese cantidad de personas permitidas");
                         int personasPermitidasS = sc.nextInt();
 
@@ -588,7 +584,7 @@ public class Main {
                             motivoNoDisponibleS = menuMotivoNoDisponible();
 
                         }
-                        sistema.cargarHabitacionSuite(precioS, descripcionS, serviciosS, personasPermitidasS, especialSuite, estadoS, motivoNoDisponibleS);
+                        sistema.cargarHabitacionSuite(precioS, descripcionS, personasPermitidasS, especialSuite, estadoS, motivoNoDisponibleS);
 
                         System.out.println("se agrego con exito la habitacion suite");
                         break;

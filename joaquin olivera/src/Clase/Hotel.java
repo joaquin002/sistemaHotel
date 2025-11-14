@@ -61,16 +61,16 @@ public class Hotel implements Identificable{
                 "habitaciones registradas... " + mostrarHabitaciones()+ '\n';
     }
 
-    public void agregarHabitacionEstandar(double precio, String descripcion,String servicios, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
-        Habitacion estandar=new Habitacion( precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
+    public void agregarHabitacionEstandar(double precio, String descripcion, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
+        Habitacion estandar=new Habitacion( precio, descripcion, personasPermitidas, estado, motivoNoDisponible);
         this.habitaciones.agregar(estandar);
     }
-    public void agregarSuite(double precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
-        Suite s1=new Suite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
+    public void agregarSuite(double precio, String descripcion, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+        Suite s1=new Suite(precio, descripcion, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
         this.habitaciones.agregar(s1);
     }
-    public void agregarDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
-        Deluxe d1=new Deluxe(precio, descripcion, servicios, personasPermitidas, servicioEspecialDeluxe, disponible, motivoNoDisponible);
+    public void agregarDeluxe(double precio, String descripcion, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+        Deluxe d1=new Deluxe(precio, descripcion, personasPermitidas, servicioEspecialDeluxe, disponible, motivoNoDisponible);
         this.habitaciones.agregar(d1);
     }
 

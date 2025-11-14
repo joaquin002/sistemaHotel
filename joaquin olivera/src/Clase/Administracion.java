@@ -50,27 +50,27 @@ public class Administracion extends Usuario {
     }
 
     //habitaciones
-    public void agregarHabitacionEstandar(double precio, String descripcion,String servicios, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponoble) throws NoRegistradoException {
+    public void agregarHabitacionEstandar(double precio, String descripcion, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponoble) throws NoRegistradoException {
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoException("No hay hotel cargado");
         }
 
-        this.hotel.agregarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponoble);
+        this.hotel.agregarHabitacionEstandar(precio, descripcion, personasPermitidas, estado, motivoNoDisponoble);
     }
-    public void agregarHabitacionSuite(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible)throws NoRegistradoException {
+    public void agregarHabitacionSuite(double precio, String descripcion, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible)throws NoRegistradoException {
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoException("No hay hotel cargado");
         }
-        this.hotel.agregarSuite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
+        this.hotel.agregarSuite(precio, descripcion, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
     }
-    public void agregarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible)throws NoRegistradoException {
+    public void agregarHabitacionDeluxe(double precio, String descripcion, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible)throws NoRegistradoException {
         //verifica si hay hotel
         if(this.hotel==null){
             throw new NoRegistradoException("No hay hotel cargado");
         }
-        this.hotel.agregarDeluxe(precio, descripcion, servicios, personasPermitidas, servicioEspecialDeluxe, disponible, motivoNoDisponible);
+        this.hotel.agregarDeluxe(precio, descripcion, personasPermitidas, servicioEspecialDeluxe, disponible, motivoNoDisponible);
     }
     public boolean eliminarHabitacion(int idHabitacion){
         boolean encontrado=false;

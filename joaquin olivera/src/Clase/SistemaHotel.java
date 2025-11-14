@@ -150,25 +150,25 @@ public class SistemaHotel {
     }
 
     //cargar y muestra habitaciones
-    public void cargarHabitacionEstandar(double precio, String descripcion, String servicios, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
+    public void cargarHabitacionEstandar(double precio, String descripcion, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
       try {
-          admin.agregarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
+          admin.agregarHabitacionEstandar(precio, descripcion, personasPermitidas, estado, motivoNoDisponible);
       }catch (NoRegistradoException e){
           System.out.println(e.getMessage());
       }
     }
 
-    public void cargarHabitacionSuite(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+    public void cargarHabitacionSuite(double precio, String descripcion, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
        try {
-           admin.agregarHabitacionSuite(precio, descripcion, servicios, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
+           admin.agregarHabitacionSuite(precio, descripcion, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
        }catch (NoRegistradoException e){
            System.out.println(e.getMessage());
        }
     }
 
-    public void cargarHabitacionDeluxe(double precio, String descripcion, String servicios, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+    public void cargarHabitacionDeluxe(double precio, String descripcion, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
        try {
-           admin.agregarHabitacionDeluxe( precio, descripcion, servicios, personasPermitidas, servicioEspecialDeluxe, disponible,  motivoNoDisponible);
+           admin.agregarHabitacionDeluxe( precio, descripcion, personasPermitidas, servicioEspecialDeluxe, disponible,  motivoNoDisponible);
        }catch (NoRegistradoException e){
            System.out.println(e.getMessage());
        }

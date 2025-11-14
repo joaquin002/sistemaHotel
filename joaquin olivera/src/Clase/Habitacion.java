@@ -11,16 +11,14 @@ public class Habitacion implements Identificable {
     private static int contador=1;
     private double precio;
     private String descripcion;
-    private String servicios;
     private int cantPersonas;
     private boolean disponible; //false ocupada true disponible
     private MotivoNoDisponible motivoNoDisponible;
 
-    public Habitacion( double precio, String descripcion,String servicios, int cantPersonas,  boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+    public Habitacion( double precio, String descripcion, int cantPersonas,  boolean disponible, MotivoNoDisponible motivoNoDisponible) {
         this.id = contador++;
         this.precio = precio;
         this.descripcion = descripcion;
-        this.servicios = servicios;
         this.cantPersonas =  cantPersonas;
         this.disponible = disponible;
         this.motivoNoDisponible=motivoNoDisponible;
@@ -30,7 +28,6 @@ public class Habitacion implements Identificable {
         this.id = obj.getInt("id");
         this.precio = obj.getDouble("precio");
         this.descripcion = obj.getString("descripcion");
-        this.servicios = obj.getString("servicios");
         this.cantPersonas = obj.getInt("cantPersonas");
         this.disponible = obj.getBoolean("disponible");
         this.motivoNoDisponible = obj.optEnum(MotivoNoDisponible.class, "motivoNoDisponible", null);
@@ -64,7 +61,6 @@ public class Habitacion implements Identificable {
                 "id= " + id + '\n' +
                 "precio= " + precio +
                 "descripcion= " + descripcion + '\'' +
-                "servicios= " + servicios + '\n' +
                 "cantPersonas= " + cantPersonas +'\n'+
                 "disponible= " + disponible + '\n'+
                 "motivo no disponible= " + motivoNoDisponible +'\n';
@@ -76,7 +72,6 @@ public class Habitacion implements Identificable {
             json.put("id", this.id);
             json.put("precio", this.precio);
             json.put("descripcion", this.descripcion);
-            json.put("servicios", this.servicios);
             json.put("cantPersonas", this.cantPersonas);
             json.put("disponible", this.disponible);
             json.put("motivoNoDisponible", this.motivoNoDisponible);

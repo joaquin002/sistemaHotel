@@ -12,8 +12,8 @@ import java.util.PrimitiveIterator;
 public class Suite extends Habitacion{
     private ServicioEspecialSuite especialSuite;
 
-    public Suite(double precio, String descripcion,String servicios, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
-        super(precio, descripcion,servicios, personasPermitidas, disponible, motivoNoDisponible);
+    public Suite(double precio, String descripcion, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+        super(precio, descripcion, personasPermitidas, disponible, motivoNoDisponible);
         this.especialSuite = especialSuite;
     }
     public Suite(JSONObject obj) throws JSONException {
