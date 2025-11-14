@@ -43,6 +43,7 @@ public class Habitacion implements Identificable {
         return precio;
     }
 
+
     public void setPrecio(double precio) {
         this.precio = precio;
     }

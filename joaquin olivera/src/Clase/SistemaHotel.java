@@ -323,6 +323,16 @@ public class SistemaHotel {
         //JsonUtiles.subirArchivo(lista);
         //JsonUtiles.subirArchivo(lista);
     }
+//metodo para calcular el precio por noche:
+    public Habitacion buscarHabitacionPorId(int id) {
+        for (Habitacion h : this.hotel.getHabitaciones().getLista()) {
+            if (h.getId() == id) {
+                return h;
+            }
+        }
+        return null;
+    }
+
 
     public void pasarAJSONaArchivo() {
         JSONObject obj = new JSONObject();

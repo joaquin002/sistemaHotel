@@ -1,4 +1,5 @@
 import Clase.Cliente;
+import Clase.Habitacion;
 import Clase.JsonUtiles;
 import Clase.SistemaHotel;
 import Enums.MetodoPago;
@@ -17,6 +18,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -470,6 +472,33 @@ public class Main {
                         String fechaInicio = checkIn.format(formatter);
                         String fechaSalida = checkOut.format(formatter);
 
+                        //para calcular el precio por noche utilizo el ChronoUnit y le paso el checkIn y el checkOut
+                        long noches = ChronoUnit.DAYS.between(checkIn,checkOut);
+
+                        Habitacion habitacion=sistema1.buscarHabitacionPorId(idHabitacion);
+                        if(habitacion==null)
+                        {
+                            System.out.println("La habitacion no existe.");
+                            break;
+                        }
+
+                        //calculando el precio:
+                        double precioPorNoche= habitacion.getPrecio();
+                        double total= noches *  precioPorNoche;
+
+                        //Mostrar detalle al cliente
+                        System.out.println("\n===== DETALLE DE LA RESERVA =====");
+                        System.out.println("Habitación ID: " + idHabitacion);
+                        System.out.println("Fecha ingreso: " + checkIn);
+                        System.out.println("Fecha salida: " + checkOut);
+                        System.out.println("Noches: " + noches);
+                        System.out.println("Precio por noche: $" + precioPorNoche);
+                        System.out.println("TOTAL: $" + total);
+                        System.out.println("=================================\n");
+
+                        //para que el cliente si desea cambiar algo la puede cancelar y hacer devuelta
+                        System.out.println("¿Desea confirmar la reserva? (s/n)");
+                        char confirmar = sc.next().charAt(0);
                         // Crear reserva
                         try {
                             System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
