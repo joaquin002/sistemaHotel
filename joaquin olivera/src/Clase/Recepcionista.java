@@ -130,6 +130,11 @@ public class Recepcionista extends Usuario implements Identificable {
             throw new NoRegistradoException("no se encontro la habitacion asociada a la reserva");
         }
 
+        // VALIDAR QUE YA SE HIZO EL CHECK-IN
+        if (h1.isDisponible()) {
+            throw new NoRegistradoException("No se puede hacer el Check-Out porque la habitación aún no tiene Check-In.");
+        }
+
         //liberar habitacion
         h1.setDisponible(true);
 
