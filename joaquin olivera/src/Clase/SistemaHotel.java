@@ -115,6 +115,7 @@ public class SistemaHotel {
                 break;
         }
         usuarios.add(nuevo);
+        pasarAJSONaArchivo();
         System.out.println("Usuario registrado con éxito");
     }
 
@@ -153,6 +154,7 @@ public class SistemaHotel {
     public void cargarHabitacionEstandar( String descripcion, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
       try {
           admin.agregarHabitacionEstandar( descripcion, personasPermitidas, estado, motivoNoDisponible);
+          pasarAJSONaArchivo();
       }catch (NoRegistradoException e){
           System.out.println(e.getMessage());
       }
@@ -161,6 +163,7 @@ public class SistemaHotel {
     public void cargarHabitacionSuite( String descripcion, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
        try {
            admin.agregarHabitacionSuite( descripcion, personasPermitidas, especialSuite, disponible, motivoNoDisponible);
+           pasarAJSONaArchivo();
        }catch (NoRegistradoException e){
            System.out.println(e.getMessage());
        }
@@ -169,13 +172,18 @@ public class SistemaHotel {
     public void cargarHabitacionDeluxe( String descripcion, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
        try {
            admin.agregarHabitacionDeluxe(descripcion, personasPermitidas, servicioEspecialDeluxe, disponible,  motivoNoDisponible);
+           pasarAJSONaArchivo();
        }catch (NoRegistradoException e){
            System.out.println(e.getMessage());
        }
     }
 
     public boolean eliminarHabitacion(int idHabitacion){
-       return admin.eliminarHabitacion(idHabitacion);
+        boolean eliminado= admin.eliminarHabitacion(idHabitacion);
+        if (eliminado){
+            pasarAJSONaArchivo();
+        }
+        return eliminado;
     }
 
     public String mostrarHabitacion(int idHabitacion) {
@@ -202,6 +210,7 @@ public class SistemaHotel {
 
         try {
             recepcionista.checkIn(dniCliente, idReserva);
+            pasarAJSONaArchivo();
         }catch (NoRegistradoException e){
             System.out.println(e.getMessage());
         }
@@ -210,6 +219,7 @@ public class SistemaHotel {
     public void checkOut(int idReserva, int dniCliente){
         try {
             recepcionista.checkOut(idReserva, dniCliente);
+            pasarAJSONaArchivo();
         } catch (NoRegistradoException e) {
             System.out.println(e.getMessage());
         }
@@ -246,6 +256,7 @@ public class SistemaHotel {
 
     //metodos cliente
     public String hacerReserva(int idHabitacion, String fechaInicio, String fechaSalida) throws NoRegistradoException{
+        String rta="";
         try {
             if (!(actual instanceof Cliente)){
                 return "El usuario actual no es un cliente";
@@ -261,7 +272,9 @@ public class SistemaHotel {
             }
             c1.setHotel(hotel);
 
-            return c1.hacerReserva(idHabitacion, recepcionista, fechaInicio, fechaSalida);
+            rta= c1.hacerReserva(idHabitacion, recepcionista, fechaInicio, fechaSalida);
+            pasarAJSONaArchivo();
+            return rta;
 
         }catch (NoRegistradoException e){
             return e.getMessage();
@@ -280,6 +293,7 @@ public class SistemaHotel {
                 throw new NoRegistradoException("no hay recepcionista registrado.");
             }
             recepcionista.registrarClienteExistente(c1);
+            pasarAJSONaArchivo();
             return "Datos del cliente guardados correctamente.";
         }else {
             return "El usuario actual no es un cliente";

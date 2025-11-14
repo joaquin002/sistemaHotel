@@ -1,1 +1,96 @@
-{"hotel":{"habitaciones":[{"descripcion":"desc","precio":2000,"id":1,"cantPersonas":2,"disponible":true}],"direccion":"Avenida Siempre Viva 742","id":1,"recaudacion":0,"nombre":"Hotel BellaVista "},"usuarios":[{"tipo":"Administrador","contrasenia":"123","nombreUsuario":"admin"},{"tipo":"Recepcionista","reservas":[],"contrasenia":"123","nombreUsuario":"recep","id":1}]}
+{
+  "hotel": {
+    "habitaciones": [
+      {
+        "descripcion": "desc",
+        "precio": 2000,
+        "id": 1,
+        "cantPersonas": 2,
+        "disponible": false
+      },
+      {
+        "descripcion": "deluxe",
+        "precio": 3000,
+        "id": 2,
+        "cantPersonas": 2,
+        "disponible": true
+      },
+      {
+        "descripcion": "suite",
+        "precio": 5000,
+        "id": 3,
+        "cantPersonas": 4,
+        "disponible": true
+      }
+    ],
+    "direccion": "Avenida Siempre Viva 742",
+    "id": 1,
+    "recaudacion": 0,
+    "nombre": "Hotel BellaVista "
+  },
+  "usuarios": [
+    {
+      "tipo": "Administrador",
+      "contrasenia": "123",
+      "nombreUsuario": "admin"
+    },
+    {
+      "tipo": "Recepcionista",
+      "reservas": [
+        {
+          "fecha": "14/11/2025",
+          "idRecepcionista": 1,
+          "dniCliente": 123,
+          "idHabitacion": 1,
+          "idReserva": 1,
+          "fechaFinalizacion": "20/11/2025"
+        }
+      ],
+      "contrasenia": "123",
+      "nombreUsuario": "recep",
+      "id": 1,
+      "clientes": [
+        {
+          "metodoPago": "EFECTIVO",
+          "tipo": "Cliente",
+          "domicilio": "casa",
+          "historial": [],
+          "contrasenia": "123",
+          "nombreUsuario": "pau",
+          "reserva": null,
+          "nombre": "paulina",
+          "dni": 12
+        },
+        {
+          "metodoPago": "DEBITO",
+          "tipo": "Cliente",
+          "domicilio": "casa",
+          "historial": [
+            {
+              "fechaInicio": "14/11/2025",
+              "fechaSalida": "20/11/2025",
+              "dniCliente": 123
+            }
+          ],
+          "contrasenia": "123",
+          "nombreUsuario": "pau",
+          "reserva": {
+            "fecha": "14/11/2025",
+            "idRecepcionista": 1,
+            "dniCliente": 123,
+            "idHabitacion": 1,
+            "idReserva": 1,
+            "fechaFinalizacion": "20/11/2025"
+          },
+          "nombre": "paulina",
+          "dni": 123
+        }
+      ]
+    },
+    {
+      "tipo": "Cliente",
+      "contrasenia": "123",
+      "nombreUsuario": "pau"
+    }
+  ]
+}

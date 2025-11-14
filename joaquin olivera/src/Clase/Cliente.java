@@ -208,7 +208,11 @@ public class Cliente extends Usuario implements Identificable {
             obj.put("dni", this.dni);
             obj.put("domicilio", this.domicilio);
             obj.put("metodoPago", this.metodoPago);
-            obj.put("reserva", this.reserva.toJSON());
+            if (this.reserva != null) {
+                obj.put("reserva", this.reserva.toJSON());
+            } else {
+                obj.put("reserva", JSONObject.NULL);
+            }
             JSONArray historialJson = new JSONArray();
             for (Historial historial : this.historial){
                 historialJson.put(historial.toJSON());

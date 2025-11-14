@@ -28,6 +28,7 @@ public class Main {
         SistemaHotel sistemaHotel = descargarInfo();
         // System.out.println(sistemaHotel.toString());
         menuPrincipal(sistemaHotel);
+        /*
         try {
             sistemaHotel.pasarAJSONaArchivo();
             //mostrando el archivo:
@@ -35,6 +36,8 @@ public class Main {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+         */
 
     }
 
