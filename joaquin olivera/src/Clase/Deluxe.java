@@ -7,9 +7,11 @@ import org.json.JSONObject;
 
 public class Deluxe extends Habitacion{
     private ServicioEspecialDeluxe servicioEspecialDeluxe;
+    public static final double precioDeluxe=3000;
 
-    public Deluxe(double precio, String descripcion, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
-        super( precio, descripcion, personasPermitidas, disponible, motivoNoDisponible);
+    public Deluxe( String descripcion, int personasPermitidas, ServicioEspecialDeluxe servicioEspecialDeluxe, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+        super( descripcion, personasPermitidas, disponible, motivoNoDisponible);
+        super.setPrecio(precioDeluxe);
         this.servicioEspecialDeluxe = servicioEspecialDeluxe;
     }
     public Deluxe(JSONObject obj) throws JSONException {
@@ -19,9 +21,7 @@ public class Deluxe extends Habitacion{
 
     @Override
     public String toString() {
-        return super.toString()+"Deluxe{" +
-                "servicioEsepcialDeluxe=" + servicioEspecialDeluxe +
-                '}';
+        return super.toString()+"---servicios Deluxe---" + servicioEspecialDeluxe;
     }
 
     @Override

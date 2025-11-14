@@ -14,10 +14,12 @@ public class Habitacion implements Identificable {
     private int cantPersonas;
     private boolean disponible; //false ocupada true disponible
     private MotivoNoDisponible motivoNoDisponible;
+    public static final double precioEstandar= 2000;
 
-    public Habitacion( double precio, String descripcion, int cantPersonas,  boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+    public Habitacion( String descripcion, int cantPersonas,  boolean disponible, MotivoNoDisponible motivoNoDisponible)
+    {
         this.id = contador++;
-        this.precio = precio;
+        this.precio = precioEstandar;
         this.descripcion = descripcion;
         this.cantPersonas =  cantPersonas;
         this.disponible = disponible;
@@ -41,6 +43,9 @@ public class Habitacion implements Identificable {
         return precio;
     }
 
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
 
     public boolean isDisponible() {
         return disponible;
@@ -59,9 +64,9 @@ public class Habitacion implements Identificable {
     public String toString() {
         return "----------Habitacion-----------" + '\n'+
                 "id= " + id + '\n' +
-                "precio= " + precio +
-                "descripcion= " + descripcion + '\'' +
-                "cantPersonas= " + cantPersonas +'\n'+
+                "precio por noche= " + precio + '\n'+
+                "descripcion= " + descripcion + '\n' +
+                "cantidad personas disponibles= " + cantPersonas +'\n'+
                 "disponible= " + disponible + '\n'+
                 "motivo no disponible= " + motivoNoDisponible +'\n';
     }

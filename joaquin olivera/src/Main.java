@@ -519,10 +519,6 @@ public class Main {
                         //estandar
                         System.out.println("Habitacion Estandar");
 
-                        System.out.println("Ingrese precio: ");
-                        double precio = sc.nextDouble();
-                        sc.nextLine();
-
                         System.out.println("Ingrese descripcion: ");
                         String descripcion = sc.nextLine();
 
@@ -534,17 +530,14 @@ public class Main {
                             motivoNoDisponible = menuMotivoNoDisponible();
                         }
 
-                        sistema.cargarHabitacionEstandar(precio, descripcion, personasPermitidas, estado, motivoNoDisponible);
-                        //pidiendole los servicios (me parece que queda mal)
-                        //sistema.cargarHabitacionEstandar(precio, descripcion, servicios, personasPermitidas, estado, motivoNoDisponible);
+                        sistema.cargarHabitacionEstandar( descripcion, personasPermitidas, estado, motivoNoDisponible);
+
                         System.out.println("se agrego con exito la habitacion estandar");
                         break;
                     case 2:
                         //deluxe
                         System.out.println("Habitacion deluxe");
-                        System.out.println("ingrese precio");
-                        double precioD = sc.nextDouble();
-                        sc.nextLine();
+
 
                         System.out.println("ingrese descripcion");
                         String descripcionD = sc.nextLine();
@@ -560,16 +553,13 @@ public class Main {
                             motivoNoDisponibleD = menuMotivoNoDisponible();
 
                         }
-                        sistema.cargarHabitacionDeluxe(precioD, descripcionD, personasPermitidasD, especialDeluxe, estadoD, motivoNoDisponibleD);
+                        sistema.cargarHabitacionDeluxe(descripcionD, personasPermitidasD, especialDeluxe, estadoD, motivoNoDisponibleD);
                         System.out.println("se agrego con exito la habitacion deluxe");
                         break;
                     case 3:
                         //suite
                         System.out.println("Habitacion Suite");
 
-                        System.out.println("Ingrese precio");
-                        double precioS = sc.nextDouble();
-                        sc.nextLine();
 
                         System.out.println("Ingrese descripcion");
                         String descripcionS = sc.nextLine();
@@ -584,7 +574,7 @@ public class Main {
                             motivoNoDisponibleS = menuMotivoNoDisponible();
 
                         }
-                        sistema.cargarHabitacionSuite(precioS, descripcionS, personasPermitidasS, especialSuite, estadoS, motivoNoDisponibleS);
+                        sistema.cargarHabitacionSuite( descripcionS, personasPermitidasS, especialSuite, estadoS, motivoNoDisponibleS);
 
                         System.out.println("se agrego con exito la habitacion suite");
                         break;

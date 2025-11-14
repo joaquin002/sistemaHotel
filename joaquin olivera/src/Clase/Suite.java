@@ -11,9 +11,11 @@ import java.util.PrimitiveIterator;
 
 public class Suite extends Habitacion{
     private ServicioEspecialSuite especialSuite;
+    public static final double precioSuite=5000;
 
-    public Suite(double precio, String descripcion, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
-        super(precio, descripcion, personasPermitidas, disponible, motivoNoDisponible);
+    public Suite(String descripcion, int personasPermitidas, ServicioEspecialSuite especialSuite, boolean disponible, MotivoNoDisponible motivoNoDisponible) {
+        super( descripcion, personasPermitidas, disponible, motivoNoDisponible);
+        super.setPrecio(precioSuite);
         this.especialSuite = especialSuite;
     }
     public Suite(JSONObject obj) throws JSONException {
@@ -23,9 +25,8 @@ public class Suite extends Habitacion{
 
     @Override
     public String toString() {
-        return super.toString()+"Suite{" +
-                "especialSuite=" + especialSuite +
-                '}';
+        return super.toString()+"--- serivicios Suite---"
+                + especialSuite;
     }
 
     @Override
