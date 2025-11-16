@@ -242,18 +242,19 @@ public String consultarDisponibilidad()
         JSONObject json = super.toJson();
         try{
             json.put("id", this.id);
+            /*
             JSONArray clienteJSON = new JSONArray();
             for (Cliente c:this.clientes.getLista()){
                 clienteJSON.put(c.toJSON());
             }
             json.put("clientes", clienteJSON);
-
+            */
             JSONArray reservasJSON = new JSONArray();
             for (Reserva r:reservas.getLista()){
                 reservasJSON.put(r.toJSON());
             }
             json.put("reservas", reservasJSON);
-
+            
         }catch (JSONException e){
             e.printStackTrace();
         }
