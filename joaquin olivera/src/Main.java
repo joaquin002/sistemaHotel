@@ -110,9 +110,8 @@ public class Main {
                                         sc.nextLine();
                                         System.out.print("Domicilio: ");
                                         String domicilioC = sc.nextLine();
-                                        MetodoPago metodoPagoC = menuMetodoPago();
                                         try {
-                                            sistema.completarDatosCliente(nombreC, dniC, domicilioC, metodoPagoC);
+                                            sistema.completarDatosCliente(nombreC, dniC, domicilioC);
                                         } catch (NoRegistradoException e) {
                                             System.out.println(e.getMessage());
                                         }
@@ -146,7 +145,7 @@ public class Main {
             if (opcion != 3) {
                 boolean valido = false;
                 do {
-                    System.out.println("\n¿Desea realizar otra accion? (s/n): ");
+                    System.out.println("\n¿Desea realizar otra accion del menu principal? (s/n): ");
                     String validar = sc.next().toLowerCase().trim();
                     if (validar.length() == 1 && (validar.charAt(0) == 's' || validar.charAt(0) == 'n')) {
                         seguir = validar.charAt(0);
@@ -173,7 +172,7 @@ public class Main {
             System.out.println("1. Administrador");
             System.out.println("2. Recepcionista");
             System.out.println("3. Cliente");
-            System.out.println("4. salir");
+            System.out.println("4. Salir al menu principal");
             boolean valida = false;
             while (!valida) {
                 try {
@@ -269,7 +268,7 @@ public class Main {
             System.out.println("7. Ver reservas");
             System.out.println("8. Ver habitaciones no disponibles por motivo");
             System.out.println("9. Ver habitaciones ocupadas");
-            System.out.println("10. Salir");
+            System.out.println("10. Salir al menu principal");
             boolean valida = false;
             while (!valida) {
 
@@ -372,7 +371,7 @@ public class Main {
             System.out.println("4. Buscar habitacion");
             System.out.println("5. Ver todas las habitaciones del hotel");
             System.out.println("6. Eliminar habitacion");
-            System.out.println("7. Salir");
+            System.out.println("7. Salir al menu principal");
             boolean valida = false;
             while (!valida) {
                 try {
@@ -451,7 +450,7 @@ public class Main {
             System.out.println("---------------------------------------------");
             System.out.println("1. Hacer reserva");
             System.out.println("2. Ver mis reservas");
-            System.out.println("3. Salir");
+            System.out.println("3. Salir al menu principal");
             boolean valida = false;
             while (!valida) {
                 try {
@@ -531,6 +530,8 @@ public class Main {
                             String fechaInicio = checkIn.format(formatter);
                             String fechaSalida = checkOut.format(formatter);
 
+                            MetodoPago metodoPagoC = menuMetodoPago();
+
                             //para calcular el precio por noche utilizo el ChronoUnit y le paso el checkIn y el checkOut
                             long noches = ChronoUnit.DAYS.between(checkIn, checkOut);
 
@@ -544,7 +545,7 @@ public class Main {
                             double precioPorNoche = habitacion.getPrecio();
                             double total = noches * precioPorNoche;
 
-                            //Mostrar detalle al cliente
+                            //Mostramos el detalle al cliente para que pueda confirmar su reserva
                             System.out.println("\n===== DETALLE DE LA RESERVA =====");
                             System.out.println("Habitación ID: " + idHabitacion);
                             System.out.println("Fecha ingreso: " + checkIn);
@@ -559,7 +560,7 @@ public class Main {
                             char confirmar = sc.next().charAt(0);
                             // Crear reserva
                             try {
-                                System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida));
+                                System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida, metodoPagoC));
                             } catch (NoRegistradoException e) {
                                 System.out.println(e.getMessage());
                             }
@@ -576,7 +577,7 @@ public class Main {
                     }
 
                 } catch (InputMismatchException e) {
-                    System.out.println("Ingrese un número válido (1).");
+                    System.out.println("Ingrese un número válido (1, 2 o 3).");
                     sc.nextLine();
                 }
             }
@@ -611,7 +612,7 @@ public class Main {
             System.out.println("1. Estandar");
             System.out.println("2. Deluxe");
             System.out.println("3. Suite");
-            System.out.println("4. Salir");
+            System.out.println("4. Salir al menu de Administrador");
             boolean valida = false;
             while (!valida) {
                 try {
@@ -722,7 +723,7 @@ public class Main {
         MetodoPago metodoPago = null;
         while (!valido) {
             try {
-                System.out.println("Seleccione metodo de pago a utilizar: ");
+                System.out.println("'\n'Seleccione metodo de pago a utilizar: ");
                 System.out.println("1. Efectivo");
                 System.out.println("2. Debito");
                 System.out.println("3. Credito");

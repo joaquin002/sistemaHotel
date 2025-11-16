@@ -255,7 +255,7 @@ public class SistemaHotel {
     }
 
     //metodos cliente
-    public String hacerReserva(int idHabitacion, String fechaInicio, String fechaSalida) throws NoRegistradoException{
+    public String hacerReserva(int idHabitacion, String fechaInicio, String fechaSalida, MetodoPago metodoPago) throws NoRegistradoException{
         String rta="";
         try {
             if (!(actual instanceof Cliente)){
@@ -271,6 +271,7 @@ public class SistemaHotel {
                throw new NoRegistradoException("no hay hotel asociado");
             }
             c1.setHotel(hotel);
+            c1.setMetodoPago(metodoPago);
 
             rta= c1.hacerReserva(idHabitacion, recepcionista, fechaInicio, fechaSalida);
             pasarAJSONaArchivo();
@@ -281,14 +282,14 @@ public class SistemaHotel {
         }
     }
 
-    public String completarDatosCliente(String nombre, int dni, String domicilio, MetodoPago metodoPago) throws NoRegistradoException{
+    public String completarDatosCliente(String nombre, int dni, String domicilio) throws NoRegistradoException{
         if (actual instanceof Cliente){
             Cliente c1= (Cliente) actual;
             c1.setHotel(hotel);
             c1.setNombre(nombre);
             c1.setDni(dni);
             c1.setDomicilio(domicilio);
-            c1.setMetodoPago(metodoPago);
+            //c1.setMetodoPago(metodoPago);
             if (recepcionista==null){
                 throw new NoRegistradoException("no hay recepcionista registrado.");
             }

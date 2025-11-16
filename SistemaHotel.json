@@ -6,7 +6,7 @@
         "precio": 2000,
         "id": 1,
         "cantPersonas": 2,
-        "disponible": false
+        "disponible": true
       }
     ],
     "direccion": "Avenida Siempre Viva 742",
@@ -18,28 +18,28 @@
     {
       "tipo": "Administrador",
       "contrasenia": "123",
-      "nombreUsuario": "admin"
+      "nombreUsuario": "pau"
     },
     {
       "tipo": "Recepcionista",
       "reservas": [
         {
-          "fecha": "17/11/2025",
+          "fecha": "16/11/2025",
           "idRecepcionista": 1,
-          "dniCliente": 1,
+          "dniCliente": 12345,
           "idHabitacion": 1,
           "idReserva": 1,
-          "fechaFinalizacion": "23/11/2025"
+          "fechaFinalizacion": "20/11/2025"
         }
       ],
-      "contrasenia": "123",
-      "nombreUsuario": "recep",
+      "contrasenia": "r",
+      "nombreUsuario": "r",
       "id": 1
     },
     {
       "tipo": "Cliente",
-      "contrasenia": "123",
-      "nombreUsuario": "cli"
+      "contrasenia": "c",
+      "nombreUsuario": "c"
     }
   ]
 }

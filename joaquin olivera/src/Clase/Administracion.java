@@ -35,8 +35,6 @@ public class Administracion extends Usuario {
         }
     }
 
-
-
     public Hotel getHotel() {
         return hotel;
     }
