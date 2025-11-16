@@ -88,8 +88,25 @@ public class Administracion extends Usuario {
     }
 
     public JSONObject toJSON() {
-        JSONObject obj = super.toJson();
+        JSONObject obj = super.toJson(); // guarda nombreUsuario, contrasenia, tipo
+        try {
+            if (hotel != null) {
+                obj.put("hotel", hotel.toJSON());
+            } else {
+                obj.put("hotel", JSONObject.NULL);
+            }
+
+            if (recepcionista != null) {
+                obj.put("recepcionista", recepcionista.toJson());
+            } else {
+                obj.put("recepcionista", JSONObject.NULL);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return obj;
     }
+
 
 }

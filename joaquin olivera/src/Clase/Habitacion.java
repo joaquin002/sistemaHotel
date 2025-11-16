@@ -35,6 +35,10 @@ public class Habitacion implements Identificable {
         this.motivoNoDisponible = obj.optEnum(MotivoNoDisponible.class, "motivoNoDisponible", null);
     }
 
+    public static void setContador(int c) {
+        contador = c;
+    }
+
     public int getId() {
         return id;
     }

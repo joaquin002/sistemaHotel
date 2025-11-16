@@ -26,13 +26,14 @@ public class Main {
 
     public static void main(String[] args) {
         SistemaHotel sistemaHotel = descargarInfo();
-        // System.out.println(sistemaHotel.toString());
+        //System.out.println(sistemaHotel.toString());
         menuPrincipal(sistemaHotel);
+        //mostrando el archivo:
+        System.out.println(JsonUtiles.descargarJson());
         /*
         try {
             sistemaHotel.pasarAJSONaArchivo();
-            //mostrando el archivo:
-            System.out.println(JsonUtiles.descargarJson());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -46,14 +47,18 @@ public class Main {
         SistemaHotel envolvente;
         try {
             String info = JsonUtiles.descargarJson();
+            if(info.isEmpty()){
+                throw new JSONException("Archivo vacío o no encontrado");
+            }
             JSONObject lista = new JSONObject(info);
             envolvente = new SistemaHotel(lista);
         } catch (JSONException e) {
+            System.out.println("Error al leer JSON: " + e.getMessage());
             envolvente = new SistemaHotel();
-            System.out.println("Error al abrir el archivo");
         }
         return envolvente;
     }
+
 
     // Menu principal. Va a contener el resto de los metodos necesarios para que funcione
     public static void menuPrincipal(SistemaHotel sistema) {

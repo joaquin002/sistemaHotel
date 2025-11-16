@@ -24,7 +24,7 @@ public class SistemaHotel {
         this.usuarios = new ArrayList<>();
         this.hotel=new Hotel(1, "Hotel BellaVista ", "Avenida Siempre Viva 742");//crea el hotel
     }
-
+/*
     public SistemaHotel(JSONObject obj) throws JSONException {
         this.usuarios = new ArrayList<>();
 
@@ -55,6 +55,70 @@ public class SistemaHotel {
                     break;
                 default:
                     System.out.println("No se encontro usuario");
+                    break;
+            }
+        }
+    }
+
+ */
+
+    public SistemaHotel(JSONObject obj) throws JSONException {
+        this.usuarios = new ArrayList<>();
+
+        JSONObject hotelJson = obj.getJSONObject("hotel");
+        this.hotel = new Hotel(hotelJson);
+
+        //actualizar contador de Habitacion
+        int maxIdHab = 0;
+        for (Habitacion h : hotel.getHabitaciones().getLista()) {
+            if (h.getId() > maxIdHab) maxIdHab = h.getId();
+        }
+        Habitacion.setContador(maxIdHab + 1);
+
+        JSONArray usuariosJson = obj.getJSONArray("usuarios");
+        for (int i = 0; i < usuariosJson.length(); i++) {
+            JSONObject usuarioJson = usuariosJson.getJSONObject(i);
+            String tipo = usuarioJson.optString("tipo");
+
+            switch (tipo) {
+                case "Administrador":
+                    Administracion admin = new Administracion(usuarioJson);
+                    if (admin.getHotel() == null) admin.setHotel(this.hotel);
+                    this.usuarios.add(admin);
+                    this.admin = admin;
+                    break;
+
+                case "Recepcionista":
+                    Recepcionista recep = new Recepcionista(usuarioJson);
+                    if (recep.getHotel() == null) recep.setHotel(this.hotel);
+                    this.usuarios.add(recep);
+                    this.recepcionista = recep;
+
+                    //cargar reservas del recepcionista y actualizar contador
+                    JSONArray reservasJson = usuarioJson.optJSONArray("reservas");
+                    int maxIdRes = 0;
+                    if (reservasJson != null) {
+                        for (int j = 0; j < reservasJson.length(); j++) {
+                            JSONObject resJson = reservasJson.getJSONObject(j);
+                            Reserva r = new Reserva(resJson);
+                            if (r.getIdBuscado() > maxIdRes){
+                                maxIdRes = r.getIdBuscado();
+                            }
+                        }
+                    }
+                    Reserva.setCont(maxIdRes + 1);
+                    break;
+
+                case "Cliente":
+                    Cliente cliente = new Cliente(usuarioJson);
+                    this.usuarios.add(cliente);
+                    if (this.recepcionista != null) {
+                        this.recepcionista.registrarClienteExistente(cliente);
+                    }
+                    break;
+
+                default:
+                    System.out.println("No se encontró usuario de tipo: " + tipo);
                     break;
             }
         }
@@ -326,18 +390,8 @@ public class SistemaHotel {
     public String verHabitacionesOcupadas(){
         return recepcionista.verHabitacionesOcupadas();
     }
-    public void toJSON(String nomrbeArchivo){
-        JSONObject admin = new JSONObject();
-        admin.put("administrador", this.admin.toJSON());
-        //JsonUtiles.subirJsonObject(admin);
-       // JsonUtiles.subirArchivoObj(admin);
-        JSONArray lista = new JSONArray();
-        for (Usuario u : usuarios){
-            lista.put(u.toJson());
-        }
-        //JsonUtiles.subirArchivo(lista);
-        //JsonUtiles.subirArchivo(lista);
-    }
+
+
 //metodo para calcular el precio por noche:
     public Habitacion buscarHabitacionPorId(int id) {
         for (Habitacion h : this.hotel.getHabitaciones().getLista()) {

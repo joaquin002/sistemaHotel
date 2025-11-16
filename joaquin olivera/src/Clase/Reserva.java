@@ -26,12 +26,20 @@ public class Reserva implements Identificable {
     public Reserva(JSONObject obj)throws JSONException {
         this.idReserva = obj.getInt("idReserva");
         this.dniCliente = obj.getInt("dniCliente");
-        this.idRecepcionista = obj.getInt("idRecepcionista");
+       // this.idRecepcionista = obj.optInt("idRecepcionista", 0);
+        this.idRecepcionista = 0;
         this.fechaInicio = obj.getString("fechaInicio");
         this.fechaFinalizacion = obj.getString("fechaFinalizacion");
         this.idHabitacion = obj.getInt("idHabitacion");
     }
 
+
+    public void setIdRecepcionista(int idRecepcionista) {
+        this.idRecepcionista = idRecepcionista;
+    }
+    public static void setCont(int c) {
+        cont = c;
+    }
     public int getIdHabitacion() {
         return idHabitacion;
     }
@@ -66,13 +74,13 @@ public class Reserva implements Identificable {
     public int getIdBuscado() {
         return this.idReserva;
     }
-    public JSONObject toJSON() {
+    public JSONObject toJson() {
         JSONObject json = new JSONObject();
         try{
             json.put("idReserva", this.idReserva);
             json.put("dniCliente", this.dniCliente);
-            json.put("idRecepcionista", this.idRecepcionista);
-            json.put("fecha", this.fechaInicio);
+           // json.put("idRecepcionista", this.idRecepcionista);
+            json.put("fechaInicio", this.fechaInicio);
             json.put("fechaFinalizacion", this.fechaFinalizacion);
             json.put("idHabitacion", this.idHabitacion);
         }catch (JSONException e){

@@ -25,6 +25,13 @@ public class Recepcionista extends Usuario implements Identificable {
         this.reservas=new Registro<>();
     }
 
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public Recepcionista(JSONObject obj)throws JSONException {
         super(obj);
@@ -44,7 +51,9 @@ public class Recepcionista extends Usuario implements Identificable {
         if (reservas != null) {
             for(int i = 0; i < reservas.length(); i++){
                 JSONObject reserva = reservas.getJSONObject(i);
-                this.reservas.agregar(new Reserva(reserva));
+                Reserva r = new Reserva(reserva);
+                r.setIdRecepcionista(this.id);
+                this.reservas.agregar(r);
             }
         }
 
@@ -132,7 +141,7 @@ public class Recepcionista extends Usuario implements Identificable {
 
         // VALIDAR QUE YA SE HIZO EL CHECK-IN
         if (h1.isDisponible()) {
-            throw new NoRegistradoException("No se puede hacer el Check-Out porque la habitación aún no tiene Check-In.");
+            throw new NoRegistradoException("No se puede hacer el Check-Out porque la habitación aun no tiene Check-In.");
         }
 
         //liberar habitacion
@@ -146,7 +155,7 @@ public class Recepcionista extends Usuario implements Identificable {
         if (c1 == null) {
             throw new NoRegistradoException("no se encontro el cliente con dni: " + dniCliente);
         }
-
+        c1.guardarHistorial(dniCliente, r2.getFechaInicio(), r2.getFechaFinalizacion());
 
 
         System.out.println(" Check-Out realizado con éxito de la reserva " + idReserva +
@@ -248,10 +257,11 @@ public String consultarDisponibilidad()
                 clienteJSON.put(c.toJSON());
             }
             json.put("clientes", clienteJSON);
-            */
+             */
+
             JSONArray reservasJSON = new JSONArray();
             for (Reserva r:reservas.getLista()){
-                reservasJSON.put(r.toJSON());
+                reservasJSON.put(r.toJson());
             }
             json.put("reservas", reservasJSON);
             

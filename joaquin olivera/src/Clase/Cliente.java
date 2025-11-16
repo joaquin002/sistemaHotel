@@ -23,38 +23,25 @@ public class Cliente extends Usuario implements Identificable {
     private Hotel hotel; //para asociar al cliente cuando hace la reserva
 
 
-    public Cliente(String nombre, int dni, String domicilio, MetodoPago metodoPago){
-        this.nombre =  nombre;
-        this.dni = dni;
-        this.domicilio = domicilio;
-        this.metodoPago = metodoPago;
-        this.historial = new ArrayList<>();
-    }
-
     public Cliente(JSONObject obj) throws JSONException {
         super(obj);
+
         this.nombre = obj.optString("nombre","");
-        this.dni=obj.optInt("dni",0);
+        this.dni = obj.optInt("dni",0);
         this.domicilio = obj.optString("domicilio","");
-        this.metodoPago = obj.optEnum(MetodoPago.class,"metodoPago",null);
+
+        if (obj.has("metodoPago") && !obj.isNull("metodoPago")) {
+            this.metodoPago = MetodoPago.valueOf(obj.getString("metodoPago"));
+        } else {
+            this.metodoPago = MetodoPago.EFECTIVO; // valor por defecto
+        }
 
         this.historial = new ArrayList<>();
         JSONArray historialArray = obj.optJSONArray("historial");
         if (historialArray != null) {
             for (int i = 0; i < historialArray.length(); i++) {
-                JSONObject historialObj = historialArray.getJSONObject(i);
-                this.historial.add(new Historial(historialObj));
+                this.historial.add(new Historial(historialArray.getJSONObject(i)));
             }
-        }
-
-        JSONObject reservaObj = obj.optJSONObject("reserva");
-        if (reservaObj != null) {
-            this.reserva = new Reserva(reservaObj);
-        }
-
-        JSONObject hotelObj = obj.optJSONObject("hotel");
-        if (hotelObj != null) {
-            this.hotel = new Hotel(hotelObj);
         }
     }
 
@@ -156,12 +143,13 @@ public class Cliente extends Usuario implements Identificable {
         }
 
         // Crear y guardar la reserva si está libre
-        Reserva nuevaReserva = new Reserva(this.getDni(), recepcionista.getIdBuscado(), fechaCheckIn, fechaCheckOut, idHabitacion);
-
+        Reserva nuevaReserva = new Reserva(this.getDni(), recepcionista.getId(), fechaCheckIn, fechaCheckOut, idHabitacion);
+        recepcionista.guardarReserva(nuevaReserva);
         this.reserva = nuevaReserva;
 
-        recepcionista.guardarReserva(nuevaReserva);
-        guardarHistorial(dni, nuevaReserva.getFechaInicio(), nuevaReserva.getFechaFinalizacion());
+        if (recepcionista.buscarCliente(this.getDni()) == null) {
+            recepcionista.registrarClienteExistente(this);
+        }
 
         return "Reserva realizada exitosamente para la habitación " + idHabitacion + " desde " + fechaCheckIn + " hasta " + fechaCheckOut;
     }
@@ -201,26 +189,27 @@ public class Cliente extends Usuario implements Identificable {
                 ", reserva=" + reserva +
                 '}';
     }
-    public JSONObject toJSON(){
+
+    @Override
+    public JSONObject toJson() {
         JSONObject obj = super.toJson();
-        try{
+        try {
             obj.put("nombre", this.nombre);
             obj.put("dni", this.dni);
             obj.put("domicilio", this.domicilio);
             obj.put("metodoPago", this.metodoPago);
-            if (this.reserva != null) {
-                obj.put("reserva", this.reserva.toJSON());
-            } else {
-                obj.put("reserva", JSONObject.NULL);
-            }
+
             JSONArray historialJson = new JSONArray();
-            for (Historial historial : this.historial){
-                historialJson.put(historial.toJSON());
+            for (Historial h : this.historial){
+                historialJson.put(h.toJson());
             }
             obj.put("historial", historialJson);
-        }catch (JSONException e){
+
+        } catch (JSONException e){
             e.printStackTrace();
         }
         return obj;
     }
+
+
 }

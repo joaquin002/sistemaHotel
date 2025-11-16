@@ -29,7 +29,7 @@ public class Historial {
                 '}';
     }
 
-    public JSONObject toJSON(){
+    public JSONObject toJson(){
         JSONObject json = new JSONObject();
         try {
             json.put("dniCliente", this.dniCliente);
