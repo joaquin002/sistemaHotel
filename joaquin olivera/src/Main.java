@@ -517,18 +517,7 @@ public class Main {
                                 break;
                             }
 
-                            long noches = ChronoUnit.DAYS.between(checkIn, checkOut);
-                            double total = noches * habitacion.getPrecio();
-
-                            // detalle de la reserva a realizar
-                            System.out.println("\n===== DETALLE DE LA RESERVA =====");
-                            System.out.println("Habitación ID: " + idHabitacion);
-                            System.out.println("Fecha ingreso: " + checkIn);
-                            System.out.println("Fecha salida: " + checkOut);
-                            System.out.println("Noches: " + noches);
-                            System.out.println("Precio por noche: $" + habitacion.getPrecio());
-                            System.out.println("TOTAL: $" + total);
-                            System.out.println("=================================\n");
+                            System.out.println(sistema1.generarDetalleReserva(idHabitacion, checkIn, checkOut));
 
                             // luego de mostrar el mensaje le preguntamos si desea confirmar la reserva, sino que la vuelva a hacer.
                             System.out.println("¿Desea confirmar la reserva? (s/n)");
@@ -541,9 +530,7 @@ public class Main {
 
                             //hacemos la reserva.
                             try {
-                                System.out.println(
-                                        sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida, metodoPagoC)
-                                );
+                                System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida, metodoPagoC));
                             } catch (NoRegistradoException e) {
                                 System.out.println(e.getMessage());
                             }

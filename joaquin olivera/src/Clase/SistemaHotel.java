@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class SistemaHotel {
@@ -360,6 +362,24 @@ public class SistemaHotel {
         return null;
     }
 
+    public String generarDetalleReserva(int idHabitacion, LocalDate fechaInicio, LocalDate fechaSalida){
+        Habitacion h1=buscarHabitacionPorId(idHabitacion);
+        if (h1 == null){
+            return "la habitacion no existe";
+        }
+        long noches= ChronoUnit.DAYS.between(fechaInicio, fechaSalida);
+        double totalReserva=noches*h1.getPrecio();
+
+        return "\n===== DETALLE DE LA RESERVA =====\n" +
+                "Habitación ID: " + idHabitacion + "\n" +
+                "Fecha ingreso: " + fechaInicio + "\n" +
+                "Fecha salida: " + fechaSalida + "\n" +
+                "Noches: " + noches + "\n" +
+                "Precio por noche: $" + h1.getPrecio() + "\n" +
+                "TOTAL: $" + totalReserva + "\n" +
+                "=================================\n";
+    }
+
 
     public void pasarAJSONaArchivo() {
         JSONObject obj = new JSONObject();
@@ -382,6 +402,8 @@ public class SistemaHotel {
             e.printStackTrace();
         }
     }
+
+
 
 
     @Override
