@@ -180,14 +180,13 @@ public class Cliente extends Usuario implements Identificable {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "nombre='" + nombre + '\'' +
-                ", dni=" + dni +
-                ", domicilio='" + domicilio + '\'' +
-                ", metodoPago=" + metodoPago +
-                ", historial=" + historial +
-                ", reserva=" + reserva +
-                '}';
+        return "\n---------Cliente--------\n" +
+                "nombre= " + nombre + '\n' +
+                "dni= " + dni + '\n'+
+                "domicilio= " + domicilio + '\n' +
+                "metodo de pago= " + metodoPago + '\n'+
+                "historial del cliente= " + historial +'\n'+
+                "reserva actual= " + reserva;
     }
 
     @Override

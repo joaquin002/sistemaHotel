@@ -188,6 +188,10 @@ public String consultarDisponibilidad()
             if (!h1.isDisponible()){
                 rta+=h1.toString()+"\n";
             }
+            else
+            {
+                rta="no hay habitaciones no disponibles por motivo";
+            }
         }
         return rta;
     }

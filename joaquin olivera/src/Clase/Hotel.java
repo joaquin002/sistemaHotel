@@ -58,7 +58,7 @@ public class Hotel implements Identificable{
                 "nombre= " + nombre + '\n' +
                 "direccion= " + direccion + '\n' +
                 "recaudacion= " + recaudacion + '\n'+
-                "habitaciones registradas... " + mostrarHabitaciones()+ '\n';
+                "Habitaciones registradas... " + mostrarHabitaciones()+ '\n';
     }
 
     public void agregarHabitacionEstandar( String descripcion, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {

@@ -67,7 +67,7 @@ public class Habitacion implements Identificable {
 
     @Override
     public String toString() {
-        return "----------Habitacion-----------" + '\n'+
+        return "\n----------Habitacion-----------" + '\n'+
                 "id= " + id + '\n' +
                 "precio por noche= " + precio + '\n'+
                 "descripcion= " + descripcion + '\n' +

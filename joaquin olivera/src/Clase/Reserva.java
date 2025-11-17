@@ -60,14 +60,13 @@ public class Reserva implements Identificable {
 
     @Override
     public String toString() {
-        return "Reserva{" +
-                "idReserva=" + idReserva +
-                ", dniCliente=" + dniCliente +
-                ", idRecepcionista=" + idRecepcionista +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFinalizacion=" + fechaFinalizacion +
-                ", idHabitacion=" + idHabitacion +
-                '}';
+        return "\n----------Reserva----------\n" +
+                "id de la reserva= " + idReserva + '\n'+
+                "dni del cliente= " + dniCliente + '\n'+
+                "id del recepcionista= " + idRecepcionista + '\n'+
+                "fecha de inicio de reserva= " + fechaInicio + '\n'+
+                "fecha de finalizacion de reserva= " + fechaFinalizacion +'\n'+
+                "id de la habitacion= " + idHabitacion;
     }
 
     @Override
