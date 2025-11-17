@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
@@ -297,7 +298,18 @@ public class SistemaHotel {
             c1.setHotel(hotel);
             c1.setMetodoPago(metodoPago);
 
+            Habitacion habitacion =hotel.buscarHabitacion(idHabitacion);
+            if (habitacion==null){
+                throw new NoRegistradoException("no hay habitacion disponible");
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate in = LocalDate.parse(fechaInicio, formatter);
+            LocalDate out = LocalDate.parse(fechaSalida, formatter);
+            long noches = ChronoUnit.DAYS.between(in, out);
+
+
             rta= c1.hacerReserva(idHabitacion, recepcionista, fechaInicio, fechaSalida);
+
             pasarAJSONaArchivo();
             return rta;
 
@@ -305,6 +317,23 @@ public class SistemaHotel {
             return e.getMessage();
         }
     }
+
+    //metodo para calcular la recaudacion y que el administrador pueda ver el total
+    public String mostrarRecaudacion() {
+        String rta="";
+        if (admin == null) {
+            rta="No hay administrador registrado.";
+        }else if (hotel == null) {
+            rta ="No hay hotel cargado.";
+        }
+        else
+        {
+            rta="Recaudación total del hotel: $" + hotel.verRecaudacion();
+
+        }
+        return rta;
+    }
+
 
     public String completarDatosCliente(String nombre, int dni, String domicilio) throws NoRegistradoException{
         if (actual instanceof Cliente){

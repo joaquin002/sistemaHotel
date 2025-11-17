@@ -111,6 +111,10 @@ public class Hotel implements Identificable{
             this.recaudacion += recaudacion;
         }
     }
+    public double verRecaudacion() {
+        return this.recaudacion;
+    }
+
 
 
     public String mostrarHabitaciones(){ // ver

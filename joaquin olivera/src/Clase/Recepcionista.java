@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Recepcionista extends Usuario implements Identificable {
@@ -140,12 +142,18 @@ public class Recepcionista extends Usuario implements Identificable {
         if (h1.isDisponible()) {
             throw new NoRegistradoException("No se puede hacer el Check-Out porque la habitación aun no tiene Check-In.");
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate in = LocalDate.parse(r2.getFechaInicio(), formatter);
+        LocalDate out = LocalDate.parse(r2.getFechaFinalizacion(), formatter);
+
+        long noches = ChronoUnit.DAYS.between(in, out);
+        double totalCobrado = noches * h1.getPrecio();
 
         //liberar habitacion
         h1.setDisponible(true);
 
-        //sumar recaudacion
-        this.hotel.sumarRecaudacion(h1.getPrecio());
+        hotel.sumarRecaudacion(totalCobrado);
+
 
         //para que se guarde en el historial
         Cliente c1 = buscarCliente(dniCliente);
@@ -155,9 +163,10 @@ public class Recepcionista extends Usuario implements Identificable {
         c1.guardarHistorial(dniCliente, r2.getFechaInicio(), r2.getFechaFinalizacion());
 
 
-        System.out.println(" Check-Out realizado con éxito de la reserva " + idReserva +
-                ". Habitación " + h1.getIdBuscado() + " liberada. " +
+        System.out.println(" Check-Out realizado con éxito de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada. " +
                 "Fecha de estadía: " + r2.getFechaInicio() + " → " + r2.getFechaFinalizacion());
+        System.out.println("Noches "+ noches);
+        System.out.println("Total cobrado: " +totalCobrado);
     }
 
 

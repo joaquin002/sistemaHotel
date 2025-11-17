@@ -78,7 +78,7 @@ public class Main {
             System.out.println("1. Registrar usuario");
             System.out.println("2. Iniciar Sesion");
             System.out.println("3. Salir");
-            System.out.println("Seleccione una opción...");
+            System.out.println("Seleccione una opcion...");
             boolean valida = false;
             while (!valida) {
                 try {
@@ -179,6 +179,7 @@ public class Main {
             System.out.println("2. Recepcionista");
             System.out.println("3. Cliente");
             System.out.println("4. Salir al menu principal");
+            System.out.println("Seleccione una opcion: ");
             boolean valida = false;
             while (!valida) {
                 try {
@@ -275,6 +276,7 @@ public class Main {
             System.out.println("8. Ver habitaciones no disponibles por motivo");
             System.out.println("9. Ver habitaciones ocupadas");
             System.out.println("10. Salir al menu principal");
+            System.out.println("Seleccione una opcion: ");
             boolean valida = false;
             while (!valida) {
 
@@ -377,7 +379,9 @@ public class Main {
             System.out.println("4. Buscar habitacion");
             System.out.println("5. Ver todas las habitaciones del hotel");
             System.out.println("6. Eliminar habitacion");
-            System.out.println("7. Salir al menu principal");
+            System.out.println("7. Ver recaudacion");
+            System.out.println("8. Salir al menu principal");
+            System.out.println("Seleccione una opcion: ");
             boolean valida = false;
             while (!valida) {
                 try {
@@ -402,7 +406,6 @@ public class Main {
                             break;
                         case 5:
                             System.out.println(sistema.mostrarHabitaciones());
-
                             break;
                         case 6:
                             System.out.println("ingrese id de habitacion a eliminar");
@@ -415,6 +418,9 @@ public class Main {
                             }
                             break;
                         case 7:
+                            System.out.println(sistema.mostrarRecaudacion());
+                            break;
+                        case 8:
                             seguir = 'n';
                             break;
                         default:
@@ -427,7 +433,7 @@ public class Main {
                     sc.nextLine();
                 }
             }
-            if (opcion != 7) {
+            if (opcion != 8) {
                 boolean valido = false;
                 do {
                     System.out.println("¿Desea elegir otra opcion del menu Administrador? (s/n)");
@@ -457,6 +463,7 @@ public class Main {
             System.out.println("1. Hacer reserva");
             System.out.println("2. Ver mis reservas");
             System.out.println("3. Salir al menu principal");
+            System.out.println("Seleccione una opcion: ");
 
             boolean valida = false;
             while (!valida) {
