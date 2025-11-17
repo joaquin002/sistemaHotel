@@ -449,7 +449,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
         char seguir = 's';
-        // para que el usuario tenga una mejor experiencia le ponemos el mensaje de error apenas escriba mal la fecha:
+
         do {
             System.out.println("=============================================");
             System.out.println("        Cliente     ");
@@ -457,152 +457,160 @@ public class Main {
             System.out.println("1. Hacer reserva");
             System.out.println("2. Ver mis reservas");
             System.out.println("3. Salir al menu principal");
+
             boolean valida = false;
             while (!valida) {
                 try {
                     opcion = sc.nextInt();
                     sc.nextLine();
                     valida = true;
+
                     switch (opcion) {
                         case 1:
-                            //hacer reserva
                             System.out.println("Habitaciones disponibles:");
-                            System.out.println(sistema1.consultarDisponibilidad()); //mostramos las habitaciones que tenemos en el hotel disponibles
+                            System.out.println(sistema1.consultarDisponibilidad());
 
                             System.out.println("Ingrese idHabitacion a reservar:");
                             int idHabitacion = sc.nextInt();
                             sc.nextLine();
 
-                            //para la fecha de ingreso
                             LocalDate hoy = LocalDate.now();
                             LocalDate checkIn = null;
                             LocalDate checkOut = null;
-                            boolean fechaValida = false;
 
-                            while (!fechaValida) {
-                                System.out.println("\n --- Fecha de ingreso ---");
-                                System.out.println("Ingrese anio: ");
-                                int anio = sc.nextInt();
-                                sc.nextLine();
+                          //pedimos la fecha de ingreso
+                            boolean elegido = false;
+                            while (!elegido) {
+                                checkIn = pedirFecha(sc, "Fecha de ingreso");
 
-                                System.out.println("Ingrese mes: ");
-                                int mes = sc.nextInt();
-                                sc.nextLine();
-
-                                System.out.println("Ingrese dia: ");
-                                int dia = sc.nextInt();
-                                sc.nextLine(); // limpio el buffer
-
-
-                                try {
-                                    checkIn = LocalDate.of(anio, mes, dia);
-                                    if (checkIn.isBefore(hoy)) {
-                                        System.out.println("La fecha de ingreso no puede ser anterior a la fecha actual (" + hoy + ").");
-                                    } else {
-                                        fechaValida = true;
-                                    }
-
-                                } catch (DateTimeException e) {
-                                    System.out.println("Fecha invalida. Intente nuevamente...");
-                                }
-
-                            }
-
-                            fechaValida = false;
-                            while (!fechaValida) {
-                                System.out.println("\n--- Fecha de salida ---");
-                                System.out.println("Ingrese anio: ");
-                                int anio = sc.nextInt();
-                                sc.nextLine();
-                                System.out.print("Ingrese mes: ");
-                                int mes = sc.nextInt();
-                                sc.nextLine();
-                                System.out.print("Ingrese dia: ");
-                                int dia = sc.nextInt();
-                                sc.nextLine();
-
-                                try {
-                                    checkOut = LocalDate.of(anio, mes, dia);
-                                    if (checkOut.isBefore(checkIn)) {
-                                        System.out.println("La fecha de salida no puede ser anterior a la de ingrero (" + checkIn + ").");
-                                    } else {
-                                        fechaValida = true;
-                                    }
-                                } catch (DateTimeException e) {
-                                    System.out.println("Fecha invalida. Intente nuevamente...");
+                                if (checkIn.isBefore(hoy)) {
+                                    System.out.println("La fecha de ingreso no puede ser anterior a hoy (" + hoy + ").");
+                                } else {
+                                    elegido = true;
                                 }
                             }
+
+                            //pedimos la fecha de salida
+                            elegido = false;
+                            while (!elegido) {
+                                checkOut = pedirFecha(sc, "Fecha de salida");
+
+                                if (checkOut.isBefore(checkIn)) {
+                                    System.out.println("La fecha de salida no puede ser anterior a la de ingreso (" + checkIn + ").");
+                                } else {
+                                    elegido = true;
+                                }
+                            }
+
+                            // convertimos las fechas a String
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                             String fechaInicio = checkIn.format(formatter);
                             String fechaSalida = checkOut.format(formatter);
 
+                            // le pedimos el metodo de pago mientras hace la reserva.
                             MetodoPago metodoPagoC = menuMetodoPago();
 
-                            //para calcular el precio por noche utilizo el ChronoUnit y le paso el checkIn y el checkOut
-                            long noches = ChronoUnit.DAYS.between(checkIn, checkOut);
-
+                            // buscamos que la habitacion exista
                             Habitacion habitacion = sistema1.buscarHabitacionPorId(idHabitacion);
                             if (habitacion == null) {
-                                System.out.println("La habitacion no existe.");
+                                System.out.println("La habitación no existe.");
                                 break;
                             }
 
-                            //calculando el precio:
-                            double precioPorNoche = habitacion.getPrecio();
-                            double total = noches * precioPorNoche;
+                            long noches = ChronoUnit.DAYS.between(checkIn, checkOut);
+                            double total = noches * habitacion.getPrecio();
 
-                            //Mostramos el detalle al cliente para que pueda confirmar su reserva
+                            // detalle de la reserva a realizar
                             System.out.println("\n===== DETALLE DE LA RESERVA =====");
                             System.out.println("Habitación ID: " + idHabitacion);
                             System.out.println("Fecha ingreso: " + checkIn);
                             System.out.println("Fecha salida: " + checkOut);
                             System.out.println("Noches: " + noches);
-                            System.out.println("Precio por noche: $" + precioPorNoche);
+                            System.out.println("Precio por noche: $" + habitacion.getPrecio());
                             System.out.println("TOTAL: $" + total);
                             System.out.println("=================================\n");
 
-                            //para que el cliente si desea cambiar algo la puede cancelar y hacer devuelta
+                            // luego de mostrar el mensaje le preguntamos si desea confirmar la reserva, sino que la vuelva a hacer.
                             System.out.println("¿Desea confirmar la reserva? (s/n)");
                             char confirmar = sc.next().charAt(0);
-                            // Crear reserva
+
+                            if (confirmar == 'n' || confirmar == 'N') {
+                                System.out.println("Reserva cancelada por el usuario.");
+                                break;
+                            }
+
+                            //hacemos la reserva.
                             try {
-                                System.out.println(sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida, metodoPagoC));
+                                System.out.println(
+                                        sistema1.hacerReserva(idHabitacion, fechaInicio, fechaSalida, metodoPagoC)
+                                );
                             } catch (NoRegistradoException e) {
                                 System.out.println(e.getMessage());
                             }
+
                             break;
+
                         case 2:
                             System.out.println(sistema1.verMisReservas());
                             break;
+
                         case 3:
                             seguir = 'n';
                             break;
+
                         default:
-                            System.out.println("opcion no valida");
-                            break;
+                            System.out.println("Opción no válida.");
                     }
 
                 } catch (InputMismatchException e) {
-                    System.out.println("Ingrese un número válido (1, 2 o 3).");
+                    System.out.println("Ingrese un número válido (1,2 o 3)");
                     sc.nextLine();
                 }
             }
+
             if (opcion != 3) {
                 boolean valido = false;
                 do {
-                    System.out.println("¿Desea elegir otra opcion del menu Cliente? (s/n)");
+                    System.out.println("¿Desea elegir otra opción del menú Cliente? (s/n)");
                     String validar = sc.next().toLowerCase().trim();
-                    if (validar.length() == 1 && (validar.charAt(0) == 's' || validar.charAt(0) == 'n')) {
+
+                    if (validar.equals("s") || validar.equals("n")) {
                         seguir = validar.charAt(0);
                         valido = true;
                     } else {
-                        System.out.println("Opcion no valida. Ingrese solo s o n");
+                        System.out.println("Opción inválida. Ingrese s o n.");
                     }
+
                 } while (!valido);
             }
 
-
         } while (seguir == 's');
+    }
+
+    //metodo para pedir la fecha, asi ahorramos en codigo y no lo pido dos veces en el mismo metodo de hacerReserva
+    public static LocalDate pedirFecha(Scanner sc, String mensaje) {
+        System.out.println("\n--- " + mensaje + " ---");
+
+        while (true) {
+            try {
+                System.out.println("Ingrese anio: ");
+                int anio = sc.nextInt();
+                sc.nextLine();
+
+                System.out.println("Ingrese mes: ");
+                int mes = sc.nextInt();
+                sc.nextLine();
+
+                System.out.println("Ingrese dia: ");
+                int dia = sc.nextInt();
+                sc.nextLine();
+
+                return LocalDate.of(anio, mes, dia);
+
+            } catch (DateTimeException e) {
+                System.out.println("Fecha invalida. Intente nuevamente...");
+            }
+        }
     }
 
     //menu para elegir las opciones de habitacion. tenemos 3 tipos de habitaciones
