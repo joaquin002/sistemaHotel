@@ -21,8 +21,8 @@ public class Recepcionista extends Usuario implements Identificable {
         super(nombreUsuario, contrasenia, "Recepcionista");
         this.id = 1;
         this.hotel = hotel;
-        this.clientes=new Registro<>();
-        this.reservas=new Registro<>();
+        this.clientes = new Registro<>();
+        this.reservas = new Registro<>();
     }
 
     public Hotel getHotel() {
@@ -33,37 +33,34 @@ public class Recepcionista extends Usuario implements Identificable {
         return id;
     }
 
-    public Recepcionista(JSONObject obj)throws JSONException {
+    public Recepcionista(JSONObject obj) throws JSONException {
         super(obj);
+
         this.clientes = new Registro<>();
         this.reservas = new Registro<>();
 
-        this.id = obj.optInt("id",0);
+        this.id = obj.optInt("id", 0);
 
         JSONArray clientes = obj.optJSONArray("clientes");
         if (clientes != null) {
-            for(int i = 0; i < clientes.length(); i++){
+            for (int i = 0; i < clientes.length(); i++) {
                 JSONObject cliente = clientes.getJSONObject(i);
                 this.clientes.agregar(new Cliente(cliente));
             }
         }
+
         JSONArray reservas = obj.optJSONArray("reservas");
         if (reservas != null) {
-            for(int i = 0; i < reservas.length(); i++){
+            for (int i = 0; i < reservas.length(); i++) {
                 JSONObject reserva = reservas.getJSONObject(i);
                 Reserva r = new Reserva(reserva);
                 r.setIdRecepcionista(this.id);
                 this.reservas.agregar(r);
             }
         }
-
-        JSONObject hotel = obj.optJSONObject("hotel");
-        if (hotel != null) {
-            this.hotel =  new Hotel(hotel);
-        }else {
-            this.hotel = null;
-        }
+        this.hotel = null;
     }
+
 
     @Override
     public int getIdBuscado() {
@@ -103,7 +100,7 @@ public class Recepcionista extends Usuario implements Identificable {
         //verifica si el cliente ya existe
         Cliente c1 = buscarCliente(dniCliente);
         if (c1 == null) {
-            throw new NoRegistradoException("No existe el cliente con el dni: "+dniCliente);
+            throw new NoRegistradoException("No existe el cliente con el dni: " + dniCliente);
         }
 
 
@@ -164,112 +161,87 @@ public class Recepcionista extends Usuario implements Identificable {
     }
 
 
-
-public String consultarDisponibilidad()
-{
-    String rta="";
-    boolean encontrado=false;
-    for (Habitacion h1: hotel.getHabitaciones().getLista())
-    {
-        if(h1.isDisponible()){
-            rta+=h1.toString()+"\n";
-            encontrado=true;
-        }
-    }
-    if(!encontrado){
-        rta="No hay habitaciones disponibles";
-    }
-    return rta;
-}
-
-    public String verHabitacionesNoDisponiblesPorMotivo(){
-        String rta="";
-        for (Habitacion h1: hotel.getHabitaciones().getLista()){
-            if (!h1.isDisponible()){
-                rta+=h1.toString()+"\n";
+    public String consultarDisponibilidad() {
+        String rta = "";
+        boolean encontrado = false;
+        for (Habitacion h1 : hotel.getHabitaciones().getLista()) {
+            if (h1.isDisponible()) {
+                rta += h1.toString() + "\n";
+                encontrado = true;
             }
-            else
-            {
-                rta="no hay habitaciones no disponibles por motivo";
+        }
+        if (!encontrado) {
+            rta = "No hay habitaciones disponibles";
+        }
+        return rta;
+    }
+
+    public String verHabitacionesNoDisponiblesPorMotivo() {
+        String rta = "";
+        for (Habitacion h1 : hotel.getHabitaciones().getLista()) {
+            if (!h1.isDisponible()) {
+                rta += h1.toString() + "\n";
+            } else {
+                rta = "no hay habitaciones no disponibles por motivo";
             }
         }
         return rta;
     }
 
-    public String verHabitacionesOcupadas(){
-        String rta="";
+    public String verHabitacionesOcupadas() {
+        String rta = "";
         boolean encontrado = false;
-        for (Habitacion h1: hotel.getHabitaciones().getLista()){
-            if (!h1.isDisponible()){
-                for (Reserva r: reservas.getLista()){
-                    if (r.getIdHabitacion()==h1.getIdBuscado()){
-                        Cliente c=buscarCliente(r.getDniCliente());
-                        rta+="Habitacion id: "+h1.getIdBuscado()+"\n";
-                        if (c!=null){
-                            rta+="Cliente: "+ c.getNombre()+"\n";
-                            rta+="Dni: "+c.getDni()+"\n";
-                        }else {
-                            rta+="Cliente no registrado"+"\n";
+        for (Habitacion h1 : hotel.getHabitaciones().getLista()) {
+            if (!h1.isDisponible()) {
+                for (Reserva r : reservas.getLista()) {
+                    if (r.getIdHabitacion() == h1.getIdBuscado()) {
+                        Cliente c = buscarCliente(r.getDniCliente());
+                        rta += "Habitacion id: " + h1.getIdBuscado() + "\n";
+                        if (c != null) {
+                            rta += "Cliente: " + c.getNombre() + "\n";
+                            rta += "Dni: " + c.getDni() + "\n";
+                        } else {
+                            rta += "Cliente no registrado" + "\n";
                         }
-                        rta+="Fecha de reserva: "+r.getFechaInicio()+" fecha de finalizacion: "+r.getFechaFinalizacion() +"\n";
-                        encontrado=true;
+                        rta += "Fecha de reserva: " + r.getFechaInicio() + " fecha de finalizacion: " + r.getFechaFinalizacion() + "\n";
+                        encontrado = true;
                     }
                 }
             }
-            if (encontrado==false){
-                rta="No hay habitaciones ocupadas";
+            if (encontrado == false) {
+                rta = "No hay habitaciones ocupadas";
             }
         }
         return rta;
     }
 
-    public String mostrar() {
-        return super.toString()+"Recepcionista{" +
-                "id=" + id +
-                ", hotel=" + hotel +
-                '}';
+    public String mostrarRecep() {
+        return  "===== RECEPCIONISTA =====\n" +
+                "ID: " + id + "\n" +
+                "Hotel asignado:\n" +
+                hotel.mostrarHotel() + "\n" +
+                "==========================";
     }
 
-    public String mostrarClientes()
-        {
 
+    public String mostrarReservas() {
+        return reservas.mostrar();
+    }
+
+    public String mostrarClientes(){
         return clientes.mostrar();
-        }
-
-        public String mostrarReservas()
-        {
-            return reservas.mostrar();
-        }
-
-    @Override
-    public String toString() {
-        return "Recepcionista{" +
-                "id=" + id +
-                ", clientes=" + clientes +
-                ", reservas=" + reservas +
-                ", hotel=" + hotel +
-                '}';
     }
-
-    public JSONObject toJson(){
+    public JSONObject toJson() {
         JSONObject json = super.toJson();
-        try{
+        try {
             json.put("id", this.id);
-            /*
-            JSONArray clienteJSON = new JSONArray();
-            for (Cliente c:this.clientes.getLista()){
-                clienteJSON.put(c.toJSON());
-            }
-            json.put("clientes", clienteJSON);
-             */
-
             JSONArray reservasJSON = new JSONArray();
-            for (Reserva r:reservas.getLista()){
+            for (Reserva r : reservas.getLista()) {
                 reservasJSON.put(r.toJson());
             }
             json.put("reservas", reservasJSON);
-            
-        }catch (JSONException e){
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return json;

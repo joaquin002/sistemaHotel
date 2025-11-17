@@ -61,6 +61,13 @@ public class Hotel implements Identificable{
                 "Habitaciones registradas... " + mostrarHabitaciones()+ '\n';
     }
 
+    public String mostrarHotel(){
+        return "--------------HOTEL----------------" +'\n' +
+                "id= " + id + '\n'+
+                "nombre= " + nombre + '\n' +
+                "direccion= " + direccion + '\n';
+    }
+
     public void agregarHabitacionEstandar( String descripcion, int personasPermitidas, boolean estado, MotivoNoDisponible motivoNoDisponible) {
         Habitacion estandar=new Habitacion( descripcion, personasPermitidas, estado, motivoNoDisponible);
         this.habitaciones.agregar(estandar);

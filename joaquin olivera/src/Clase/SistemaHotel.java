@@ -24,43 +24,6 @@ public class SistemaHotel {
         this.usuarios = new ArrayList<>();
         this.hotel=new Hotel(1, "Hotel BellaVista ", "Avenida Siempre Viva 742");//crea el hotel
     }
-/*
-    public SistemaHotel(JSONObject obj) throws JSONException {
-        this.usuarios = new ArrayList<>();
-
-        JSONObject hotelJson = obj.getJSONObject("hotel");
-        this.hotel = new Hotel(hotelJson);
-
-        JSONArray usuariosJson = obj.getJSONArray("usuarios");
-        for (int i = 0; i < usuariosJson.length(); i++) {
-            JSONObject usuarioJson = usuariosJson.getJSONObject(i);
-            String tipo = usuarioJson.optString("tipo");
-
-            switch (tipo) {
-                case "Administrador":
-                    Administracion admin = new Administracion(usuarioJson);
-                    admin.setHotel(hotel);
-                    this.usuarios.add(admin);
-                    this.admin = admin;
-                    break;
-                case "Recepcionista":
-                    Recepcionista recepcionista = new Recepcionista(usuarioJson);
-                    recepcionista.setHotel(hotel);
-                    this.usuarios.add(recepcionista);
-                    this.recepcionista = recepcionista;
-                    break;
-                case "Cliente":
-                    Cliente cliente = new Cliente(usuarioJson);
-                    this.usuarios.add(cliente);
-                    break;
-                default:
-                    System.out.println("No se encontro usuario");
-                    break;
-            }
-        }
-    }
-
- */
 
     public SistemaHotel(JSONObject obj) throws JSONException {
         this.usuarios = new ArrayList<>();
@@ -68,7 +31,7 @@ public class SistemaHotel {
         JSONObject hotelJson = obj.getJSONObject("hotel");
         this.hotel = new Hotel(hotelJson);
 
-        //actualizar contador de Habitacion
+        // actualizar contador de Habitacion
         int maxIdHab = 0;
         for (Habitacion h : hotel.getHabitaciones().getLista()) {
             if (h.getId() > maxIdHab) maxIdHab = h.getId();
@@ -81,6 +44,7 @@ public class SistemaHotel {
             String tipo = usuarioJson.optString("tipo");
 
             switch (tipo) {
+
                 case "Administrador":
                     Administracion admin = new Administracion(usuarioJson);
                     if (admin.getHotel() == null) admin.setHotel(this.hotel);
@@ -88,41 +52,36 @@ public class SistemaHotel {
                     this.admin = admin;
                     break;
 
+
                 case "Recepcionista":
                     Recepcionista recep = new Recepcionista(usuarioJson);
-                    if (recep.getHotel() == null) recep.setHotel(this.hotel);
+                    // Todavía NO asignamos hotel aquí
                     this.usuarios.add(recep);
                     this.recepcionista = recep;
-
-                    //cargar reservas del recepcionista y actualizar contador
-                    JSONArray reservasJson = usuarioJson.optJSONArray("reservas");
-                    int maxIdRes = 0;
-                    if (reservasJson != null) {
-                        for (int j = 0; j < reservasJson.length(); j++) {
-                            JSONObject resJson = reservasJson.getJSONObject(j);
-                            Reserva r = new Reserva(resJson);
-                            if (r.getIdBuscado() > maxIdRes){
-                                maxIdRes = r.getIdBuscado();
-                            }
-                        }
-                    }
-                    Reserva.setCont(maxIdRes + 1);
                     break;
 
                 case "Cliente":
                     Cliente cliente = new Cliente(usuarioJson);
                     this.usuarios.add(cliente);
-                    if (this.recepcionista != null) {
-                        this.recepcionista.registrarClienteExistente(cliente);
-                    }
-                    break;
-
-                default:
-                    System.out.println("No se encontró usuario de tipo: " + tipo);
                     break;
             }
         }
+
+        for (Usuario u : usuarios) {
+            if (u instanceof Recepcionista) {
+                Recepcionista r = (Recepcionista) u;
+                r.setHotel(this.hotel);
+                this.recepcionista = r;
+            }
+        }
+        // asociar recepcionista al administrador (si hay admin y recepcionista)
+        if (this.admin != null && this.recepcionista != null) {
+            this.admin.setRecepcionista(this.recepcionista);
+        }
+
+
     }
+
 
 
 
@@ -138,7 +97,6 @@ public class SistemaHotel {
     }
 
     public Recepcionista registrarRecepcionista(String nombreUsuario, String contrasenia) {
-        int id=1;
         Recepcionista r1 = new Recepcionista(nombreUsuario, contrasenia, this.hotel);
         this.recepcionista=r1;
        //si ya existe administrador, lo guarda ahí también

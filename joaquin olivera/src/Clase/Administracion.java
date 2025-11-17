@@ -18,7 +18,6 @@ public class Administracion extends Usuario {
     }
 
     public Administracion(JSONObject obj) throws JSONException {
-        // Cargar datos básicos del usuario
         super(obj);
 
         if (obj.has("hotel") && !obj.isNull("hotel")) {
@@ -84,27 +83,11 @@ public class Administracion extends Usuario {
         if (this.recepcionista==null){
             throw new NoRegistradoException("No hay recepcionista registrado");
         }
-        return this.recepcionista.mostrar();
+        return this.recepcionista.mostrarRecep();
     }
 
-    public JSONObject toJSON() {
+    public JSONObject toJson() {
         JSONObject obj = super.toJson(); // guarda nombreUsuario, contrasenia, tipo
-        try {
-            if (hotel != null) {
-                obj.put("hotel", hotel.toJSON());
-            } else {
-                obj.put("hotel", JSONObject.NULL);
-            }
-
-            if (recepcionista != null) {
-                obj.put("recepcionista", recepcionista.toJson());
-            } else {
-                obj.put("recepcionista", JSONObject.NULL);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return obj;
     }
 
