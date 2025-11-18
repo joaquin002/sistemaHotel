@@ -535,11 +535,23 @@ public class Main {
                             System.out.println(sistema1.generarDetalleReserva(idHabitacion, checkIn, checkOut));
 
                             // luego de mostrar el mensaje le preguntamos si desea confirmar la reserva, sino que la vuelva a hacer.
-                            System.out.println("¿Desea confirmar la reserva? (s/n)");
-                            char confirmar = sc.next().charAt(0);
+                            char confirmar = 's';
+                            boolean confirmado = false;
+                            do{
+                                System.out.println("¿Desea confirmar la reserva? (s/n)");
+                                String rta=sc.next().toLowerCase().trim();
 
-                            if (confirmar == 'n' || confirmar == 'N') {
-                                System.out.println("Reserva cancelada por el usuario.");
+                                if(rta.length()==1 && (rta.charAt(0) == 's' || rta.charAt(0) == 'n')) {
+                                confirmar=rta.charAt(0);
+                                confirmado = true;
+                                }else {
+                                    System.out.println("Opcion no valida. Ingrese s o n");
+                                }
+                            }while(!confirmado);
+
+                            if(confirmar=='n')
+                            {
+                                System.out.println("Reserva cancelada.");
                                 break;
                             }
 
@@ -555,11 +567,9 @@ public class Main {
                         case 2:
                             System.out.println(sistema1.verMisReservas());
                             break;
-
                         case 3:
                             seguir = 'n';
                             break;
-
                         default:
                             System.out.println("Opción no válida.");
                     }
@@ -576,10 +586,12 @@ public class Main {
                     System.out.println("¿Desea elegir otra opción del menú Cliente? (s/n)");
                     String validar = sc.next().toLowerCase().trim();
 
-                    if (validar.equals("s") || validar.equals("n")) {
-                        seguir = validar.charAt(0);
+                    if (validar.length()==1 && (validar.charAt(0) == 's' || validar.charAt(0) == 'n'))
+                    {
+                        seguir=validar.charAt(0);
                         valido = true;
-                    } else {
+                        }
+                    else {
                         System.out.println("Opción inválida. Ingrese s o n.");
                     }
 
@@ -653,18 +665,18 @@ public class Main {
 
                             sistema.cargarHabitacionEstandar(descripcion, personasPermitidas, estado, motivoNoDisponible);
 
-                            System.out.println("se agrego con exito la habitacion estandar");
+                            System.out.println("Se agrego con exito la habitacion estandar");
                             break;
                         case 2:
                             //deluxe
                             System.out.println("Habitacion deluxe");
 
 
-                            System.out.println("ingrese descripcion");
+                            System.out.println("Ingrese descripcion");
                             String descripcionD = sc.nextLine();
 
 
-                            System.out.println("ingrese cantidad de personas permitidas");
+                            System.out.println("Ingrese cantidad de personas permitidas");
                             int personasPermitidasD = sc.nextInt();
 
                             ServicioEspecialDeluxe especialDeluxe = menuServicioDeluxe();
@@ -675,7 +687,7 @@ public class Main {
 
                             }
                             sistema.cargarHabitacionDeluxe(descripcionD, personasPermitidasD, especialDeluxe, estadoD, motivoNoDisponibleD);
-                            System.out.println("se agrego con exito la habitacion deluxe");
+                            System.out.println("Se agrego con exito la habitacion deluxe");
                             break;
                         case 3:
                             //suite
@@ -697,13 +709,13 @@ public class Main {
                             }
                             sistema.cargarHabitacionSuite(descripcionS, personasPermitidasS, especialSuite, estadoS, motivoNoDisponibleS);
 
-                            System.out.println("se agrego con exito la habitacion suite");
+                            System.out.println("Se agrego con exito la habitacion suite");
                             break;
                         case 4:
                             seguir = 'n';
                             break;
                         default:
-                            System.out.println("opcion invalida");
+                            System.out.println("Opcion invalida");
                             break;
                     }
 
@@ -739,7 +751,7 @@ public class Main {
         MetodoPago metodoPago = null;
         while (!valido) {
             try {
-                System.out.println("'\n'Seleccione metodo de pago a utilizar: ");
+                System.out.println("\nSeleccione metodo de pago a utilizar: ");
                 System.out.println("1. Efectivo");
                 System.out.println("2. Debito");
                 System.out.println("3. Credito");

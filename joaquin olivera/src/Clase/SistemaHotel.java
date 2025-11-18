@@ -349,13 +349,13 @@ public class SistemaHotel {
             Cliente c1= (Cliente) actual;
 
             if (recepcionista==null){
-                throw new NoRegistradoException("no hay recepcionista registrado.");
+                throw new NoRegistradoException("No hay recepcionista registrado.");
             }
 
 
             Cliente existente=recepcionista.buscarCliente(dni);
             if (existente!=null && existente!=c1){
-                throw new NoRegistradoException("ya existe un cliente registrado con ese dni");
+                throw new NoRegistradoException("Ya existe un cliente registrado con ese dni. Ingrese los datos nuevamente...");
             }
 
 
@@ -411,7 +411,7 @@ public class SistemaHotel {
     public String generarDetalleReserva(int idHabitacion, LocalDate fechaInicio, LocalDate fechaSalida){
         Habitacion h1=buscarHabitacionPorId(idHabitacion);
         if (h1 == null){
-            return "la habitacion no existe";
+            return "La habitacion no existe";
         }
         long noches= ChronoUnit.DAYS.between(fechaInicio, fechaSalida);
         double totalReserva=noches*h1.getPrecio();

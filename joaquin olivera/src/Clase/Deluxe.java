@@ -21,7 +21,7 @@ public class Deluxe extends Habitacion{
 
     @Override
     public String toString() {
-        return super.toString()+"---servicios Deluxe---" + servicioEspecialDeluxe;
+        return super.toString()+"---servicios Deluxe---\n" + servicioEspecialDeluxe;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Suite extends Habitacion{
 
     @Override
     public String toString() {
-        return super.toString()+"--- serivicios Suite---"
+        return super.toString()+"--- serivicios Suite---\n"
                 + especialSuite;
     }
 
