@@ -48,7 +48,7 @@ public class Main {
         SistemaHotel envolvente;
         try {
             String info = JsonUtiles.descargarJson();
-            if(info.isEmpty()){
+            if (info.isEmpty()) {
                 throw new JSONException("Archivo vacío o no encontrado");
             }
             JSONObject lista = new JSONObject(info);
@@ -85,7 +85,7 @@ public class Main {
 
                     opcion = sc.nextInt();
                     sc.nextLine();
-                    valida=true;
+                    valida = true;
 
                     switch (opcion) {
                         case 1:
@@ -99,43 +99,44 @@ public class Main {
                             try {
                                 String modo = sistema.iniciarSesion(nombre, contrasenia);
                                 System.out.println("Inicio sesion correctamente como " + modo);
+
                                 if (modo.equals("Recepcionista")) {
                                     opcionRecepcionista(sistema);
-                                }
-                                if (modo.equals("Administrador")) {
+                                } else if (modo.equals("Administrador")) {
                                     opcionAdministrador(sistema);
-                                }
-                                if (modo.equals("Cliente")) {
+                                } else if (modo.equals("Cliente")) {
                                     Cliente c1 = (Cliente) sistema.getActual();
                                     boolean datosCompletos = false;
+
                                     while (!datosCompletos) {
-                                        if (c1.getNombre() != null && c1.getNombre().isEmpty() && c1.getDni() != 0 && c1.getDomicilio() != null && c1.getDomicilio().isEmpty()) {
+                                        if (c1.getNombre() != null && !c1.getNombre().isEmpty() &&
+                                                c1.getDni() != 0 &&
+                                                c1.getDomicilio() != null && !c1.getDomicilio().isEmpty()) {
                                             datosCompletos = true;
+                                        } else {
+                                            System.out.println("Complete sus datos personales antes de continuar:");
+                                            System.out.print("Nombre completo: ");
+                                            String nombreC = sc.nextLine();
+                                            System.out.print("Dni: ");
+                                            int dniC = sc.nextInt();
+                                            sc.nextLine();
+                                            System.out.print("Domicilio: ");
+                                            String domicilioC = sc.nextLine();
+                                            try {
+                                                sistema.completarDatosCliente(nombreC, dniC, domicilioC);
+                                                datosCompletos = true;
+                                            } catch (NoRegistradoException e) {
+                                                System.out.println(e.getMessage());
+                                            }
                                         }
-
-                                    System.out.println("Complete sus datos personales antes de continuar:");
-                                    System.out.print("Nombre completo: ");
-                                    String nombreC = sc.nextLine();
-                                    System.out.print("Dni: ");
-                                    int dniC = sc.nextInt();
-                                    sc.nextLine();
-                                    System.out.print("Domicilio: ");
-                                    String domicilioC = sc.nextLine();
-
-                                    try {
-                                        sistema.completarDatosCliente(nombreC, dniC, domicilioC);
-                                        datosCompletos = true;
-                                    } catch (NoRegistradoException e) {
-                                        System.out.println(e.getMessage());
                                     }
-                                }
-                                    }
+
                                     try {
                                         opcionCliente(sistema);
-
                                     } catch (DateTimeParseException e) {
                                         System.out.println(e.getMessage());
                                     }
+                                }
 
                             } catch (UsuarioNoEncontradoException e) {
                                 System.out.println(e.getMessage());
@@ -492,7 +493,7 @@ public class Main {
                             LocalDate checkIn = null;
                             LocalDate checkOut = null;
 
-                          //pedimos la fecha de ingreso
+                            //pedimos la fecha de ingreso
                             boolean elegido = false;
                             while (!elegido) {
                                 checkIn = pedirFecha(sc, "Fecha de ingreso");
