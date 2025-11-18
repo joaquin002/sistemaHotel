@@ -42,9 +42,6 @@ public class Hotel implements Identificable{
         return habitaciones;
     }
 
-    public double getRecaudacion() {
-        return recaudacion;
-    }
 
     @Override
     public int getIdBuscado() {
@@ -61,6 +58,7 @@ public class Hotel implements Identificable{
                 "Habitaciones registradas... " + mostrarHabitaciones()+ '\n';
     }
 
+    //para recepcionista
     public String mostrarHotel(){
         return "--------------HOTEL----------------" +'\n' +
                 "id= " + id + '\n'+

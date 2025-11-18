@@ -276,13 +276,13 @@ public class Main {
             System.out.println("---------------------------------------------");
             System.out.println("1. Hacer CheckIn");
             System.out.println("2. Hacer CheckOut");
-            System.out.println("3. Consultar disponibilidad de habitaciones");
+            System.out.println("3. Ver habitaciones disponibles");
             System.out.println("4. Buscar reserva");
             System.out.println("5. Buscar cliente");
             System.out.println("6. Ver clientes");
             System.out.println("7. Ver reservas");
             System.out.println("8. Ver habitaciones no disponibles por motivo");
-            System.out.println("9. Ver habitaciones ocupadas");
+            System.out.println("9. Ver habitaciones reservadas");
             System.out.println("10. Salir al menu principal");
             System.out.println("Seleccione una opcion: ");
             boolean valida = false;
@@ -437,7 +437,7 @@ public class Main {
                     }
                     // esta excepcion es para que el usuario no ponga una letra o un nro invalido cuando le pedimos por teclado.
                 } catch (InputMismatchException e) {
-                    System.out.println(" Ingrese un número válido (1-7):");
+                    System.out.println(" Ingrese un número válido (1-8):");
                     sc.nextLine();
                 }
             }
@@ -489,6 +489,12 @@ public class Main {
                             int idHabitacion = sc.nextInt();
                             sc.nextLine();
 
+                            Habitacion habitacion = sistema1.buscarHabitacion(idHabitacion);
+                            if (habitacion == null) {
+                                System.out.println("Error: No existe la habitación con id " + idHabitacion);
+                                return;
+                            }
+
                             LocalDate hoy = LocalDate.now();
                             LocalDate checkIn = null;
                             LocalDate checkOut = null;
@@ -524,13 +530,6 @@ public class Main {
 
                             // le pedimos el metodo de pago mientras hace la reserva.
                             MetodoPago metodoPagoC = menuMetodoPago();
-
-                            // buscamos que la habitacion exista
-                            Habitacion habitacion = sistema1.buscarHabitacionPorId(idHabitacion);
-                            if (habitacion == null) {
-                                System.out.println("La habitación no existe.");
-                                break;
-                            }
 
                             System.out.println(sistema1.generarDetalleReserva(idHabitacion, checkIn, checkOut));
 
@@ -826,7 +825,7 @@ public class Main {
         ServicioEspecialDeluxe especialDeluxe = null;
         while (!valido) {
             try {
-                System.out.println("Seleccione el servicio deluxe");
+                System.out.println("Seleccione un servicio adicional deluxe");
                 System.out.println("1. Jaccuzzi");
                 System.out.println("2. Vista personalizada");
                 System.out.println("3. Bar");
@@ -864,7 +863,7 @@ public class Main {
         ServicioEspecialSuite especialSuite = null;
         while (!valido) {
             try {
-                System.out.println("Seleccione servicio suite");
+                System.out.println("Seleccione un servicio adicional suite");
                 System.out.println("1. Pileta climatizada");
                 System.out.println("2. Cine interactivo");
                 System.out.println("3. Helipuerto");

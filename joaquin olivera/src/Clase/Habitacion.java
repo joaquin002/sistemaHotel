@@ -65,6 +65,10 @@ public class Habitacion implements Identificable {
         return this.id;
     }
 
+    public MotivoNoDisponible getMotivoNoDisponible() {
+        return motivoNoDisponible;
+    }
+
     @Override
     public String toString() {
         return "\n----------Habitacion-----------" + '\n'+

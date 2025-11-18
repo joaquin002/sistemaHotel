@@ -30,7 +30,6 @@ public class SistemaHotel {
 
     public SistemaHotel(JSONObject obj) throws JSONException {
         this.usuarios = new ArrayList<>();
-
         JSONObject hotelJson = obj.getJSONObject("hotel");
         this.hotel = new Hotel(hotelJson);
 
@@ -60,6 +59,19 @@ public class SistemaHotel {
                     Recepcionista recep = new Recepcionista(usuarioJson);
                     this.usuarios.add(recep);
                     this.recepcionista = recep;
+                    //cargar reservas del recepcionista y actualizar contador
+                    JSONArray reservasJson = usuarioJson.optJSONArray("reservas");
+                    int maxIdRes = 0;
+                    if (reservasJson != null) {
+                        for (int j = 0; j < reservasJson.length(); j++) {
+                            JSONObject resJson = reservasJson.getJSONObject(j);
+                            Reserva r = new Reserva(resJson);
+                            if (r.getIdBuscado() > maxIdRes){
+                                maxIdRes = r.getIdBuscado();
+                            }
+                        }
+                    }
+                    Reserva.setCont(maxIdRes + 1);
                     break;
 
                 case "Cliente":
@@ -307,15 +319,10 @@ public class SistemaHotel {
             c1.setHotel(hotel);
             c1.setMetodoPago(metodoPago);
 
-            Habitacion habitacion =hotel.buscarHabitacion(idHabitacion);
-            if (habitacion==null){
-                throw new NoRegistradoException("no hay habitacion disponible");
+            Habitacion habitacion = buscarHabitacion(idHabitacion);
+            if (habitacion == null){
+                return "Error: No existe la habitación con id " + idHabitacion;
             }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate in = LocalDate.parse(fechaInicio, formatter);
-            LocalDate out = LocalDate.parse(fechaSalida, formatter);
-            long noches = ChronoUnit.DAYS.between(in, out);
-
 
             rta= c1.hacerReserva(idHabitacion, recepcionista, fechaInicio, fechaSalida);
 
@@ -325,6 +332,10 @@ public class SistemaHotel {
         }catch (NoRegistradoException e){
             return e.getMessage();
         }
+    }
+
+    public Habitacion buscarHabitacion(int idHabitacion){
+        return hotel.buscarHabitacion(idHabitacion);
     }
 
     //metodo para calcular la recaudacion y que el administrador pueda ver el total
@@ -398,18 +409,8 @@ public class SistemaHotel {
     }
 
 
-//metodo para calcular el precio por noche:
-    public Habitacion buscarHabitacionPorId(int id) {
-        for (Habitacion h : this.hotel.getHabitaciones().getLista()) {
-            if (h.getId() == id) {
-                return h;
-            }
-        }
-        return null;
-    }
-
     public String generarDetalleReserva(int idHabitacion, LocalDate fechaInicio, LocalDate fechaSalida){
-        Habitacion h1=buscarHabitacionPorId(idHabitacion);
+        Habitacion h1=admin.getHotel().buscarHabitacion(idHabitacion);
         if (h1 == null){
             return "La habitacion no existe";
         }
@@ -417,7 +418,7 @@ public class SistemaHotel {
         double totalReserva=noches*h1.getPrecio();
 
         return "\n===== DETALLE DE LA RESERVA =====\n" +
-                "Habitación ID: " + idHabitacion + "\n" +
+                "Habitacion ID: " + idHabitacion + "\n" +
                 "Fecha ingreso: " + fechaInicio + "\n" +
                 "Fecha salida: " + fechaSalida + "\n" +
                 "Noches: " + noches + "\n" +

@@ -83,7 +83,7 @@ public class Administracion extends Usuario {
         if (this.recepcionista==null){
             throw new NoRegistradoException("No hay recepcionista registrado");
         }
-        return this.recepcionista.mostrarRecep();
+        return this.recepcionista.mostrarRecepcionista();
     }
 
     public JSONObject toJson() {

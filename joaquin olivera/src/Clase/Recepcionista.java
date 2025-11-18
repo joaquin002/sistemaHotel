@@ -27,9 +27,6 @@ public class Recepcionista extends Usuario implements Identificable {
         this.reservas = new Registro<>();
     }
 
-    public Hotel getHotel() {
-        return hotel;
-    }
 
     public int getId() {
         return id;
@@ -89,6 +86,10 @@ public class Recepcionista extends Usuario implements Identificable {
         return this.reservas.buscar(id);
     }
 
+    public boolean eliminarReserva(Reserva reserva){
+        return this.reservas.eliminar(reserva);
+    }
+
     public Cliente buscarCliente(int dni) {
         return this.clientes.buscar(dni);
     }
@@ -127,13 +128,13 @@ public class Recepcionista extends Usuario implements Identificable {
     }
 
     public void checkOut(int idReserva, int dniCliente) throws NoRegistradoException {
-        Reserva r2 = buscarReserva(idReserva); //buscar la reserva
-        if (r2 == null) {
+        Reserva reserva = buscarReserva(idReserva); //buscar la reserva
+        if (reserva == null) {
             throw new NoRegistradoException("la reserva con id: " + idReserva + " no esta registrada");
         }
 
         //buscar habitacion de la reserva
-        Habitacion h1 = hotel.buscarHabitacion(r2.getIdHabitacion());
+        Habitacion h1 = hotel.buscarHabitacion(reserva.getIdHabitacion());
         if (h1 == null) {
             throw new NoRegistradoException("no se encontro la habitacion asociada a la reserva");
         }
@@ -143,8 +144,8 @@ public class Recepcionista extends Usuario implements Identificable {
             throw new NoRegistradoException("No se puede hacer el Check-Out porque la habitación aun no tiene Check-In.");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate in = LocalDate.parse(r2.getFechaInicio(), formatter);
-        LocalDate out = LocalDate.parse(r2.getFechaFinalizacion(), formatter);
+        LocalDate in = LocalDate.parse(reserva.getFechaInicio(), formatter);
+        LocalDate out = LocalDate.parse(reserva.getFechaFinalizacion(), formatter);
 
         long noches = ChronoUnit.DAYS.between(in, out);
         double totalCobrado = noches * h1.getPrecio();
@@ -160,11 +161,13 @@ public class Recepcionista extends Usuario implements Identificable {
         if (c1 == null) {
             throw new NoRegistradoException("no se encontro el cliente con dni: " + dniCliente);
         }
-        c1.guardarHistorial(dniCliente, r2.getFechaInicio(), r2.getFechaFinalizacion());
+        c1.guardarHistorial(dniCliente, reserva.getFechaInicio(), reserva.getFechaFinalizacion());
+        c1.setReserva(null);
+        eliminarReserva(reserva);
 
 
         System.out.println(" Check-Out realizado con éxito de la reserva " + idReserva + ". Habitación " + h1.getIdBuscado() + " liberada. " +
-                "Fecha de estadía: " + r2.getFechaInicio() + " → " + r2.getFechaFinalizacion());
+                "Fecha de estadía: " + reserva.getFechaInicio() + " → " + reserva.getFechaFinalizacion());
         System.out.println("Noches "+ noches);
         System.out.println("Total cobrado: " +totalCobrado);
     }
@@ -187,12 +190,15 @@ public class Recepcionista extends Usuario implements Identificable {
 
     public String verHabitacionesNoDisponiblesPorMotivo() {
         String rta = "";
+        boolean encontrado = false;
         for (Habitacion h1 : hotel.getHabitaciones().getLista()) {
-            if (!h1.isDisponible()) {
+            if (!h1.isDisponible() && h1.getMotivoNoDisponible()!=null) {
                 rta += h1.toString() + "\n";
-            } else {
-                rta = "no hay habitaciones no disponibles por motivo";
+                encontrado = true;
             }
+        }
+        if (!encontrado) {
+            rta = "No hay habitaciones disponibles";
         }
         return rta;
     }
@@ -217,14 +223,15 @@ public class Recepcionista extends Usuario implements Identificable {
                     }
                 }
             }
-            if (encontrado == false) {
-                rta = "No hay habitaciones ocupadas";
-            }
+
+        }
+        if (encontrado == false) {
+            rta = "No hay habitaciones ocupadas";
         }
         return rta;
     }
 
-    public String mostrarRecep() {
+    public String mostrarRecepcionista() {
         return  "===== RECEPCIONISTA =====\n" +
                 "ID: " + id + "\n" +
                 "Hotel asignado:\n" +
@@ -234,11 +241,23 @@ public class Recepcionista extends Usuario implements Identificable {
 
 
     public String mostrarReservas() {
-        return reservas.mostrar();
+       String rta = "";
+        if (this.reservas == null || this.reservas.getLista().isEmpty()) {
+            rta= "No hay reservas disponibles";
+        }else {
+            rta=reservas.mostrar();
+        }
+        return rta;
     }
 
     public String mostrarClientes(){
-        return clientes.mostrar();
+        String rta="";
+        if (this.clientes == null || this.clientes.getLista().isEmpty()) {
+            rta="No hay clientes disponibles";
+        }else {
+            rta=clientes.mostrar();
+        }
+        return rta;
     }
     public JSONObject toJson() {
         JSONObject json = super.toJson();

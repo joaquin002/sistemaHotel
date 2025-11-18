@@ -13,9 +13,7 @@ public abstract class Usuario {
         this.contrasenia = contrasenia;
         this.tipo = tipo;
     }
-    public Usuario(){
 
-    }
     public Usuario(JSONObject obj) throws JSONException {
         this.nombreUsuario = obj.getString("nombreUsuario");
         this.contrasenia = obj.getString("contrasenia");

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class Historial {
     private int dniCliente;
-    private String fechaInicio;// con formato
+    private String fechaInicio;
     private String fechaSalida;
 
     public Historial(int dniCliente, String fechaInicio, String fechaSalida) {
