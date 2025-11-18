@@ -58,7 +58,6 @@ public class SistemaHotel {
 
                 case "Recepcionista":
                     Recepcionista recep = new Recepcionista(usuarioJson);
-                    // Todavía NO asignamos hotel aquí
                     this.usuarios.add(recep);
                     this.recepcionista = recep;
                     break;
@@ -66,6 +65,9 @@ public class SistemaHotel {
                 case "Cliente":
                     Cliente cliente = new Cliente(usuarioJson);
                     this.usuarios.add(cliente);
+                    if (this.recepcionista != null) {
+                        this.recepcionista.registrarClienteExistente(cliente);
+                    }
                     break;
             }
         }
@@ -82,7 +84,15 @@ public class SistemaHotel {
             this.admin.setRecepcionista(this.recepcionista);
         }
 
-
+        if (this.recepcionista != null) {
+            ArrayList<Reserva> listaReservas = this.recepcionista.getReservas().getLista();
+            for (Reserva r : listaReservas) {
+                Cliente cliente = recepcionista.buscarCliente(r.getDniCliente());
+                if (cliente != null) {
+                    cliente.setReserva(r);
+                }
+            }
+        }
     }
 
 
@@ -232,7 +242,6 @@ public class SistemaHotel {
 
     //recepcionista metodos
     public void checkIn(int dniCliente, int idReserva){
-
         try {
             recepcionista.checkIn(dniCliente, idReserva);
             pasarAJSONaArchivo();
@@ -338,14 +347,22 @@ public class SistemaHotel {
     public String completarDatosCliente(String nombre, int dni, String domicilio) throws NoRegistradoException{
         if (actual instanceof Cliente){
             Cliente c1= (Cliente) actual;
+
+            if (recepcionista==null){
+                throw new NoRegistradoException("no hay recepcionista registrado.");
+            }
+
+
+            Cliente existente=recepcionista.buscarCliente(dni);
+            if (existente!=null && existente!=c1){
+                throw new NoRegistradoException("ya existe un cliente registrado con ese dni");
+            }
+
+
             c1.setHotel(hotel);
             c1.setNombre(nombre);
             c1.setDni(dni);
             c1.setDomicilio(domicilio);
-            //c1.setMetodoPago(metodoPago);
-            if (recepcionista==null){
-                throw new NoRegistradoException("no hay recepcionista registrado.");
-            }
             recepcionista.registrarClienteExistente(c1);
             pasarAJSONaArchivo();
             return "Datos del cliente guardados correctamente.";

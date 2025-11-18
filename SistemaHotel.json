@@ -1,1 +1,41 @@
-{"hotel":{"habitaciones":[],"direccion":"Avenida Siempre Viva 742","id":1,"recaudacion":2000,"nombre":"Hotel BellaVista "},"usuarios":[{"tipo":"Administrador","contrasenia":"12","nombreUsuario":"admin"},{"tipo":"Recepcionista","reservas":[{"fechaInicio":"20/11/2025","dniCliente":123,"idHabitacion":1,"idReserva":1,"fechaFinalizacion":"21/11/2025"}],"contrasenia":"r","nombreUsuario":"r","id":1},{"metodoPago":"DEBITO","tipo":"Cliente","domicilio":"calle","historial":[{"fechaInicio":"20/11/2025","fechaSalida":"21/11/2025","dniCliente":123}],"contrasenia":"c","nombreUsuario":"c","nombre":"pau","dni":123}]}
+{
+  "hotel": {
+    "habitaciones": [],
+    "direccion": "Avenida Siempre Viva 742",
+    "id": 1,
+    "recaudacion": 0,
+    "nombre": "Hotel BellaVista "
+  },
+  "usuarios": [
+    {
+      "tipo": "Administrador",
+      "contrasenia": "123",
+      "nombreUsuario": "admin"
+    },
+    {
+      "tipo": "Recepcionista",
+      "reservas": [],
+      "contrasenia": "123",
+      "nombreUsuario": "recep",
+      "id": 1
+    },
+    {
+      "tipo": "Cliente",
+      "domicilio": "casa",
+      "historial": [],
+      "contrasenia": "123",
+      "nombreUsuario": "cli",
+      "nombre": "paulina",
+      "dni": 46
+    },
+    {
+      "tipo": "Cliente",
+      "domicilio": "casa",
+      "historial": [],
+      "contrasenia": "123",
+      "nombreUsuario": "cli2",
+      "nombre": "carlos",
+      "dni": 12
+    }
+  ]
+}

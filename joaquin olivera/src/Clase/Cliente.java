@@ -43,6 +43,11 @@ public class Cliente extends Usuario implements Identificable {
                 this.historial.add(new Historial(historialArray.getJSONObject(i)));
             }
         }
+        if (obj.has("reserva") && !obj.isNull("reserva")) {
+            this.reserva = new Reserva(obj.getJSONObject("reserva"));
+        } else {
+            this.reserva = null;
+        }
     }
 
 
@@ -50,6 +55,10 @@ public class Cliente extends Usuario implements Identificable {
     public Cliente(String nombreUsuario, String contrasenia) {
         super(nombreUsuario, contrasenia,"Cliente");
         this.historial=new ArrayList<>();
+    }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
     public void guardarHistorial(int dniCliente, String fechaInicio, String fechaSalida){

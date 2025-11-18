@@ -107,21 +107,28 @@ public class Main {
                                 }
                                 if (modo.equals("Cliente")) {
                                     Cliente c1 = (Cliente) sistema.getActual();
-                                    if (c1.getNombre() == null || c1.getNombre().isEmpty() || c1.getDni() == 0 || c1.getDomicilio() == null || c1.getDomicilio().isEmpty()) {
-                                        System.out.println("Complete sus datos personales antes de continuar:");
-                                        System.out.print("Nombre completo: ");
-                                        String nombreC = sc.nextLine();
-                                        System.out.print("Dni: ");
-                                        int dniC = sc.nextInt();
-                                        sc.nextLine();
-                                        System.out.print("Domicilio: ");
-                                        String domicilioC = sc.nextLine();
-                                        try {
-                                            sistema.completarDatosCliente(nombreC, dniC, domicilioC);
-                                        } catch (NoRegistradoException e) {
-                                            System.out.println(e.getMessage());
+                                    boolean datosCompletos = false;
+                                    while (!datosCompletos) {
+                                        if (c1.getNombre() != null && c1.getNombre().isEmpty() && c1.getDni() != 0 && c1.getDomicilio() != null && c1.getDomicilio().isEmpty()) {
+                                            datosCompletos = true;
                                         }
 
+                                    System.out.println("Complete sus datos personales antes de continuar:");
+                                    System.out.print("Nombre completo: ");
+                                    String nombreC = sc.nextLine();
+                                    System.out.print("Dni: ");
+                                    int dniC = sc.nextInt();
+                                    sc.nextLine();
+                                    System.out.print("Domicilio: ");
+                                    String domicilioC = sc.nextLine();
+
+                                    try {
+                                        sistema.completarDatosCliente(nombreC, dniC, domicilioC);
+                                        datosCompletos = true;
+                                    } catch (NoRegistradoException e) {
+                                        System.out.println(e.getMessage());
+                                    }
+                                }
                                     }
                                     try {
                                         opcionCliente(sistema);
@@ -129,7 +136,7 @@ public class Main {
                                     } catch (DateTimeParseException e) {
                                         System.out.println(e.getMessage());
                                     }
-                                }
+
                             } catch (UsuarioNoEncontradoException e) {
                                 System.out.println(e.getMessage());
                             }
